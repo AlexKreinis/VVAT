@@ -7,7 +7,7 @@ const Login = () => {
         <View style={styles.container}>
           <View style={styles.logoContainer}>
             <Image 
-              source={require('./assets/b7.png')}
+              source={require('../../assets/b7.png')}
               style={styles.logo}
             />
             <Text style={styles.title}>An app made for beer sheva city!</Text>

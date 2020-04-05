@@ -1,5 +1,6 @@
 import {View,TextInput,Text, StyleSheet, TouchableOpacity} from 'react-native';
 import formStyle from '../../styles/formStyle';
+import {useState} from 'react';
 
 import React from 'react';
 
@@ -16,6 +17,7 @@ const LoginForm = () => {
                 placeholderTextColor='rgba(255,255,255,0.7)'
                 onChangeText={text => setUsername(text)}
                 value={username}
+                //type=''
             />
             <TextInput
                 style={formStyle.input}
@@ -24,6 +26,7 @@ const LoginForm = () => {
                 secureTextEntry={true}
                 onChangeText={text => setPassword(text)}
                 value={password}
+                //type=''
             />
             <TouchableOpacity style={formStyle.buttonContainer}>
                 <Text style={formStyle.buttonText}>Login</Text>

@@ -3,6 +3,10 @@ import { View, TextInput, TouchableOpacity, Text } from "react-native";
 import formStyle from "../../styles/formStyle";
 
 const RegistrationForm = (props) => {
+
+  // const [username,setUsername] = useState('');
+  // const [password,setPassword] = useState('');
+
   return (
     <View style={formStyle.container}>
       <TextInput
