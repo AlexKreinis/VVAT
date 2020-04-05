@@ -22,16 +22,26 @@ export default Login
 
 const styles = StyleSheet.create({
     container:{
-
+        flex:1,
+        backgroundColor: '#706fd3',
     },
 
     logoContainer:{
+        alignItems:'center',
+        justifyContent: 'center',
+        flexGrow: 1
 
     },
     logo: {
-
+        width: 300,
+        height: 65
     },
     title: {
-
+        color: '#fff',
+        marginTop: 10,
+        textAlign: 'left',
+        textShadowColor: 'rgba(0, 0, 0, 0.75)',
+        textShadowOffset: {width: -3, height: 0},
+        textShadowRadius: 10
     }
 });
