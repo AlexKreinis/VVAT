@@ -4,7 +4,7 @@ import { StyleSheet, Text, View } from "react-native";
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text>New fresh project!!!111111</Text>
+      <Text>New fresh project!!!222222</Text>
     </View>
   );
 }
