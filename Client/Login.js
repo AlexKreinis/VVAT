@@ -1,5 +1,6 @@
 import React from 'react'
 import {View,Text, StyleSheet,Image} from 'react-native';
+import LoginForm from './LoginForm';
 
 const Login = () => {
     return(
@@ -13,6 +14,7 @@ const Login = () => {
             <Text style={styles.title}>An app made for beer sheva city!</Text>
           </View>
           <View>
+            <LoginForm/>
           </View>
         </View>
       );
@@ -39,7 +41,6 @@ const styles = StyleSheet.create({
     title: {
         color: '#fff',
         marginTop: 10,
-        textAlign: 'left',
         textShadowColor: 'rgba(0, 0, 0, 0.75)',
         textShadowOffset: {width: -3, height: 0},
         textShadowRadius: 10
