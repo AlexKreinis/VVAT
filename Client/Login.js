@@ -10,7 +10,7 @@ const Login = () => {
               source={require('./assets/b7.png')}
               style={styles.logo}
             />
-            <Text style={styles.title}>An app made for beer sheva city.</Text>
+            <Text style={styles.title}>An app made for beer sheva city!</Text>
           </View>
           <View>
           </View>
