@@ -22,7 +22,8 @@ export default StyleSheet.create({
         elevation: 2,
     },
     buttonContainer:{
-        backgroundColor: "#d63031",
+        backgroundColor: "#F7632D",
+        borderColor: '#000',
         paddingVertical: 10,
         marginHorizontal: 80,
         marginVertical: 20,
