@@ -7,6 +7,7 @@ import Login from "./Screens/LoginScreen";
 const rootReducer = combineReducers({
   users: UsersReducer,
 });
+import nevigator from 'nevegator';
 const store = createStore(rootReducer);
 
 export default function App() {

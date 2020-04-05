@@ -14,6 +14,7 @@ const Login = () => {
           </View>
           <View>
             <LoginForm/>
+            <Text style={styles.createAccount}>Create Account</Text>
           </View>
         </View>
       );
@@ -43,4 +44,9 @@ const styles = StyleSheet.create({
     textShadowOffset: { width: -3, height: 0 },
     textShadowRadius: 10,
   },
+  createAccount:{
+    flexGrow: 1,
+    textAlign: 'center',
+    marginVertical: 20,
+  }
 });
