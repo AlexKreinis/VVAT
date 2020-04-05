@@ -5,7 +5,6 @@ import LoginForm from './LoginForm';
 const Login = () => {
     return(
         <View style={styles.container}>
-
           <View style={styles.logoContainer}>
             <Image 
               source={require('./assets/b7.png')}
@@ -32,7 +31,6 @@ const styles = StyleSheet.create({
         alignItems:'center',
         justifyContent: 'center',
         flexGrow: 1
-
     },
     logo: {
         width: 300,
