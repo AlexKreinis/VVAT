@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
-import RegistrationForm from "../../Components/Registration/RegistrationForm";
+import RegistrationForm from "../Components/Registration/RegistrationForm";
 
 const Registration = (props) => {
   return (
