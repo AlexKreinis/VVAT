@@ -1,10 +1,10 @@
-import {StyleSheet} from 'react-native';
+import { StyleSheet } from "react-native";
 
 export default StyleSheet.create({
-    container:{
-        paddingHorizontal: 60,
-        paddingBottom: 40,
-    },
+  container: {
+    paddingHorizontal: 60,
+    paddingBottom: 40,
+  },
     input:{
         height: 40,
         marginBottom: 10,

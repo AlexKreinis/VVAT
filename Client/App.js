@@ -1,17 +1,13 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
-import Login from './Screens/Login';
+import Login from './Screens/Login/Login';
 
 export default function App() {
-  return <Login/>;
-
+  return <Login />;
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
   },
 });
