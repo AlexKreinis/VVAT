@@ -1,10 +1,11 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
+import Registration from "./Registration";
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text>New fresh project!!!222222</Text>
+      <Registration />
     </View>
   );
 }
@@ -12,8 +13,5 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
   },
 });
