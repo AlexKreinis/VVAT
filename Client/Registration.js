@@ -16,9 +16,17 @@ const Registration = (props) => {
 };
 
 const styles = StyleSheet.create({
-  container: {},
+  container: {
+    flex: 1,
+    backgroundColor: "#706fd3",
+    alignItems: "center",
+    justifyContent: "center",
+  },
   logoContainer: {},
-  logoHeader: {},
+  logoHeader: {
+    fontSize: 30,
+    color: "#fff",
+  },
 });
 
 export default Registration;
