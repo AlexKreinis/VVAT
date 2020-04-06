@@ -22,6 +22,7 @@ export const register = (data) => async (dispatch) => {
     }
 
     let json = await res.json();
+    console.log("res is", json);
     return json;
     // dispatch({
     //   type: REGISTER_SUCCESS,
