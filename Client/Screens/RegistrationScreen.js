@@ -93,12 +93,15 @@ const Registration = (props) => {
         </View>
       </View>
       <View>
-        <Text
-          style={styles.alreadyRegistered}
-          onPress={() => props.navigation.navigate("Login")}
-        >
-          Already Registered ?
-        </Text>
+      <TouchableOpacity
+      style={formStyle.navigateButton}
+      onPress={() => props.navigation.navigate("Login")}
+      >
+      <Text style={formStyle.navigateText}>
+      Already Registered ?
+      </Text>
+      </TouchableOpacity>
+
       </View>
     </View>
   );
@@ -120,10 +123,6 @@ const styles = StyleSheet.create({
     textShadowColor: "rgba(0, 0, 0, 0.75)",
     textShadowOffset: { width: -3, height: 0 },
     textShadowRadius: 10,
-  },
-  alreadyRegistered: {
-    textAlign: "center",
-    marginTop: 1,
   },
 });
 

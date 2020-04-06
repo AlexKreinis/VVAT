@@ -33,5 +33,18 @@ export default StyleSheet.create({
         color: '#fff',
         textAlign: 'center',
         fontWeight: '500'
-    }
+    },
+    navigateButton: {
+        alignItems: "center",
+        padding: 2,
+        marginHorizontal: 80,
+        borderWidth: 1,
+        flexGrow: 1,
+        textAlign: "center",
+        marginVertical: 20,
+      },
+      navigateText: {
+        color: '#fff',
+        fontWeight: 'bold'
+      }
 });
