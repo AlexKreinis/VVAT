@@ -1,10 +1,10 @@
 import React from "react";
-import { StyleSheet, Text, View, ShadowPropTypesIOS } from "react-native";
+import { StyleSheet } from "react-native";
 import { createStore, combineReducers, applyMiddleware } from "redux";
 import UsersReducer from "./store/reducers/UsersReducer";
 import { Provider } from "react-redux";
 import ReduxThunk from "redux-thunk";
-import Navigator from "../Client/navigations/navigator";
+import Navigator from "./navigations/Navigator";
 
 const rootReducer = combineReducers({
   users: UsersReducer,
