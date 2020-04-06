@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from "react-native";
 
 const MainScreen = () => {
   return (
-    <View>
+    <View style={styles.main}>
       <Text>Main view</Text>
     </View>
   );
@@ -11,4 +11,10 @@ const MainScreen = () => {
 
 export default MainScreen;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  main: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+});

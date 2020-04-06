@@ -1,25 +1,92 @@
-import React from "react";
-import { View, Text, StyleSheet, Button } from "react-native";
-import RegistrationForm from "../Components/Registration/RegistrationForm";
+import React, { useState, useEffect } from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Button,
+  TextInput,
+  TouchableOpacity,
+  Alert,
+} from "react-native";
+import formStyle from "../styles/formStyle";
 import { register } from "../store/actions/Usersactions";
 import { useDispatch } from "react-redux";
 
-const Registration = props => {
+const Registration = (props) => {
+  const [name, SetName] = useState("");
+  const [email, SetEmail] = useState("");
+  const [password, SetPassword] = useState("");
+  const [password2, SetPassword2] = useState("");
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    if (error) {
+      Alert.alert("An Error Occurred!", error, [{ text: "Okay" }]);
+    }
+  }, [error]);
+
   const dispatch = useDispatch();
-  const registerHandler = () => {
-    console.log("test!\n");
-    dispatch(register());
+  const registerHandler = async () => {
+    try {
+      await dispatch(
+        register({
+          name,
+          email,
+          password,
+        })
+      );
+
+      props.navigation.navigate("Main");
+    } catch (err) {
+      setError(err.message);
+    }
   };
+
   return (
     <View style={styles.container}>
       <View>
         <Text style={styles.title}>REGISTRATION</Text>
       </View>
-
-      <Button title={"RegisterTest"} onPress={registerHandler} />
-
       <View>
-        <RegistrationForm />
+        <View style={formStyle.container}>
+          <TextInput
+            placeholder="Full Name"
+            style={formStyle.input}
+            placeholderTextColor="rgba(255,255,255,0.7)"
+            onChangeText={(text) => SetName(text)}
+            value={name}
+          />
+          <TextInput
+            placeholder="E-mail"
+            keyboardType="email-address"
+            style={formStyle.input}
+            placeholderTextColor="rgba(255,255,255,0.7)"
+            onChangeText={(text) => SetEmail(text)}
+            value={email}
+          />
+          <TextInput
+            placeholder="Password"
+            secureTextEntry={true}
+            style={formStyle.input}
+            placeholderTextColor="rgba(255,255,255,0.7)"
+            onChangeText={(text) => SetPassword(text)}
+            value={password}
+          />
+          <TextInput
+            placeholder="Password"
+            secureTextEntry={true}
+            style={formStyle.input}
+            placeholderTextColor="rgba(255,255,255,0.7)"
+            onChangeText={(text) => SetPassword2(text)}
+            value={password2}
+          />
+          <TouchableOpacity
+            style={formStyle.buttonContainer}
+            onPress={registerHandler}
+          >
+            <Text style={formStyle.buttonText}>REGISTER</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </View>
   );
@@ -29,7 +96,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#706fd3",
-    justifyContent: "center"
+    justifyContent: "center",
   },
   title: {
     fontSize: 30,
@@ -39,8 +106,8 @@ const styles = StyleSheet.create({
     marginBottom: 70,
     textShadowColor: "rgba(0, 0, 0, 0.75)",
     textShadowOffset: { width: -3, height: 0 },
-    textShadowRadius: 10
-  }
+    textShadowRadius: 10,
+  },
 });
 
 export default Registration;

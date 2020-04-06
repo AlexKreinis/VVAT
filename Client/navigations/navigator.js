@@ -1,13 +1,16 @@
 import { createStackNavigator } from "react-navigation-stack";
 import { createAppContainer } from "react-navigation";
-import LoginScreen from '../Screens/LoginScreen'
-import RegistrationScreen from '../Screens/RegistrationScreen'
+import { createSwitchNavigator } from "react-navigation";
+import LoginScreen from "../Screens/LoginScreen";
+import RegistrationScreen from "../Screens/RegistrationScreen";
 import MainScreen from "../Screens/MainScreen";
 
-const Navigator = createStackNavigator({
+const LoginRegisterNav = createStackNavigator({
   Login: LoginScreen,
   Registration: RegistrationScreen,
+});
+const Navigator = createSwitchNavigator({
+  loginregister: LoginRegisterNav,
   Main: MainScreen,
 });
-
 export default createAppContainer(Navigator);
