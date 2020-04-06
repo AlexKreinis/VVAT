@@ -88,6 +88,14 @@ const Registration = (props) => {
           </TouchableOpacity>
         </View>
       </View>
+      <View>
+        <Text
+          style={styles.alreadyRegistered}
+          onPress={() => props.navigation.navigate("Login")}
+        >
+          Already Registered ?
+        </Text>
+      </View>
     </View>
   );
 };
@@ -95,8 +103,9 @@ const Registration = (props) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    flexDirection: "column",
     backgroundColor: "#706fd3",
-    justifyContent: "center",
+    justifyContent: "space-evenly",
   },
   title: {
     fontSize: 30,
@@ -107,6 +116,10 @@ const styles = StyleSheet.create({
     textShadowColor: "rgba(0, 0, 0, 0.75)",
     textShadowOffset: { width: -3, height: 0 },
     textShadowRadius: 10,
+  },
+  alreadyRegistered: {
+    textAlign: "center",
+    marginTop: 1,
   },
 });
 
