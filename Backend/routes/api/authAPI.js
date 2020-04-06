@@ -121,4 +121,15 @@ router.post(
   }
 );
 
+router.delete("/delete/:email", async (req, res) => {
+  try {
+    console.log(req.params.email);
+    await User.deleteOne({ email: req.params.email });
+    res.json({ msg: "Deleted Successfully" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send(err.message);
+  }
+});
+
 module.exports = router;
