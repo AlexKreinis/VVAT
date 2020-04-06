@@ -68,12 +68,11 @@ const Login = (props) => {
             <Text style={formStyle.buttonText}>Login</Text>
           </TouchableOpacity>
         </View>
-        <TouchableOpacity style={styles.createAccount}>
-        <Text
-        onPress={() => props.navigation.navigate("Registration")}
-      >
-        Create new account
-      </Text>
+        <TouchableOpacity
+         style={formStyle.navigateButton}
+         onPress={() => props.navigation.navigate("Registration")}
+        >
+          <Text style={formStyle.navigateText}>Create new account</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -104,15 +103,5 @@ const styles = StyleSheet.create({
     textShadowOffset: { width: -3, height: 0 },
     textShadowRadius: 10,
   },
-  createAccount: {
-    alignItems: "center",
-    padding: 2,
-    marginHorizontal: 80,
-    color:'#fff',
-    borderColor: '#000',
-    borderWidth: 1,
-    flexGrow: 1,
-    textAlign: "center",
-    marginVertical: 20,
-  },
+
 });
