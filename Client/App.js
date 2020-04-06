@@ -4,7 +4,7 @@ import { createStore, combineReducers, applyMiddleware } from "redux";
 import UsersReducer from "./store/reducers/UsersReducer";
 import { Provider } from "react-redux";
 import ReduxThunk from "redux-thunk";
-import Navigator from "./navigations/NavigatorTest";
+import Navigator from "./navigations/Navigator";
 
 const rootReducer = combineReducers({
   users: UsersReducer,
