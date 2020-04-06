@@ -1,20 +1,22 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { createStore, combineReducers } from "redux";
+import { createStore, combineReducers, applyMiddleware } from "redux";
 import UsersReducer from "./store/reducers/UsersReducer";
 import { Provider } from "react-redux";
-import Login from "./Screens/LoginScreen";
+import ReduxThunk from "redux-thunk";
+import Navigator from "./navigations/Navigator";
+
 const rootReducer = combineReducers({
-  users: UsersReducer,
+  users: UsersReducer
 });
-import nevigator from 'nevegator';
-const store = createStore(rootReducer);
+
+const store = createStore(rootReducer, applyMiddleware(ReduxThunk));
 
 export default function App() {
   return (
     //main screen should be wrapped with provider
     <Provider store={store}>
-      <Login />
+      <Navigator />
     </Provider>
   );
 }
@@ -24,6 +26,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
     alignItems: "center",
-    justifyContent: "center",
-  },
+    justifyContent: "center"
+  }
 });
