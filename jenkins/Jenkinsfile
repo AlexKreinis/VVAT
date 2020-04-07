@@ -1,0 +1,24 @@
+pipeline {
+     agent { docker { image 'node:6.3' } }
+    stages {
+        stage('build') {
+            steps {
+                
+                sh 'npm install'
+                sh label: '', script: 'npm install'
+            }
+        
+        }
+        
+        stage('Test') {
+            steps {
+              sh label: '', script: 'npm run test'
+            }
+            post {
+                always {
+                    junit 'test-reports/results.xml'
+                }
+            }
+        }
+    }
+}
