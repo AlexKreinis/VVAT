@@ -71,7 +71,11 @@ const MapScreen = (props) => {
   //   };
   //test
   return (
-    <MapView style={styles.map} region={pickedLocation}>
+    <MapView
+      style={styles.map}
+      region={pickedLocation}
+      showsUserLocation={true}
+    >
       <Marker
         coordinate={{
           latitude: 31.255161367000028,
