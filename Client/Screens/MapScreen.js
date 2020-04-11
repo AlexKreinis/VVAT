@@ -69,7 +69,7 @@ const MapScreen = (props) => {
   //   const onRegionChange = (re) => {
   //     setRegion(re);
   //   };
-
+  //test
   return (
     <MapView style={styles.map} region={pickedLocation}>
       <Marker
