@@ -4,6 +4,7 @@ import { createSwitchNavigator } from "react-navigation";
 import LoginScreen from "../Screens/LoginScreen";
 import RegistrationScreen from "../Screens/RegistrationScreen";
 import MainScreen from "../Screens/MainScreen";
+import MapScreen from "../Screens/MapScreen";
 
 const LoginRegisterNav = createStackNavigator({
   Login: LoginScreen,
@@ -11,6 +12,6 @@ const LoginRegisterNav = createStackNavigator({
 });
 const Navigator = createSwitchNavigator({
   loginregister: LoginRegisterNav,
-  Main: MainScreen,
+  Main: MapScreen,
 });
 export default createAppContainer(Navigator);
