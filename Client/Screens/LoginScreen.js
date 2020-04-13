@@ -41,22 +41,22 @@ const Login = (props) => {
   return (
     <View style={styles.container}>
       <View style={styles.logoContainer}>
-        <Image source={require("../assets/b7.png")} style={styles.logo} />
-        <Text style={styles.title}>An app made for beer sheva city!</Text>
+        <Image source={require("../assets/vvat.png")} style={styles.logo} />
+        {/* <Text style={styles.title}>An app made for beer sheva city!</Text> */}
       </View>
       <View>
         <View style={formStyle.container}>
           <TextInput
             style={formStyle.input}
-            placeholder="Enter your username"
-            placeholderTextColor="rgba(255,255,255,0.7)"
+            placeholder="User name"
+            placeholderTextColor="rgba(0,0,0,0.2)"
             onChangeText={(text) => setEmail(text)}
             value={email}
           />
           <TextInput
             style={formStyle.input}
-            placeholder="Enter your password"
-            placeholderTextColor="rgba(255,255,255,0.7)"
+            placeholder="Password"
+            placeholderTextColor="rgba(0,0,0,0.2)"
             secureTextEntry={true}
             onChangeText={(text) => setPassword(text)}
             value={password}
@@ -84,7 +84,7 @@ export default Login;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#706fd3",
+    backgroundColor: "#ededed",
   },
 
   logoContainer: {
@@ -93,15 +93,15 @@ const styles = StyleSheet.create({
     flexGrow: 1,
   },
   logo: {
-    width: 300,
-    height: 65,
+    width: 270,
+    height: 320,
   },
-  title: {
-    color: "#fff",
-    marginTop: 10,
-    textShadowColor: "rgba(0, 0, 0, 0.75)",
-    textShadowOffset: { width: -3, height: 0 },
-    textShadowRadius: 10,
-  },
+  // title: {
+  //   color: "#fff",
+  //   marginTop: 10,
+  //   textShadowColor: "rgba(0, 0, 0, 0.75)",
+  //   textShadowOffset: { width: -3, height: 0 },
+  //   textShadowRadius: 10,
+  // },
 
 });
