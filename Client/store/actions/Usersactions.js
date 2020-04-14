@@ -34,7 +34,6 @@ export const register = (data) => async (dispatch) => {
 
 export const login = (data) => async (dispatch) => {
   try {
-    console.log(getState());
     const res = await fetch(`${youripadress}/api/auth/login`, {
       method: "POST",
       headers: {
@@ -57,7 +56,7 @@ export const login = (data) => async (dispatch) => {
       type: LOGIN,
       payload: { token: serverData.token },
     });
-    return json;
+    return serverData;
   } catch (err) {
     throw err;
   }
