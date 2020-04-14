@@ -7,18 +7,15 @@ const initialState = {
 
 const UsersReducers = (state = initialState, action) => {
   switch (action.type) {
-    //complete cases
     case LOGIN:
       return {
-        token: action.token,
-        userId: action.id,
-        name: action.name,
+        token: action.payload.token,
       };
     case REGISTER:
       return {
         token: action.token,
-        userId: action.id,
-        name: action.name,
+        // userId: action.id,
+        // name: action.name,
       };
     default:
       return state;

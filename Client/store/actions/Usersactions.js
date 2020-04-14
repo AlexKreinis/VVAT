@@ -1,5 +1,5 @@
 export const SIGNUP = "SIGNUP";
-
+import { LOGIN, REGISTER } from "../actions/const";
 const youripadress = "https://vvat.herokuapp.com";
 
 export const register = (data) => async (dispatch) => {
@@ -22,26 +22,19 @@ export const register = (data) => async (dispatch) => {
     }
 
     let json = await res.json();
-    console.log("res is", json);
+    dispatch({
+      type: REGISTER,
+      payload: json.token,
+    });
     return json;
-    // dispatch({
-    //   type: REGISTER_SUCCESS,
-    //   payload: res.data
-    // });
-    //dispatch(loadUser());
   } catch (err) {
     throw err;
-    // const errors = err.response.data.errors;
-    // if (errors) {
-    //   errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
-    // }
-    // dispatch({ type: REGISTER_FAIL });
   }
 };
 
 export const login = (data) => async (dispatch) => {
   try {
-    console.log("entered");
+    console.log(getState());
     const res = await fetch(`${youripadress}/api/auth/login`, {
       method: "POST",
       headers: {
@@ -59,13 +52,12 @@ export const login = (data) => async (dispatch) => {
       throw new Error(message);
     }
 
-    let json = await res.json();
+    let serverData = await res.json();
+    dispatch({
+      type: LOGIN,
+      payload: { token: serverData.token },
+    });
     return json;
-    // dispatch({
-    //   type: REGISTER_SUCCESS,
-    //   payload: res.data
-    // });
-    // dispatch(loadUser());
   } catch (err) {
     throw err;
   }

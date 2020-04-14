@@ -40,10 +40,9 @@ const Login = (props) => {
   };
   return (
     <View style={styles.container}>
-      <View style={styles.logoContainer}>
+      {/* <View style={styles.logoContainer}>
         <Image source={require("../assets/vvat.png")} style={styles.logo} />
-        {/* <Text style={styles.title}>An app made for beer sheva city!</Text> */}
-      </View>
+      </View> */}
       <View>
         <View style={formStyle.container}>
           <TextInput
@@ -69,8 +68,8 @@ const Login = (props) => {
           </TouchableOpacity>
         </View>
         <TouchableOpacity
-         style={formStyle.navigateButton}
-         onPress={() => props.navigation.navigate("Registration")}
+          style={formStyle.navigateButton}
+          onPress={() => props.navigation.navigate("Registration")}
         >
           <Text style={formStyle.navigateText}>Create new account</Text>
         </TouchableOpacity>
@@ -103,5 +102,4 @@ const styles = StyleSheet.create({
   //   textShadowOffset: { width: -3, height: 0 },
   //   textShadowRadius: 10,
   // },
-
 });

@@ -78,7 +78,7 @@ router.post(
     ).isLength({ min: 6 }),
   ],
   async (req, res) => {
-    console.log("entered", req.body);
+    console.log("\nentered\n", req.body);
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
@@ -97,6 +97,7 @@ router.post(
         password,
       });
       const salt = await bcrypt.genSalt(10);
+
       user.password = await bcrypt.hash(password, salt);
       await user.save();
 
@@ -105,6 +106,7 @@ router.post(
           id: user.id,
         },
       };
+
       jwt.sign(
         payload,
         config.get("jwtSecret"),
