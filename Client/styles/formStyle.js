@@ -6,7 +6,7 @@ export default StyleSheet.create({
     paddingBottom: 40,
   },
     input:{
-        height: 40,
+      height: 40,
         borderBottomColor: '#000',
         borderBottomWidth: 1,
         borderColor:'#000',
@@ -51,7 +51,7 @@ export default StyleSheet.create({
         borderWidth: 1,
         flexGrow: 1,
         textAlign: "center",
-        marginVertical: 20,
+        marginVertical: 60,
       },
       navigateText: {
         color: '#000',

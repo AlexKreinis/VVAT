@@ -1,3 +1,4 @@
+//import liraries
 import React, { useState, useEffect } from "react";
 import {
   View,
@@ -7,11 +8,15 @@ import {
   TextInput,
   TouchableOpacity,
   Alert,
+  KeyboardAvoidingView
 } from "react-native";
 import formStyle from "../styles/formStyle";
+import {LinearGradient} from 'expo-linear-gradient';
+
 //to connect to redux
 import { login } from "../store/actions/Usersactions";
 import { useDispatch } from "react-redux";
+
 
 const Login = (props) => {
   const [email, setEmail] = useState("");
@@ -38,24 +43,25 @@ const Login = (props) => {
       setError(err.message);
     }
   };
-  return (
-    <View style={styles.container}>
-      {/* <View style={styles.logoContainer}>
-        <Image source={require("../assets/vvat.png")} style={styles.logo} />
-      </View> */}
-      <View>
-        <View style={formStyle.container}>
+  return(
+    <LinearGradient colors={['#FAFFD1', '#A1FFCE', '#cb71ff']} style={styles.gradient}>  
+    <KeyboardAvoidingView behavior='padding' style={styles.container} >
+      <View style={styles.logo}>
+        <Image source={require("../assets/vvat3.png")} />
+        <Text style={{color:"#710061"}}>Play like a Champion Today!</Text>
+      </View>
+      <View style={formStyle.container}>
           <TextInput
             style={formStyle.input}
             placeholder="User name"
-            placeholderTextColor="rgba(0,0,0,0.2)"
+            placeholderTextColor="rgba(0,0,0,0.3)"
             onChangeText={(text) => setEmail(text)}
             value={email}
           />
           <TextInput
             style={formStyle.input}
             placeholder="Password"
-            placeholderTextColor="rgba(0,0,0,0.2)"
+            placeholderTextColor="rgba(0,0,0,0.3)"
             secureTextEntry={true}
             onChangeText={(text) => setPassword(text)}
             value={password}
@@ -66,40 +72,32 @@ const Login = (props) => {
           >
             <Text style={formStyle.buttonText}>Login</Text>
           </TouchableOpacity>
-        </View>
+        </View> 
         <TouchableOpacity
           style={formStyle.navigateButton}
           onPress={() => props.navigation.navigate("Registration")}
         >
           <Text style={formStyle.navigateText}>Create new account</Text>
         </TouchableOpacity>
-      </View>
-    </View>
-  );
-};
+    </KeyboardAvoidingView>
+    </LinearGradient> 
+  )
+}
 
-export default Login;
-
+// define your styles
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#ededed",
-  },
-
-  logoContainer: {
-    alignItems: "center",
-    justifyContent: "center",
-    flexGrow: 1,
   },
   logo: {
-    width: 270,
-    height: 320,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingTop: 10,
+    paddingVertical: 45,
   },
-  // title: {
-  //   color: "#fff",
-  //   marginTop: 10,
-  //   textShadowColor: "rgba(0, 0, 0, 0.75)",
-  //   textShadowOffset: { width: -3, height: 0 },
-  //   textShadowRadius: 10,
-  // },
+  gradient: {
+    flex: 1,
+  }
 });
+
+export default Login;
