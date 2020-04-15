@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View, Alert } from "react-native";
 import MapView from "react-native-maps";
 import { Marker } from "react-native-maps";
-
+import { useDispatch, useSelector } from "react-redux";
+import { maps } from "../store/actions/MapsActions";
 import * as Location from "expo-location";
 import * as Permissions from "expo-permissions";
 const MapScreen = (props) => {
@@ -12,7 +13,8 @@ const MapScreen = (props) => {
     latitudeDelta: 0.009,
     longitudeDelta: 0.009,
   });
-
+  const Maps = useSelector((state) => state.maps.sportsCenters);
+  const dispatch = useDispatch();
   const verifyPermissions = async () => {
     const result = await Permissions.askAsync(Permissions.LOCATION);
     if (result.status !== "granted") {
@@ -57,9 +59,16 @@ const MapScreen = (props) => {
 
   // console.log(location);
   //console.log(pickedLocation);
-  useEffect(() => {
-    getLocationHandler();
-  }, []);
+  try {
+    useEffect(() => {
+      getLocationHandler();
+
+      dispatch(maps());
+    }, []);
+  } catch (err) {
+    setError(err.message);
+  }
+
   // la = pickedLocation.lat;
   // ln = pickedLocation.lng;
   // console.log(la);

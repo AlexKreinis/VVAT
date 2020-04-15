@@ -56,6 +56,7 @@ export const login = (data) => async (dispatch) => {
       type: LOGIN,
       payload: { token: serverData.token },
     });
+
     return serverData;
   } catch (err) {
     throw err;
