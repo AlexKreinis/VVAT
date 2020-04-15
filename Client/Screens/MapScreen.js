@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View, Alert } from "react-native";
-import MapView from "react-native-maps";
+import MapView, { Overlay } from "react-native-maps";
 import { Marker } from "react-native-maps";
 import { useDispatch, useSelector } from "react-redux";
 import { maps } from "../store/actions/MapsActions";
@@ -8,10 +8,10 @@ import * as Location from "expo-location";
 import * as Permissions from "expo-permissions";
 const MapScreen = (props) => {
   const [pickedLocation, setPickedLocation] = useState({
-    latitude: 0,
-    longitude: 0,
-    latitudeDelta: 0.00009,
-    longitudeDelta: 0.00009,
+    latitude: 31.255161367000028,
+    longitude: 34.77513006300006,
+    latitudeDelta: 0.009,
+    longitudeDelta: 0.009,
   });
   const Maps = useSelector((state) => state.maps.sportsCenters);
   const [sportsLocations, setSportsLocations] = useState([
@@ -54,8 +54,8 @@ const MapScreen = (props) => {
       setPickedLocation({
         latitude: location.coords.latitude,
         longitude: location.coords.longitude,
-        latitudeDelta: 0.00009,
-        longitudeDelta: 0.00009,
+        latitudeDelta: 0.009,
+        longitudeDelta: 0.009,
       });
     } catch (err) {
       setError(err.message);
@@ -84,6 +84,7 @@ const MapScreen = (props) => {
             coordinate={{ latitude: +marker["lat"], longitude: +marker["lon"] }}
             title={marker["Name"]}
             description={marker["Type"]}
+            onCalloutPress={() => props.navigation.navigate("events")}
           />
         );
       })}
