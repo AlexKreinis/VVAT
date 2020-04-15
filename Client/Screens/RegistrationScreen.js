@@ -126,9 +126,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 2,
     marginHorizontal: 80,
-    borderWidth: 1,
     marginVertical: 130,
-    borderColor: '#3c1762'
   },
 });
 
