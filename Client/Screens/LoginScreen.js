@@ -44,13 +44,13 @@ const Login = (props) => {
     }
   };
   return(
-    <LinearGradient colors={['#FAFFD1', '#A1FFCE', '#cb71ff']} style={styles.gradient}>  
+    <LinearGradient colors={['#FAFFD1', '#A1FFCE', '#cb71ff']} style={styles.container}>  
     <KeyboardAvoidingView behavior='padding' style={styles.container} >
       <View style={styles.logo}>
         <Image source={require("../assets/vvat3.png")} />
         <Text style={{color:"#710061"}}>Play like a Champion Today!</Text>
       </View>
-      <View style={formStyle.container}>
+      <View style={formStyle.form}>
           <TextInput
             style={formStyle.input}
             placeholder="User name"
@@ -67,7 +67,7 @@ const Login = (props) => {
             value={password}
           />
           <TouchableOpacity
-            
+
             onPress={loginHandler}
           >
             <LinearGradient colors={['#6441A5', '#2a0845']} style={formStyle.buttonContainer}>
@@ -98,9 +98,7 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     paddingVertical: 45,
   },
-  gradient: {
-    flex: 1,
-  }
+
 });
 
 export default Login;

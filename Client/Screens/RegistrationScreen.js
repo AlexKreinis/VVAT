@@ -7,10 +7,13 @@ import {
   TextInput,
   TouchableOpacity,
   Alert,
+  KeyboardAvoidingView
 } from "react-native";
 import formStyle from "../styles/formStyle";
 import { register } from "../store/actions/Usersactions";
 import { useDispatch } from "react-redux";
+import {LinearGradient} from 'expo-linear-gradient';
+
 
 const Registration = (props) => {
   const [name, SetName] = useState("");
@@ -47,12 +50,11 @@ const Registration = (props) => {
   };
 
   return (
-    <View style={styles.container}>
-      <View>
+    <LinearGradient colors={['#12c2e9', '#c471ed', '#f64f59']} style={styles.container}>
+    <KeyboardAvoidingView behavior='padding' style={styles.container} >
+      
         <Text style={styles.title}>REGISTRATION</Text>
-      </View>
-      <View>
-        <View style={formStyle.container}>
+        <View style={formStyle.form}>
           <TextInput
             placeholder="Full Name"
             style={formStyle.input}
@@ -84,37 +86,33 @@ const Registration = (props) => {
             onChangeText={(text) => SetPassword2(text)}
             value={password2}
           />
-          <TouchableOpacity
-            style={formStyle.buttonContainer}
-            onPress={registerHandler}
-          >
-            <Text style={formStyle.buttonText}>REGISTER</Text>
+          <TouchableOpacity onPress={registerHandler}>
+              <LinearGradient colors={['#6441A5', '#2a0845']} style={formStyle.buttonContainer}>
+              <Text style={formStyle.buttonText}>Create Account</Text>
+              </LinearGradient>
           </TouchableOpacity>
         </View>
-      </View>
       <View>
       <TouchableOpacity
-      style={formStyle.navigateButton}
+      style={styles.navigateButton}
       onPress={() => props.navigation.navigate("Login")}
       >
       <Text style={formStyle.navigateText}>
       Already Registered ?
       </Text>
       </TouchableOpacity>
-
       </View>
-    </View>
+    </KeyboardAvoidingView>
+    </LinearGradient> 
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: "column",
-    backgroundColor: "#706fd3",
-    justifyContent: "space-evenly",
   },
   title: {
+    paddingTop: 10,
     fontSize: 30,
     fontWeight: "bold",
     color: "rgba(255,255,255,0.7)",
@@ -123,6 +121,14 @@ const styles = StyleSheet.create({
     textShadowColor: "rgba(0, 0, 0, 0.75)",
     textShadowOffset: { width: -3, height: 0 },
     textShadowRadius: 10,
+  },
+  navigateButton: {
+    alignItems: "center",
+    padding: 2,
+    marginHorizontal: 80,
+    borderWidth: 1,
+    marginVertical: 130,
+    borderColor: '#3c1762'
   },
 });
 
