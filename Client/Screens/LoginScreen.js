@@ -7,6 +7,10 @@ import {
   TextInput,
   TouchableOpacity,
   Alert,
+  KeyboardAvoidingView,
+  TouchableWithoutFeedback,
+  Keyboard,
+  ScrollView,
 } from "react-native";
 import formStyle from "../styles/formStyle";
 //to connect to redux
@@ -39,42 +43,46 @@ const Login = (props) => {
     }
   };
   return (
-    <View style={styles.container}>
-      {/* <View style={styles.logoContainer}>
-        <Image source={require("../assets/vvat.png")} style={styles.logo} />
-      </View> */}
-      <View>
-        <View style={formStyle.container}>
-          <TextInput
-            style={formStyle.input}
-            placeholder="User name"
-            placeholderTextColor="rgba(0,0,0,0.2)"
-            onChangeText={(text) => setEmail(text)}
-            value={email}
-          />
-          <TextInput
-            style={formStyle.input}
-            placeholder="Password"
-            placeholderTextColor="rgba(0,0,0,0.2)"
-            secureTextEntry={true}
-            onChangeText={(text) => setPassword(text)}
-            value={password}
-          />
-          <TouchableOpacity
-            style={formStyle.buttonContainer}
-            onPress={loginHandler}
-          >
-            <Text style={formStyle.buttonText}>Login</Text>
-          </TouchableOpacity>
-        </View>
-        <TouchableOpacity
-          style={formStyle.navigateButton}
-          onPress={() => props.navigation.navigate("Registration")}
-        >
-          <Text style={formStyle.navigateText}>Create new account</Text>
-        </TouchableOpacity>
-      </View>
-    </View>
+    <KeyboardAvoidingView style={styles.container}>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <ScrollView>
+          <View style={styles.logoContainer}>
+            <Image source={require("../assets/vvat.png")} style={styles.logo} />
+          </View>
+          <View>
+            <View style={formStyle.container}>
+              <TextInput
+                style={formStyle.input}
+                placeholder="User name"
+                placeholderTextColor="rgba(0,0,0,0.2)"
+                onChangeText={(text) => setEmail(text)}
+                value={email}
+              />
+              <TextInput
+                style={formStyle.input}
+                placeholder="Password"
+                placeholderTextColor="rgba(0,0,0,0.2)"
+                secureTextEntry={true}
+                onChangeText={(text) => setPassword(text)}
+                value={password}
+              />
+              <TouchableOpacity
+                style={formStyle.buttonContainer}
+                onPress={loginHandler}
+              >
+                <Text style={formStyle.buttonText}>Login</Text>
+              </TouchableOpacity>
+            </View>
+            <TouchableOpacity
+              style={formStyle.navigateButton}
+              onPress={() => props.navigation.navigate("Registration")}
+            >
+              <Text style={formStyle.navigateText}>Create new account</Text>
+            </TouchableOpacity>
+          </View>
+        </ScrollView>
+      </TouchableWithoutFeedback>
+    </KeyboardAvoidingView>
   );
 };
 
