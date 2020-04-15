@@ -54,23 +54,25 @@ const Login = (props) => {
           <TextInput
             style={formStyle.input}
             placeholder="User name"
-            placeholderTextColor="rgba(0,0,0,0.3)"
+            placeholderTextColor="#ffffff"
             onChangeText={(text) => setEmail(text)}
             value={email}
           />
           <TextInput
             style={formStyle.input}
             placeholder="Password"
-            placeholderTextColor="rgba(0,0,0,0.3)"
+            placeholderTextColor="#ffffff"
             secureTextEntry={true}
             onChangeText={(text) => setPassword(text)}
             value={password}
           />
           <TouchableOpacity
-            style={formStyle.buttonContainer}
+            
             onPress={loginHandler}
           >
+            <LinearGradient colors={['#6441A5', '#2a0845']} style={formStyle.buttonContainer}>
             <Text style={formStyle.buttonText}>Login</Text>
+            </LinearGradient>
           </TouchableOpacity>
         </View> 
         <TouchableOpacity
@@ -81,6 +83,7 @@ const Login = (props) => {
         </TouchableOpacity>
     </KeyboardAvoidingView>
     </LinearGradient> 
+
   )
 }
 

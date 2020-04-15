@@ -7,13 +7,12 @@ export default StyleSheet.create({
   },
     input:{
       height: 40,
-        borderBottomColor: '#000',
+        borderBottomColor: '#43226e',
         borderBottomWidth: 1,
         borderColor:'#000',
         marginBottom: 10,
-        color: '#000',
+        color: '#3c1762',
         paddingHorizontal: 10,
-        color: '#000'
 
     },
   //   input2:{
@@ -37,7 +36,8 @@ export default StyleSheet.create({
         paddingVertical: 10,
         marginHorizontal: 80,
         marginVertical: 10,
-        borderRadius: 20
+        borderRadius: 20,
+        
     },
     buttonText:{
         color: '#fff',
@@ -52,9 +52,10 @@ export default StyleSheet.create({
         flexGrow: 1,
         textAlign: "center",
         marginVertical: 60,
+        borderColor: '#3c1762'
       },
       navigateText: {
-        color: '#000',
+        color: '#3c1762',
         fontWeight: 'bold'
       }
 });
