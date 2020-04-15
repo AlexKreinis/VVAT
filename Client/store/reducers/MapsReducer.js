@@ -1,4 +1,5 @@
 import { GET_MAPS } from "../actions/const";
+import { ActionSheetIOS } from "react-native";
 
 const initialState = {
   sportsCenters: [],
@@ -9,8 +10,7 @@ const MapsReducers = (state = initialState, action) => {
     //complete cases
 
     case GET_MAPS:
-      console.log(action.payloads.maps);
-      return { sportsCenters: action.payload.maps };
+      return { sportsCenters: [...action.payload] };
     default:
       return state;
   }

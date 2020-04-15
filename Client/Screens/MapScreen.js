@@ -10,11 +10,23 @@ const MapScreen = (props) => {
   const [pickedLocation, setPickedLocation] = useState({
     latitude: 0,
     longitude: 0,
-    latitudeDelta: 0.009,
-    longitudeDelta: 0.009,
+    latitudeDelta: 0.00009,
+    longitudeDelta: 0.00009,
   });
   const Maps = useSelector((state) => state.maps.sportsCenters);
+  const [sportsLocations, setSportsLocations] = useState([
+    {
+      Name: "test",
+      lat: 31.255161367000028,
+      lon: 34.77513006300006,
+    },
+  ]);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    //  console.log("\n\nTEST\n\n", Maps, "\n\ntest\n\n");
+    setSportsLocations([...Maps]);
+  }, [Maps]);
   const verifyPermissions = async () => {
     const result = await Permissions.askAsync(Permissions.LOCATION);
     if (result.status !== "granted") {
@@ -42,57 +54,39 @@ const MapScreen = (props) => {
       setPickedLocation({
         latitude: location.coords.latitude,
         longitude: location.coords.longitude,
-        latitudeDelta: 0.009,
-        longitudeDelta: 0.009,
+        latitudeDelta: 0.00009,
+        longitudeDelta: 0.00009,
       });
-
-      // console.log(pickedLocation);
     } catch (err) {
-      //console.log(err);
-      // Alert.alert(
-      //   "Could not fetch location!",
-      //   "Please try again later or pick a location on the map.",
-      //   [{ text: "Okay" }]
-      // );
+      setError(err.message);
     }
   };
 
-  // console.log(location);
-  //console.log(pickedLocation);
   try {
     useEffect(() => {
       getLocationHandler();
-
       dispatch(maps());
     }, []);
   } catch (err) {
     setError(err.message);
   }
 
-  // la = pickedLocation.lat;
-  // ln = pickedLocation.lng;
-  // console.log(la);
-  // console.log(ln);
-  //console.log(pickedLocation);
-
-  //   const onRegionChange = (re) => {
-  //     setRegion(re);
-  //   };
-  //test
   return (
     <MapView
       style={styles.map}
       region={pickedLocation}
       showsUserLocation={true}
     >
-      <Marker
-        coordinate={{
-          latitude: 31.255161367000028,
-          longitude: 34.77513006300006,
-        }}
-        title="p1"
-        description="c1"
-      />
+      {sportsLocations.map((marker) => {
+        return (
+          <Marker
+            key={marker["lat"]}
+            coordinate={{ latitude: +marker["lat"], longitude: +marker["lon"] }}
+            title={marker["Name"]}
+            description={marker["Type"]}
+          />
+        );
+      })}
     </MapView>
   );
 };
