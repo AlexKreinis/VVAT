@@ -8,7 +8,10 @@ import {
   TextInput,
   TouchableOpacity,
   Alert,
-  KeyboardAvoidingView
+  KeyboardAvoidingView,
+  TouchableWithoutFeedback,
+  Keyboard,
+  ScrollView,
 } from "react-native";
 import formStyle from "../styles/formStyle";
 import {LinearGradient} from 'expo-linear-gradient';
@@ -83,7 +86,6 @@ const Login = (props) => {
         </TouchableOpacity>
     </KeyboardAvoidingView>
     </LinearGradient> 
-
   )
 }
 
