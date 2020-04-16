@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { maps } from "../store/actions/MapsActions";
 import * as Location from "expo-location";
 import * as Permissions from "expo-permissions";
+import ModalComp from "../Components/ModalComp";
 const MapScreen = (props) => {
   const [pickedLocation, setPickedLocation] = useState({
     latitude: 31.255161367000028,
@@ -14,6 +15,8 @@ const MapScreen = (props) => {
     longitudeDelta: 0.009,
   });
   const Maps = useSelector((state) => state.maps.sportsCenters);
+  const [openModal, setOpenModal] = useState(false);
+  const [mapDetail, setMapDetail] = useState({ lat: "", lon: "" });
   const [sportsLocations, setSportsLocations] = useState([
     {
       Name: "test",
@@ -70,25 +73,41 @@ const MapScreen = (props) => {
   } catch (err) {
     setError(err.message);
   }
-
+  const handleOpenModal = (marker) => {
+    setOpenModal(true);
+    setMapDetail({
+      lat: marker["lat"],
+      lon: marker["lon"],
+    });
+  };
   return (
-    <MapView
-      style={styles.map}
-      region={pickedLocation}
-      showsUserLocation={true}
-    >
-      {sportsLocations.map((marker) => {
-        return (
-          <Marker
-            key={marker["lat"]}
-            coordinate={{ latitude: +marker["lat"], longitude: +marker["lon"] }}
-            title={marker["Name"]}
-            description={marker["Type"]}
-            onCalloutPress={() => props.navigation.navigate("events")}
-          />
-        );
-      })}
-    </MapView>
+    <View style={styles.test}>
+      <ModalComp
+        isOpen={openModal}
+        setIsOpen={setOpenModal}
+        mapDetail={mapDetail}
+      />
+      <MapView
+        style={styles.map}
+        region={pickedLocation}
+        showsUserLocation={true}
+      >
+        {sportsLocations.map((marker) => {
+          return (
+            <Marker
+              key={marker["lat"]}
+              coordinate={{
+                latitude: +marker["lat"],
+                longitude: +marker["lon"],
+              }}
+              title={marker["Name"]}
+              description={marker["Type"]}
+              onCalloutPress={() => handleOpenModal(marker)}
+            />
+          );
+        })}
+      </MapView>
+    </View>
   );
 };
 
@@ -101,6 +120,9 @@ const styles = StyleSheet.create({
   },
   map: {
     ...StyleSheet.absoluteFillObject,
+  },
+  test: {
+    height: "100%",
   },
 });
 
