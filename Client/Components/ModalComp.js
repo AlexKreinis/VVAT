@@ -6,9 +6,14 @@ import {
   Modal,
   TouchableHighlight,
 } from "react-native";
+import EventForm from "./innerComponents/EventForm";
 
-const ModalComp = ({ isOpen, setIsOpen, mapDetail }) => {
-  console.log("the map detail is", mapDetail);
+const ModalComp = ({ isOpen, setIsOpen, choice }) => {
+  const showInnerComponent = () => {
+    if (choice === "EventForm") {
+      return <EventForm />;
+    }
+  };
   return (
     <View style={styles.centeredView}>
       <Modal
@@ -21,8 +26,7 @@ const ModalComp = ({ isOpen, setIsOpen, mapDetail }) => {
       >
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            <Text style={styles.modalText}>Hello World!</Text>
-
+            {showInnerComponent()}
             <TouchableHighlight
               style={{ ...styles.openButton, backgroundColor: "#2196F3" }}
               onPress={() => {
@@ -46,6 +50,8 @@ const styles = StyleSheet.create({
     marginTop: 22,
   },
   modalView: {
+    height: "60%",
+    width: "80%",
     margin: 20,
     backgroundColor: "white",
     borderRadius: 20,
