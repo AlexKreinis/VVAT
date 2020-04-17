@@ -14,12 +14,11 @@ import {
   ScrollView,
 } from "react-native";
 import formStyle from "../styles/formStyle";
-import {LinearGradient} from 'expo-linear-gradient';
+import { LinearGradient } from "expo-linear-gradient";
 
 //to connect to redux
 import { login } from "../store/actions/Usersactions";
 import { useDispatch } from "react-redux";
-
 
 const Login = (props) => {
   const [email, setEmail] = useState("");
@@ -46,14 +45,17 @@ const Login = (props) => {
       setError(err.message);
     }
   };
-  return(
-    <LinearGradient colors={['#FAFFD1', '#A1FFCE', '#cb71ff']} style={styles.container}>  
-    <KeyboardAvoidingView behavior='padding' style={styles.container} >
-      <View style={styles.logo}>
-        <Image source={require("../assets/vvat3.png")} />
-        <Text style={{color:"#710061"}}>Play like a Champion Today!</Text>
-      </View>
-      <View style={formStyle.form}>
+  return (
+    <LinearGradient
+      colors={["#FAFFD1", "#A1FFCE", "#cb71ff"]}
+      style={styles.container}
+    >
+      <KeyboardAvoidingView behavior="padding" style={styles.container}>
+        <View style={styles.logo}>
+          <Image source={require("../assets/vvat3.png")} />
+          <Text style={{ color: "#710061" }}>Play like a Champion Today!</Text>
+        </View>
+        <View style={formStyle.form}>
           <TextInput
             style={formStyle.input}
             placeholder="User name"
@@ -69,25 +71,25 @@ const Login = (props) => {
             onChangeText={(text) => setPassword(text)}
             value={password}
           />
-          <TouchableOpacity
-
-            onPress={loginHandler}
-          >
-            <LinearGradient colors={['#6441A5', '#2a0845']} style={formStyle.buttonContainer}>
-            <Text style={formStyle.buttonText}>Login</Text>
+          <TouchableOpacity onPress={loginHandler}>
+            <LinearGradient
+              colors={["#6441A5", "#2a0845"]}
+              style={formStyle.buttonContainer}
+            >
+              <Text style={formStyle.buttonText}>Login</Text>
             </LinearGradient>
           </TouchableOpacity>
-        </View> 
+        </View>
         <TouchableOpacity
           style={formStyle.navigateButton}
           onPress={() => props.navigation.navigate("Registration")}
         >
           <Text style={formStyle.navigateText}>Create new account</Text>
         </TouchableOpacity>
-    </KeyboardAvoidingView>
-    </LinearGradient> 
-  )
-}
+      </KeyboardAvoidingView>
+    </LinearGradient>
+  );
+};
 
 // define your styles
 const styles = StyleSheet.create({
@@ -95,12 +97,11 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   logo: {
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     paddingTop: 10,
     paddingVertical: 45,
   },
-
 });
 
 export default Login;

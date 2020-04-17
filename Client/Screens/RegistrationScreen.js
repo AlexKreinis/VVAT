@@ -7,13 +7,12 @@ import {
   TextInput,
   TouchableOpacity,
   Alert,
-  KeyboardAvoidingView
+  KeyboardAvoidingView,
 } from "react-native";
 import formStyle from "../styles/formStyle";
 import { register } from "../store/actions/Usersactions";
 import { useDispatch } from "react-redux";
-import {LinearGradient} from 'expo-linear-gradient';
-
+import { LinearGradient } from "expo-linear-gradient";
 
 const Registration = (props) => {
   const [name, SetName] = useState("");
@@ -50,9 +49,11 @@ const Registration = (props) => {
   };
 
   return (
-    <LinearGradient colors={['#12c2e9', '#c471ed', '#f64f59']} style={styles.container}>
-    <KeyboardAvoidingView behavior='padding' style={styles.container} >
-      
+    <LinearGradient
+      colors={["#12c2e9", "#c471ed", "#f64f59"]}
+      style={styles.container}
+    >
+      <KeyboardAvoidingView behavior="padding" style={styles.container}>
         <Text style={styles.title}>REGISTRATION</Text>
         <View style={formStyle.form}>
           <TextInput
@@ -87,23 +88,24 @@ const Registration = (props) => {
             value={password2}
           />
           <TouchableOpacity onPress={registerHandler}>
-              <LinearGradient colors={['#6441A5', '#2a0845']} style={formStyle.buttonContainer}>
+            <LinearGradient
+              colors={["#6441A5", "#2a0845"]}
+              style={formStyle.buttonContainer}
+            >
               <Text style={formStyle.buttonText}>Create Account</Text>
-              </LinearGradient>
+            </LinearGradient>
           </TouchableOpacity>
         </View>
-      <View>
-      <TouchableOpacity
-      style={styles.navigateButton}
-      onPress={() => props.navigation.navigate("Login")}
-      >
-      <Text style={formStyle.navigateText}>
-      Already Registered ?
-      </Text>
-      </TouchableOpacity>
-      </View>
-    </KeyboardAvoidingView>
-    </LinearGradient> 
+        <View>
+          <TouchableOpacity
+            style={styles.navigateButton}
+            onPress={() => props.navigation.navigate("Login")}
+          >
+            <Text style={formStyle.navigateText}>Already Registered ?</Text>
+          </TouchableOpacity>
+        </View>
+      </KeyboardAvoidingView>
+    </LinearGradient>
   );
 };
 
