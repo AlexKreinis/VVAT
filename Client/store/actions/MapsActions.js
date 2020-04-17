@@ -1,5 +1,5 @@
 const youripadress = "https://vvat.herokuapp.com";
-import { GET_MAPS } from "./const";
+import { GET_MAPS, SELECTED_MAP_DATA } from "./const";
 export const maps = () => async (dispatch) => {
   try {
     const res = await fetch(`${youripadress}/api/maps/getmaps`);
@@ -18,4 +18,11 @@ export const maps = () => async (dispatch) => {
   } catch (err) {
     throw err;
   }
+};
+
+export const selectedMapsDetails = (marker) => (dispatch) => {
+  dispatch({
+    type: SELECTED_MAP_DATA,
+    payload: { name: marker["Name"], lat: marker["lat"], lon: marker["lon"] },
+  });
 };

@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, Alert, TextInput, Button } from "react-native";
 import MapView, { Overlay } from "react-native-maps";
 import { Marker } from "react-native-maps";
 import { useDispatch, useSelector } from "react-redux";
-import { maps } from "../store/actions/MapsActions";
+import { maps, selectedMapsDetails } from "../store/actions/MapsActions";
 import * as Location from "expo-location";
 import * as Permissions from "expo-permissions";
 import ModalComp from "../Components/ModalComp";
@@ -69,10 +69,7 @@ const MapScreen = (props) => {
   }
   const handleOpenModal = (marker) => {
     setOpenModal(true);
-    setMapDetail({
-      lat: marker["lat"],
-      lon: marker["lon"],
-    });
+    dispatch(selectedMapsDetails(marker));
   };
   return (
     <View style={styles.test}>
