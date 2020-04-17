@@ -93,15 +93,12 @@ const Registration = (props) => {
         </View>
       </View>
       <View>
-      <TouchableOpacity
-      style={formStyle.navigateButton}
-      onPress={() => props.navigation.navigate("Login")}
-      >
-      <Text style={formStyle.navigateText}>
-      Already Registered ?
-      </Text>
-      </TouchableOpacity>
-
+        <TouchableOpacity
+          style={formStyle.navigateButton}
+          onPress={() => props.navigation.navigate("Login")}
+        >
+          <Text style={formStyle.navigateText}>Already Registered ?</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -111,13 +108,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: "column",
-    backgroundColor: "#706fd3",
+    backgroundColor: "#1e90ff",
     justifyContent: "space-evenly",
   },
   title: {
-    fontSize: 30,
-    fontWeight: "bold",
-    color: "rgba(255,255,255,0.7)",
+    fontSize: 35,
+    color: "white",
+    fontFamily: "dancing-script",
     textAlign: "center",
     marginBottom: 70,
     textShadowColor: "rgba(0, 0, 0, 0.75)",
