@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View, Button } from "react-native";
 
 import { useSelector, useDispatch } from "react-redux";
+import Events from "./Events";
 
 const EventForm = () => {
   // const dispatch = useDispatch();
@@ -14,9 +15,8 @@ const EventForm = () => {
 
   return (
     <View style={styles.eventform}>
-      <Text>Welcome to the event form!</Text>
+      <Events />
       <Text>{details.name}</Text>
-      <Text>Event list....</Text>
       <Button title="Add your event" />
     </View>
   );

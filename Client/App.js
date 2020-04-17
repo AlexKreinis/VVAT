@@ -8,7 +8,6 @@ import MapsReducer from "./store/reducers/MapsReducer";
 import { Provider } from "react-redux";
 import ReduxThunk from "redux-thunk";
 import Navigator from "./navigations/Navigator";
-import EventsScreen from "./Screens/EventsScreen";
 
 const rootReducer = combineReducers({
   users: UsersReducer,

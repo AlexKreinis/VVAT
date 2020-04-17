@@ -5,6 +5,7 @@ import {
   View,
   Modal,
   TouchableHighlight,
+  KeyboardAvoidingView,
 } from "react-native";
 import EventForm from "./innerComponents/EventForm";
 
@@ -15,7 +16,7 @@ const ModalComp = ({ isOpen, setIsOpen, choice }) => {
     }
   };
   return (
-    <View style={styles.centeredView}>
+    <KeyboardAvoidingView style={styles.centeredView}>
       <Modal
         animationType="slide"
         transparent={true}
@@ -33,12 +34,12 @@ const ModalComp = ({ isOpen, setIsOpen, choice }) => {
                 setIsOpen(false);
               }}
             >
-              <Text style={styles.textStyle}>Hide Modal</Text>
+              <Text style={styles.textStyle}>X</Text>
             </TouchableHighlight>
           </View>
         </View>
       </Modal>
-    </View>
+    </KeyboardAvoidingView>
   );
 };
 
@@ -50,7 +51,7 @@ const styles = StyleSheet.create({
     marginTop: 22,
   },
   modalView: {
-    height: "60%",
+    height: "70%",
     width: "80%",
     margin: 20,
     backgroundColor: "white",
@@ -71,6 +72,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     padding: 10,
     elevation: 2,
+    marginTop: 25,
   },
   textStyle: {
     color: "white",

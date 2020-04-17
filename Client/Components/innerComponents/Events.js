@@ -1,11 +1,10 @@
 import React from "react";
 import { View, Text, StyleSheet, FlatList } from "react-native";
-import { EVENTS } from "../dummy-data/dummy-data";
+import { EVENTS } from "../../dummy-data/dummy-data";
 
-const EventsScreen = () => {
+const Events = () => {
   const renderEventItem = (eventData) => {
     return (
-      //to make event clickable wrap with TouchableOpacity
       <View style={styles.listItem}>
         <Text>{eventData.item.id}</Text>
         <Text>{eventData.item.time}</Text>
@@ -35,12 +34,11 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#1e90ff",
   },
   title: {
     fontFamily: "dancing-script",
-    fontSize: 35,
-    color: "white",
+    fontSize: 25,
+    color: "black",
   },
   header: {
     flex: 1,
@@ -64,4 +62,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default EventsScreen;
+export default Events;
