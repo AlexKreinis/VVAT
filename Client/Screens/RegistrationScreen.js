@@ -48,10 +48,7 @@ const Registration = (props) => {
   };
 
   return (
-    <LinearGradient
-      colors={["#12c2e9", "#c471ed", "#f64f59"]}
-      style={styles.container}
-    >
+    <LinearGradient colors={["#21618c", "#85c1e9"]} style={styles.container}>
       <KeyboardAvoidingView behavior="padding" style={styles.container}>
         <Text style={styles.title}>REGISTRATION</Text>
         <View style={formStyle.form}>
