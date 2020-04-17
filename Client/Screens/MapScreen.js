@@ -1,18 +1,29 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, Text, View, Alert } from "react-native";
-import MapView from "react-native-maps";
+import { StyleSheet, Text, View, Alert, TextInput, Button } from "react-native";
+import MapView, { Overlay } from "react-native-maps";
 import { Marker } from "react-native-maps";
-
+import { useDispatch, useSelector } from "react-redux";
+import { maps } from "../store/actions/MapsActions";
 import * as Location from "expo-location";
 import * as Permissions from "expo-permissions";
+import ModalComp from "../Components/ModalComp";
+
 const MapScreen = (props) => {
   const [pickedLocation, setPickedLocation] = useState({
-    latitude: 0,
-    longitude: 0,
+    latitude: 31.255161367000028,
+    longitude: 34.77513006300006,
     latitudeDelta: 0.009,
     longitudeDelta: 0.009,
   });
+  const Maps = useSelector((state) => state.maps.sportsCenters);
+  const [openModal, setOpenModal] = useState(false);
+  const [mapDetail, setMapDetail] = useState({ lat: "", lon: "" });
+  const [sportsLocations, setSportsLocations] = useState([]);
+  const dispatch = useDispatch();
 
+  useEffect(() => {
+    setSportsLocations([...Maps]);
+  }, [Maps]);
   const verifyPermissions = async () => {
     const result = await Permissions.askAsync(Permissions.LOCATION);
     if (result.status !== "granted") {
@@ -43,48 +54,69 @@ const MapScreen = (props) => {
         latitudeDelta: 0.009,
         longitudeDelta: 0.009,
       });
-
-      // console.log(pickedLocation);
     } catch (err) {
-      //console.log(err);
-      // Alert.alert(
-      //   "Could not fetch location!",
-      //   "Please try again later or pick a location on the map.",
-      //   [{ text: "Okay" }]
-      // );
+      setError(err.message);
     }
   };
 
-  // console.log(location);
-  //console.log(pickedLocation);
-  useEffect(() => {
-    getLocationHandler();
-  }, []);
-  // la = pickedLocation.lat;
-  // ln = pickedLocation.lng;
-  // console.log(la);
-  // console.log(ln);
-  //console.log(pickedLocation);
-
-  //   const onRegionChange = (re) => {
-  //     setRegion(re);
-  //   };
-  //test
+  try {
+    useEffect(() => {
+      getLocationHandler();
+      dispatch(maps());
+    }, []);
+  } catch (err) {
+    setError(err.message);
+  }
+  const handleOpenModal = (marker) => {
+    setOpenModal(true);
+    setMapDetail({
+      lat: marker["lat"],
+      lon: marker["lon"],
+    });
+  };
   return (
-    <MapView
-      style={styles.map}
-      region={pickedLocation}
-      showsUserLocation={true}
-    >
-      <Marker
-        coordinate={{
-          latitude: 31.255161367000028,
-          longitude: 34.77513006300006,
-        }}
-        title="p1"
-        description="c1"
-      />
-    </MapView>
+    <View style={styles.test}>
+      <View style={styles.button}>
+        <Button
+          title="go to beersheba"
+          onPress={() =>
+            setPickedLocation({
+              latitude: 31.255161367000028,
+              longitude: 34.77513006300006,
+              latitudeDelta: 0.009,
+              longitudeDelta: 0.009,
+            })
+          }
+        />
+      </View>
+      <View style={styles.mapContainer}>
+        <ModalComp
+          isOpen={openModal}
+          setIsOpen={setOpenModal}
+          choice="EventForm"
+        />
+        <MapView
+          style={styles.map}
+          region={pickedLocation}
+          showsUserLocation={true}
+        >
+          {sportsLocations.map((marker) => {
+            return (
+              <Marker
+                key={marker["lat"]}
+                coordinate={{
+                  latitude: +marker["lat"],
+                  longitude: +marker["lon"],
+                }}
+                title={marker["Name"]}
+                description={marker["Type"]}
+                onCalloutPress={() => handleOpenModal(marker)}
+              />
+            );
+          })}
+        </MapView>
+      </View>
+    </View>
   );
 };
 
@@ -98,6 +130,16 @@ const styles = StyleSheet.create({
   map: {
     ...StyleSheet.absoluteFillObject,
   },
+  test: {
+    height: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  mapContainer: {
+    width: "100%",
+    height: "90%",
+  },
+  button: { margin: 20, backgroundColor: "red" },
 });
 
 export default MapScreen;

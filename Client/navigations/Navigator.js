@@ -5,7 +5,7 @@ import LoginScreen from "../Screens/LoginScreen";
 import RegistrationScreen from "../Screens/RegistrationScreen";
 import MainScreen from "../Screens/MainScreen";
 import MapScreen from "../Screens/MapScreen";
-
+import EventsScreen from "../Screens/EventsScreen";
 const LoginRegisterNav = createStackNavigator({
   Login: LoginScreen,
   Registration: RegistrationScreen,
@@ -13,5 +13,6 @@ const LoginRegisterNav = createStackNavigator({
 const Navigator = createSwitchNavigator({
   loginregister: LoginRegisterNav,
   Main: MapScreen,
+  events: EventsScreen,
 });
 export default createAppContainer(Navigator);

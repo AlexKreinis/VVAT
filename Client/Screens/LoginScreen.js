@@ -9,6 +9,9 @@ import {
   TouchableOpacity,
   Alert,
   KeyboardAvoidingView,
+  TouchableWithoutFeedback,
+  Keyboard,
+  ScrollView,
 } from "react-native";
 import formStyle from "../styles/formStyle";
 import { LinearGradient } from "expo-linear-gradient";
@@ -45,14 +48,14 @@ const Login = (props) => {
   return (
     <LinearGradient
       colors={["#FAFFD1", "#A1FFCE", "#cb71ff"]}
-      style={styles.gradient}
+      style={styles.container}
     >
       <KeyboardAvoidingView behavior="padding" style={styles.container}>
         <View style={styles.logo}>
           <Image source={require("../assets/vvat3.png")} />
           <Text style={{ color: "#710061" }}>Play like a Champion Today!</Text>
         </View>
-        <View style={formStyle.container}>
+        <View style={formStyle.form}>
           <TextInput
             style={formStyle.input}
             placeholder="User name"
@@ -98,9 +101,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingTop: 10,
     paddingVertical: 45,
-  },
-  gradient: {
-    flex: 1,
   },
 });
 
