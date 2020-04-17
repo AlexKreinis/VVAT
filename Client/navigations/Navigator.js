@@ -13,7 +13,7 @@ const LoginRegisterNav = createStackNavigator(
 
   {
     defaultNavigationOptions: {
-      header: null,
+      headerShown: false,
     },
   }
 );
