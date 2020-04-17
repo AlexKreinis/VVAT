@@ -99,8 +99,8 @@ const styles = StyleSheet.create({
   logo: {
     justifyContent: "center",
     alignItems: "center",
-    paddingTop: 10,
-    paddingVertical: 45,
+    marginTop: 55,
+    marginBottom: 65,
   },
 });
 

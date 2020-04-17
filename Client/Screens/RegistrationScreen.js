@@ -3,7 +3,6 @@ import {
   View,
   Text,
   StyleSheet,
-  Button,
   TextInput,
   TouchableOpacity,
   Alert,
@@ -114,14 +113,12 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   title: {
-    paddingTop: 10,
+    marginTop: 40,
     fontSize: 30,
     fontWeight: "bold",
     color: "rgba(255,255,255,0.7)",
     textAlign: "center",
     marginBottom: 70,
-    textShadowColor: "rgba(0, 0, 0, 0.75)",
-    textShadowOffset: { width: -3, height: 0 },
     textShadowRadius: 10,
   },
   navigateButton: {

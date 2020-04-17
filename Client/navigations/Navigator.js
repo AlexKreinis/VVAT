@@ -5,10 +5,18 @@ import LoginScreen from "../Screens/LoginScreen";
 import RegistrationScreen from "../Screens/RegistrationScreen";
 import MapScreen from "../Screens/MapScreen";
 
-const LoginRegisterNav = createStackNavigator({
-  Login: LoginScreen,
-  Registration: RegistrationScreen,
-});
+const LoginRegisterNav = createStackNavigator(
+  {
+    Login: LoginScreen,
+    Registration: RegistrationScreen,
+  },
+
+  {
+    defaultNavigationOptions: {
+      header: null,
+    },
+  }
+);
 const Navigator = createSwitchNavigator({
   loginregister: LoginRegisterNav,
   Main: MapScreen,
