@@ -9,6 +9,7 @@ import * as Permissions from "expo-permissions";
 import ModalComp from "../Components/ModalComp";
 
 const MapScreen = (props) => {
+  // console.log(props);
   const [pickedLocation, setPickedLocation] = useState({
     latitude: 31.255161367000028,
     longitude: 34.77513006300006,

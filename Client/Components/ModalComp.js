@@ -9,9 +9,10 @@ import {
 } from "react-native";
 import EventForm from "./innerComponents/EventForm";
 
-const ModalComp = ({ isOpen, setIsOpen, choice }) => {
+const ModalComp = (props) => {
+  //console.log(props);
   const showInnerComponent = () => {
-    if (choice === "EventForm") {
+    if (props.choice === "EventForm") {
       return <EventForm />;
     }
   };
@@ -20,7 +21,7 @@ const ModalComp = ({ isOpen, setIsOpen, choice }) => {
       <Modal
         animationType="slide"
         transparent={true}
-        visible={isOpen}
+        visible={props.isOpen}
         onRequestClose={() => {
           Alert.alert("Modal has been closed.");
         }}
@@ -31,7 +32,7 @@ const ModalComp = ({ isOpen, setIsOpen, choice }) => {
             <TouchableHighlight
               style={{ ...styles.openButton, backgroundColor: "#2196F3" }}
               onPress={() => {
-                setIsOpen(false);
+                props.setIsOpen(false);
               }}
             >
               <Text style={styles.textStyle}>X</Text>
