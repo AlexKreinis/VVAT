@@ -46,10 +46,7 @@ const Login = (props) => {
     }
   };
   return (
-    <LinearGradient
-      colors={["#FAFFD1", "#A1FFCE", "#cb71ff"]}
-      style={styles.container}
-    >
+    <LinearGradient colors={["#d2b4de", "#4a235a"]} style={styles.container}>
       <KeyboardAvoidingView behavior="padding" style={styles.container}>
         <View style={styles.logo}>
           <Image source={require("../assets/vvat3.png")} />
@@ -99,8 +96,8 @@ const styles = StyleSheet.create({
   logo: {
     justifyContent: "center",
     alignItems: "center",
-    paddingTop: 10,
-    paddingVertical: 45,
+    marginTop: 55,
+    marginBottom: 65,
   },
 });
 

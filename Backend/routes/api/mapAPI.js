@@ -12,4 +12,32 @@ router.get("/getmaps", async (req, res) => {
   }
 });
 
+router.get("/getevents", async (req, res) => {
+  try {
+    const dummyData = [
+      {
+        id: "1",
+        address: "yehuda ha levi 6",
+        date: "13/5/2020",
+        time: "13:30 - 14:30",
+        type: "football game",
+        description:
+          "This sport center belongs to a nearby school and blah-blah-blah",
+      },
+      {
+        id: "2",
+        address: "yehuda ha levi 7",
+        date: "12/5/2020",
+        time: "11:30 - 12:30",
+        type: "volleyball game",
+        description: "This sport center",
+      },
+    ];
+
+    res.json({ events: dummyData });
+  } catch (error) {
+    console.log(error);
+  }
+});
+
 module.exports = router;

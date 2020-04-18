@@ -19,7 +19,7 @@ export default StyleSheet.create({
     marginVertical: 40,
   },
   navigateText: {
-    color: "#3c1762",
+    color: "white",
     fontWeight: "bold",
   },
   input: {
