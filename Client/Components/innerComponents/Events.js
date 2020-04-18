@@ -6,7 +6,6 @@ const Events = () => {
   const renderEventItem = (eventData) => {
     return (
       <View style={styles.listItem}>
-        <Text>{eventData.item.id}</Text>
         <Text>{eventData.item.time}</Text>
         <Text>{eventData.item.type}</Text>
       </View>
@@ -46,12 +45,12 @@ const styles = StyleSheet.create({
   },
   list: {
     flex: 3,
-    width: "85%",
+    width: "95%",
   },
   listItem: {
     flex: 1,
     flexDirection: "row",
-    justifyContent: "space-around",
+    justifyContent: "space-between",
     alignItems: "center",
     margin: 15,
     height: 40,
