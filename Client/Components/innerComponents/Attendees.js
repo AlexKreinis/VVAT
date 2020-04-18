@@ -1,25 +1,26 @@
 import React from "react";
-import { View, Text, StyleSheet, FlatList } from "react-native";
-import { EVENTS } from "../../dummy-data/dummy-data";
+import { StyleSheet, View, Text, FlatList } from "react-native";
+import { USERS } from "../../dummy-data/dummy-data";
 
-const Events = () => {
-  const renderEventItem = (itemData) => {
+const Attendees = () => {
+  const renderUserItem = (itemData) => {
     return (
       <View style={styles.listItem}>
-        <Text style={{ fontWeight: "bold" }}>{itemData.item.time}</Text>
-        <Text>{itemData.item.type}</Text>
+        <Text style={{ fontWeight: "bold" }}>{itemData.item.id}</Text>
+        <Text>{itemData.item.name}</Text>
+        <Text>{itemData.item.email}</Text>
       </View>
     );
   };
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.title}>UPCOMING EVENTS</Text>
+        <Text style={styles.title}>Attendees</Text>
       </View>
       <View style={styles.list}>
         <FlatList
-          data={EVENTS}
-          renderItem={renderEventItem}
+          data={USERS}
+          renderItem={renderUserItem}
           keyExtractor={(item, index) => item.id}
         ></FlatList>
       </View>
@@ -56,5 +57,4 @@ const styles = StyleSheet.create({
     height: 40,
   },
 });
-
-export default Events;
+export default Attendees;

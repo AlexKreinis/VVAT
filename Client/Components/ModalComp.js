@@ -16,7 +16,7 @@ const ModalComp = ({ isOpen, setIsOpen, choice }) => {
     }
   };
   return (
-    <KeyboardAvoidingView style={styles.centeredView}>
+    <View style={styles.centeredView}>
       <Modal
         animationType="slide"
         transparent={true}
@@ -39,7 +39,7 @@ const ModalComp = ({ isOpen, setIsOpen, choice }) => {
           </View>
         </View>
       </Modal>
-    </KeyboardAvoidingView>
+    </View>
   );
 };
 
@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
     height: "70%",
     width: "80%",
     margin: 20,
-    backgroundColor: "white",
+    backgroundColor: "#F1EFFD",
     borderRadius: 20,
     padding: 35,
     alignItems: "center",

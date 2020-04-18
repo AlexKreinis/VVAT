@@ -1,4 +1,5 @@
 import Event from "../models/event";
+import User from "../models/user";
 
 export const EVENTS = [
   new Event(
@@ -25,4 +26,11 @@ export const EVENTS = [
     "meditation hour",
     "Inside the matnas building there is a fittness equipment room"
   ),
+];
+
+export const USERS = [
+  new User("1", "Bob", "bob@walla.co.il", "11"),
+  new User("2", "Fedya", "fedya@nana.co.il", "40"),
+  new User("3", "Vladislav", "vladislav@vmail.co.il", "20"),
+  new User("4", "Lola", "lola@gmail.com", "18"),
 ];

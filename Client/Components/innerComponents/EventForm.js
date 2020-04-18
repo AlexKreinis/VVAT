@@ -16,7 +16,7 @@ const EventForm = () => {
   return (
     <View style={styles.eventform}>
       <Events />
-      <Text>{details.name}</Text>
+      <Text>location: {details.name}</Text>
       <Button title="Add your event" />
     </View>
   );
