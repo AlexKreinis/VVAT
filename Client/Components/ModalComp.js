@@ -5,15 +5,14 @@ import {
   View,
   Modal,
   TouchableHighlight,
-  KeyboardAvoidingView,
 } from "react-native";
-import EventForm from "./innerComponents/EventForm";
+import ModalNavigator from "./innerComponents/ModalNavigator";
 
 const ModalComp = (props) => {
   //console.log(props);
   const showInnerComponent = () => {
-    if (props.choice === "EventForm") {
-      return <EventForm />;
+    if (props.choice === "ModalNavigator") {
+      return <ModalNavigator />;
     }
   };
   return (
@@ -29,6 +28,7 @@ const ModalComp = (props) => {
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
             {showInnerComponent()}
+
             <TouchableHighlight
               style={{ ...styles.openButton, backgroundColor: "#2196F3" }}
               onPress={() => {
@@ -52,10 +52,10 @@ const styles = StyleSheet.create({
     marginTop: 22,
   },
   modalView: {
-    height: "80%",
+    height: "90%",
     width: "80%",
     margin: 20,
-    backgroundColor: "#F1EFFD",
+    backgroundColor: "white",
     borderRadius: 20,
     padding: 35,
     alignItems: "center",

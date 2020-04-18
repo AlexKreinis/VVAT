@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { StyleSheet } from "react-native";
 import { AppLoading } from "expo"; //prolongs app start untill fonts loaded
 import * as Font from "expo-font";
 import { createStore, combineReducers, applyMiddleware } from "redux";
@@ -34,18 +33,8 @@ export default function App() {
     );
   }
   return (
-    //main screen should be wrapped with provider
     <Provider store={store}>
       <Navigator />
     </Provider>
   );
 }
-//test
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});

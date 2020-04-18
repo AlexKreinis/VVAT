@@ -9,9 +9,8 @@ import {
 } from "react-native";
 import { EVENTS } from "../../dummy-data/dummy-data";
 import { useSelector, useDispatch } from "react-redux";
-//import { useNavigation } from "@react-navigation/native";
 
-const Events = (props) => {
+const EventList = (props) => {
   const [details, setDetails] = useState({ name: "", lat: "", lon: "" });
   const selectedMapsData = useSelector((state) => state.maps.selectedMapData);
 
@@ -19,8 +18,6 @@ const Events = (props) => {
     setDetails(selectedMapsData);
   }, [selectedMapsData]);
 
-  // const navigation = useNavigation();
-  //console.log(props);
   const renderEventItem = (itemData) => {
     return (
       <TouchableOpacity
@@ -84,4 +81,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Events;
+export default EventList;

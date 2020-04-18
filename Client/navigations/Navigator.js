@@ -21,7 +21,6 @@ const LoginRegisterNav = createStackNavigator(
 const Navigator = createSwitchNavigator({
   loginregister: LoginRegisterNav,
   Main: MapScreen,
-  Event: EventScreen,
 });
 
 export default createAppContainer(Navigator);

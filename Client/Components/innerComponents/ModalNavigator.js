@@ -1,11 +1,7 @@
 import React from "react";
-import { StyleSheet, Text, View, Button } from "react-native";
-
+import { StyleSheet, View } from "react-native";
 import EventNavigator from "../../navigations/EventNavigator";
-const EventForm = (props) => {
-  // const dispatch = useDispatch();
-  // console.log(props);
-
+const ModalNavigator = () => {
   return (
     <View style={styles.eventform}>
       <EventNavigator />
@@ -13,7 +9,7 @@ const EventForm = (props) => {
   );
 };
 
-export default EventForm;
+export default ModalNavigator;
 
 const styles = StyleSheet.create({
   eventform: {

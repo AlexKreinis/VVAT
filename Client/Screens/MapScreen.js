@@ -91,7 +91,7 @@ const MapScreen = (props) => {
         <ModalComp
           isOpen={openModal}
           setIsOpen={setOpenModal}
-          choice="EventForm"
+          choice="ModalNavigator"
         />
         <MapView
           style={styles.map}
