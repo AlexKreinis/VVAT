@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
   },
   list: {
     flex: 3,
-    width: "95%",
+    width: "100%",
   },
   listItem: {
     flex: 1,

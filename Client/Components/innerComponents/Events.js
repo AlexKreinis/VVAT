@@ -23,7 +23,9 @@ const Events = (props) => {
   //console.log(props);
   const renderEventItem = (itemData) => {
     return (
-      <TouchableOpacity onPress={() => props.navigation.navigate("Event")}>
+      <TouchableOpacity
+        onPress={() => props.navigation.navigate("EventDetails")}
+      >
         <View style={styles.listItem}>
           <Text style={{ fontWeight: "bold" }}>{itemData.item.time}</Text>
           <Text>{itemData.item.type}</Text>
