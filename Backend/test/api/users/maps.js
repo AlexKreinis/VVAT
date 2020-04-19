@@ -31,7 +31,7 @@ it("OK. got events", (done) => {
     })
     .catch((err) => done(err));
 });
-
+//hello
 it("OK. added events", (done) => {
   request(app)
     .post("/api/maps/addevent")
