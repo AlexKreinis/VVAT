@@ -31,3 +31,21 @@ it("OK. got events", (done) => {
     })
     .catch((err) => done(err));
 });
+
+it("OK. added events", (done) => {
+  request(app)
+    .post("/api/maps/addevent")
+    .send({
+      lat: "1.1",
+      lon: "2.2",
+      name: "testevent",
+      start: "10:00",
+      end: "12:00",
+    })
+    .then((res) => {
+      const body = res.body;
+      expect(body).to.contain.property("msg");
+      done();
+    })
+    .catch((err) => done(err));
+});
