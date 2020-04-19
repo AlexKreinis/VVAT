@@ -1,4 +1,4 @@
-const youripadress = "http://10.100.102.2:5000";
+const youripadress = "https://vvat.herokuapp.com";
 import { GET_MAPS, SELECTED_MAP_DATA } from "./const";
 
 export const maps = () => async (dispatch) => {
@@ -23,7 +23,6 @@ export const maps = () => async (dispatch) => {
 
 export const createEvent = (data) => async (dispatch) => {
   try {
-    console.log(data);
     const res = await fetch(`${youripadress}/api/maps/addevent`, {
       method: "POST",
       headers: {
