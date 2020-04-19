@@ -5,24 +5,19 @@ pipeline {
             args '-p 5000:5000' 
         }
     }
-    dir("Backend") {
-       sh "pwd"
-    }
     stages {
+        dir("Backend") {
         stage('build') {
-                dir("Backend") {
-                    steps {
+                steps {
                         sh 'pwd'
                         sh 'echo start build'
                         sh 'ls'
                         sh 'npm install'
                     }
              }
-        
         }
-        
-        stage('Test') {
-            dir("Backend") {
+        dir("Backend") {
+          stage('Test') {
                  steps {
                      sh 'cd Backend'  
                      sh 'echo start test'
