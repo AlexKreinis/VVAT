@@ -6,9 +6,10 @@ pipeline {
         }
     }
     stages {
-        dir("Backend") {
+       
         stage('build') {
-                steps {
+                steps { 
+                    dir("Backend") {
                         sh 'pwd'
                         sh 'echo start build'
                         sh 'ls'
@@ -16,9 +17,10 @@ pipeline {
                     }
              }
         }
-        dir("Backend") {
+        
           stage('Test') {
                  steps {
+                     dir("Backend") {
                      sh 'cd Backend'  
                      sh 'echo start test'
                      sh 'ls'
