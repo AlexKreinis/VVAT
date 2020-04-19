@@ -5,13 +5,11 @@ pipeline {
             args '-p 5000:5000' 
         }
     }
-    stages {
+    dir("Backend") {
+       sh "pwd"
+        stages {
         stage('build') {
             steps {
-                sh 'pwd'
-                sh 'echo start build'
-                sh 'ls'
-                sh 'cd /var/jenkins_home/workspace/Team_20/project_20/Backend'
                 sh 'ls'
                 sh 'npm install'
             }
@@ -19,8 +17,7 @@ pipeline {
         }
         
         stage('Test') {
-            steps {
-              sh 'cd Backend'  
+            steps { 
               sh 'echo start test'
               sh 'ls'
               sh 'npm run test'
@@ -32,4 +29,6 @@ pipeline {
             // }
         }
     }
+    }
+   
 }
