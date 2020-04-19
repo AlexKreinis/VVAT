@@ -5,7 +5,7 @@ import LoginScreen from "../Screens/LoginScreen";
 import RegistrationScreen from "../Screens/RegistrationScreen";
 import MapScreen from "../Screens/MapScreen";
 import EventScreen from "../Screens/EventScreen";
-const ch = null;
+const ch2 = null;
 const LoginRegisterNav = createStackNavigator(
   {
     Login: LoginScreen,
