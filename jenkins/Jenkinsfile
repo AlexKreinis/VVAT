@@ -10,9 +10,7 @@ pipeline {
         stage('build') {
                 steps { 
                     dir("Backend") {
-                        sh 'pwd'
-                        sh 'echo start build'
-                        sh 'ls'
+
                         sh 'npm install'
                     }
              }
@@ -21,9 +19,9 @@ pipeline {
           stage('Test') {
                  steps {
                      dir("Backend") {
-                     sh 'cd Backend'  
-                     sh 'echo start test'
-                     sh 'ls'
+                      
+                    
+                    
                     sh 'npm run test'
                  }
             }
