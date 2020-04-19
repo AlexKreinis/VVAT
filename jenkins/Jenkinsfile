@@ -16,7 +16,6 @@ pipeline {
         
         stage('Test') {
             steps {
-              sh 'cd Backend'
               sh 'npm run test'
             }
             // post {
