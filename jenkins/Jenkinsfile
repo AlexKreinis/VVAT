@@ -1,18 +1,17 @@
 pipeline {
-     agent { docker { image 'node:6.3' } }
+    agent { docker { image 'node:6.3' } }
     stages {
         stage('build') {
             steps {
-                
+                sh 'cd Backend'
                 sh 'npm install'
-                sh label: '', script: 'npm install'
             }
         
         }
         
         stage('Test') {
             steps {
-              sh label: '', script: 'npm run test'
+              sh 'npm run test'
             }
             post {
                 always {
