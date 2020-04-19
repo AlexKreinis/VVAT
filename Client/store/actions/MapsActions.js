@@ -1,5 +1,5 @@
-//const youripadress = "https://vvat.herokuapp.com";
-const youripadress = "http://192.168.0.117:5000";
+const youripadress = "https://vvat.herokuapp.com";
+
 import { GET_MAPS, SELECTED_MAP_DATA } from "./const";
 
 export const maps = () => async (dispatch) => {
