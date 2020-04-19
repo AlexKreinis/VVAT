@@ -7,20 +7,28 @@ pipeline {
     }
     dir("Backend") {
        sh "pwd"
-        stages {
+    }
+    stages {
         stage('build') {
-            steps {
-                sh 'ls'
-                sh 'npm install'
-            }
+                dir("Backend") {
+                    steps {
+                        sh 'pwd'
+                        sh 'echo start build'
+                        sh 'ls'
+                        sh 'npm install'
+                    }
+             }
         
         }
         
         stage('Test') {
-            steps { 
-              sh 'echo start test'
-              sh 'ls'
-              sh 'npm run test'
+            dir("Backend") {
+                 steps {
+                     sh 'cd Backend'  
+                     sh 'echo start test'
+                     sh 'ls'
+                    sh 'npm run test'
+                 }
             }
             // post {
             //     always {
@@ -29,6 +37,4 @@ pipeline {
             // }
         }
     }
-    }
-   
 }
