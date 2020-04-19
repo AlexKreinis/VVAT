@@ -1,5 +1,6 @@
-const youripadress = "https://vvat.herokuapp.com";
+const youripadress = "http://10.100.102.2:5000";
 import { GET_MAPS, SELECTED_MAP_DATA } from "./const";
+
 export const maps = () => async (dispatch) => {
   try {
     const res = await fetch(`${youripadress}/api/maps/getmaps`);
@@ -20,6 +21,38 @@ export const maps = () => async (dispatch) => {
   }
 };
 
+export const createEvent = (data) => async (dispatch) => {
+  try {
+    console.log(data);
+    const res = await fetch(`${youripadress}/api/maps/addevent`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+
+    if (!res.ok) {
+      const errorResData = await res.json();
+      let message = "Something went wrong!";
+      if (errorResData && errorResData.errors.length > 0)
+        message = errorResData.errors[0].msg;
+      throw new Error(message);
+    }
+
+    let json = await res.json();
+    // dispatch({
+    //   type: REGISTER,
+    //   payload: json.token,
+    // });
+    // return json;
+    console.log(json);
+  } catch (err) {
+    //throw err;
+    console.log(err);
+  }
+};
 export const selectedMapsDetails = (marker) => (dispatch) => {
   dispatch({
     type: SELECTED_MAP_DATA,
