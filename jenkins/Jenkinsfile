@@ -8,7 +8,10 @@ pipeline {
     stages {
         stage('build') {
             steps {
+                sh 'echo start build'
+                sh 'ls'
                 sh 'cd Backend'
+                sh 'ls'
                 sh 'npm install'
             }
         
@@ -16,6 +19,8 @@ pipeline {
         
         stage('Test') {
             steps {
+              sh 'echo start test'
+              sh 'ls'
               sh 'npm run test'
             }
             // post {
