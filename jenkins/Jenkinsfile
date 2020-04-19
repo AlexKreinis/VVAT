@@ -6,22 +6,22 @@ pipeline {
         }
     }
     stages {
-        dir("Backend") {
+       
         stage('build') {
-                steps {
-                        sh 'pwd'
-                        sh 'echo start build'
-                        sh 'ls'
+                steps { 
+                    dir("Backend") {
+
                         sh 'npm install'
                     }
              }
         }
-        dir("Backend") {
+        
           stage('Test') {
                  steps {
-                     sh 'cd Backend'  
-                     sh 'echo start test'
-                     sh 'ls'
+                     dir("Backend") {
+                      
+                    
+                    
                     sh 'npm run test'
                  }
             }
