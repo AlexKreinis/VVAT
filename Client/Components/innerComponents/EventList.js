@@ -33,7 +33,7 @@ const EventList = (props) => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.title}>UPCOMING EVENTS at {details.name}</Text>
+        <Text style={styles.title}>{details.name}</Text>
       </View>
       <View style={styles.list}>
         <FlatList

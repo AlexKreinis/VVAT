@@ -1,4 +1,3 @@
-//import liraries
 import React, { useState, useEffect } from "react";
 import {
   View,
@@ -9,9 +8,7 @@ import {
   TouchableOpacity,
   Alert,
   KeyboardAvoidingView,
-  TouchableWithoutFeedback,
   Keyboard,
-  ScrollView,
 } from "react-native";
 import formStyle from "../styles/formStyle";
 import { LinearGradient } from "expo-linear-gradient";
@@ -34,6 +31,7 @@ const Login = (props) => {
 
   const dispatch = useDispatch();
   const loginHandler = async () => {
+    Keyboard.dismiss;
     try {
       await dispatch(
         login({

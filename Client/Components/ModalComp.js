@@ -5,6 +5,7 @@ import {
   View,
   Modal,
   TouchableHighlight,
+  TouchableWithoutFeedback,
 } from "react-native";
 import ModalNavigator from "./innerComponents/ModalNavigator";
 
@@ -25,20 +26,26 @@ const ModalComp = (props) => {
           Alert.alert("Modal has been closed.");
         }}
       >
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            {showInnerComponent()}
+        <TouchableWithoutFeedback
+          onPress={() => {
+            props.setIsOpen(false);
+          }}
+        >
+          <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+              {showInnerComponent()}
 
-            <TouchableHighlight
-              style={{ ...styles.openButton, backgroundColor: "#2196F3" }}
-              onPress={() => {
-                props.setIsOpen(false);
-              }}
-            >
-              <Text style={styles.textStyle}>X</Text>
-            </TouchableHighlight>
+              <TouchableHighlight
+                style={{ ...styles.openButton, backgroundColor: "#2196F9" }}
+                onPress={() => {
+                  props.setIsOpen(false);
+                }}
+              >
+                <Text style={styles.textStyle}>X</Text>
+              </TouchableHighlight>
+            </View>
           </View>
-        </View>
+        </TouchableWithoutFeedback>
       </Modal>
     </View>
   );
