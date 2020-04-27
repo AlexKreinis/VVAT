@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { StyleSheet, View, Button, Text, TextInput } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Button,
+  Text,
+  TextInput,
+  TouchableOpacity,
+} from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { useDispatch, useSelector } from "react-redux";
 import { createEvent } from "../store/actions/MapsActions";
@@ -52,23 +59,32 @@ const Calender = () => {
 
   return (
     <View style={styles.container}>
+      <Text style={styles.title}>Insert event information</Text>
+      <View style={styles.inputSection}>
+        <View style={styles.row}>
+          <TouchableOpacity style={styles.button} onPress={showDatepicker}>
+            <Text style={styles.btnText}>Date</Text>
+          </TouchableOpacity>
+          <Text style={styles.outputText}>Date: {date.getDate()}</Text>
+        </View>
+
+        <View style={styles.row}>
+          <TouchableOpacity style={styles.button} onPress={showTimepicker}>
+            <Text style={styles.btnText}>Start Time</Text>
+          </TouchableOpacity>
+          <Text style={styles.outputText}>
+            Starting time: {startDate.getHours()}
+          </Text>
+        </View>
+
+        <View style={styles.row}>
+          <TouchableOpacity style={styles.button} onPress={handleEndTime}>
+            <Text style={styles.btnText}>End Time</Text>
+          </TouchableOpacity>
+          <Text style={styles.outputText}>Ending Time: {date.getHours()}</Text>
+        </View>
+      </View>
       <View>
-        <View>
-          <Button
-            onPress={showDatepicker}
-            title="Pick a date for your event!"
-          />
-        </View>
-        <View>
-          <Button
-            onPress={showTimepicker}
-            title="Pick a time for your event!"
-          />
-          <Button
-            onPress={handleEndTime}
-            title="Pick an ending time for event"
-          />
-        </View>
         {show && (
           <DateTimePicker
             testID="dateTimePicker"
@@ -82,25 +98,64 @@ const Calender = () => {
         )}
       </View>
       <View>
-        <Text>The day is : {date.getDate()}</Text>
-        <Text>The Ending hour is :{date.getHours()}</Text>
-        <Text>The starting hour is:{startDate.getHours()}</Text>
         <TextInput
-          placeholder="Event name"
-          placeholderTextColor="#ffffff"
+          placeholder="Event Name"
+          style={{ height: 40, backgroundColor: "#f8f0fa" }}
+          placeholderTextColor="#000"
           onChangeText={(text) => setEventName(text)}
           value={eventName}
         />
       </View>
-      <Button title="submit" onPress={onSubmit} />
+      <TouchableOpacity style={styles.button} onPress={onSubmit}>
+        <Text style={styles.btnText}>Create Event</Text>
+      </TouchableOpacity>
     </View>
   );
 };
 const styles = StyleSheet.create({
   container: {
-    height: "80%",
-    marginTop: 20,
+    height: "90%",
+
     width: "100%",
+  },
+  button: {
+    width: "40%",
+    margin: 4,
+    display: "flex",
+    backgroundColor: "#ac588c",
+    borderColor: "white",
+    borderWidth: 1,
+    borderRadius: 12,
+    justifyContent: "space-between",
+    overflow: "hidden",
+    padding: 12,
+    textAlign: "center",
+  },
+  btnText: {
+    color: "white",
+    fontSize: 15,
+    fontWeight: "bold",
+  },
+  row: {
+    display: "flex",
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "space-evenly",
+    alignItems: "center",
+  },
+  inputSection: {
+    flex: 1,
+    display: "flex",
+    justifyContent: "space-around",
+    flexDirection: "column",
+  },
+  outputText: {
+    flex: 2,
+  },
+  title: {
+    fontFamily: "averia-libre",
+    fontSize: 22,
+    color: "black",
   },
 });
 

@@ -12,7 +12,7 @@ const UserSchema = new mongoose.Schema({
   password: {
     type: String,
     required: true,
-    unique: true,
+    unique: true, //test idea: what if my password is already in the DB?
   },
   date: {
     type: Date,
