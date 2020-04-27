@@ -72,10 +72,20 @@ const MapScreen = (props) => {
     setOpenModal(true);
     dispatch(selectedMapsDetails(marker));
   };
+
   return (
     <View style={styles.test}>
-      <View style={styles.button}>
+      <View
+        style={{
+          flexDirection: "row",
+        }}
+      >
         <Button
+          style={{
+            backgroundColor: "green",
+            width: "40%",
+            height: 40,
+          }}
           title="go to beersheba"
           onPress={() =>
             setPickedLocation({
@@ -85,6 +95,16 @@ const MapScreen = (props) => {
               longitudeDelta: 0.009,
             })
           }
+        />
+
+        <Button
+          style={{
+            backgroundColor: "green",
+            width: "40%",
+            height: 40,
+          }}
+          title="Profile"
+          onPress={() => props.navigation.navigate("Profile")}
         />
       </View>
       <View style={styles.mapContainer}>
@@ -131,13 +151,16 @@ const styles = StyleSheet.create({
   test: {
     height: "100%",
     justifyContent: "center",
-    alignItems: "center",
   },
   mapContainer: {
     width: "100%",
-    height: "90%",
+    height: "110%",
   },
   button: { margin: 20, backgroundColor: "red" },
+
+  container: {
+    flex: 1,
+  },
 });
 
 export default MapScreen;
