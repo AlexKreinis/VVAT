@@ -49,14 +49,3 @@ it("OK. added event", (done) => {
     })
     .catch((err) => done(err));
 });
-
-it("OK, schedule sent", (done) => {
-  request(app)
-    .get("/api/maps/getschdule")
-    .then((res) => {
-      const body = res.body;
-      expect(body).to.contain.property("schdule");
-      done();
-    })
-    .catch((err) => done(err));
-});

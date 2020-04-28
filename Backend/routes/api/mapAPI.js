@@ -15,29 +15,17 @@ router.get("/getmaps", async (req, res) => {
   }
 });
 
-router.get("/getevents", async (req, res) => {
+router.get("/getevents/:lat/:lon", async (req, res) => {
   try {
-    const dummyData = [
-      {
-        id: "1",
-        address: "yehuda ha levi 6",
-        date: "13/5/2020",
-        time: "13:30 - 14:30",
-        type: "football game",
-        description:
-          "This sport center belongs to a nearby school and blah-blah-blah",
-      },
-      {
-        id: "2",
-        address: "yehuda ha levi 7",
-        date: "12/5/2020",
-        time: "11:30 - 12:30",
-        type: "volleyball game",
-        description: "This sport center",
-      },
-    ];
+    let lat = req.params.lat;
+    let lon = req.params.lon;
+    console.log("lat:", lat);
+    console.log("lon:", lon);
 
-    res.json({ events: dummyData });
+    let location = await Location.findOne({ lat, lon });
+    console.log("location:", location);
+
+    //res.json({ events: location.events });
   } catch (error) {
     console.log(error);
   }
