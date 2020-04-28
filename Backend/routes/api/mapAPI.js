@@ -4,6 +4,7 @@ const auth = require("../../middleware/auth");
 var sportdata = require("../../b7data/sport.json");
 const Event = require("../../models/Event");
 const Location = require("../../models/Location");
+const Schdule = require("../../models/Schdule");
 
 router.get("/getmaps", async (req, res) => {
   try {
@@ -45,7 +46,7 @@ router.get("/getevents", async (req, res) => {
 
 router.post("/addevent", async (req, res) => {
   try {
-    const { end, start, lon, lat, name } = req.body;
+    const { start, end, lat, lon, name } = req.body;
 
     let location = await Location.findOne({ lat, lon });
     const newEvent = new Event({
@@ -69,6 +70,39 @@ router.post("/addevent", async (req, res) => {
     res.json({ msg: "location and event added" });
   } catch (error) {
     console.error(err.message);
+    res.status(500).send("Server error");
+  }
+});
+
+router.get("/getschdule", async (req, res) => {
+  try {
+    const dummyData = [
+      {
+        demo1: "demoString1",
+        demo2: "demoString2",
+      },
+      {
+        demo1: "demoString3",
+        demo2: "demoString4",
+      },
+    ];
+    res.json({ schdule: dummyData });
+  } catch (error) {
+    console.log("schdule error:", error);
+  }
+});
+
+router.post("/addschdule", async (req, res) => {
+  try {
+    const newSchedule = new Schdule({
+      demo1: "demoString1",
+      demo2: "demoString2",
+    });
+    await newSchedule.save();
+    res.json({ msg: "Schedule added" });
+    console.log("Schedule added");
+  } catch (error) {
+    console.log("getschdule route error:", error);
     res.status(500).send("Server error");
   }
 });
