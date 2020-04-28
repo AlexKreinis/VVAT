@@ -83,8 +83,9 @@ const MapScreen = (props) => {
         <Button
           style={{
             backgroundColor: "green",
-            width: "40%",
-            height: 40,
+            width: "80%",
+            height: 60,
+            flex: 1,
           }}
           title="go to beersheba"
           onPress={() =>
@@ -95,16 +96,6 @@ const MapScreen = (props) => {
               longitudeDelta: 0.009,
             })
           }
-        />
-
-        <Button
-          style={{
-            backgroundColor: "green",
-            width: "40%",
-            height: 40,
-          }}
-          title="Profile"
-          onPress={() => props.navigation.navigate("Profile")}
         />
       </View>
       <View style={styles.mapContainer}>

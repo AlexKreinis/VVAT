@@ -1,5 +1,10 @@
+<<<<<<< HEAD
 //const youripadress = "https://vvat.herokuapp.com";
 const youripadress = "http://192.168.56.1:5000";
+=======
+const youripadress = "https://vvat.herokuapp.com";
+//const youripadress = "http://192.168.56.1:5000";
+>>>>>>> 5e18f527e3c89463c42ad66f90a2c44edff19792
 
 import { GET_MAPS, SELECTED_MAP_DATA, GET_EVENTS } from "./const";
 
