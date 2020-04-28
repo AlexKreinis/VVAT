@@ -22,14 +22,17 @@ const EventList = (props) => {
     setDetails(selectedMapsData);
   }, [selectedMapsData]);
 
-  try {
-    useEffect(() => {
-      dispatch(getEvents(details.lat, details.lon));
-      setEvents(selectedEvents);
-    }, [selectedEvents]);
-  } catch (err) {
-    setError(err.message);
-  }
+  const handleGetEvents = async () => {
+    try {
+      await dispatch(getEvents(details.lat, details.lon));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    handleGetEvents();
+  }, []);
 
   const renderEventItem = (itemData) => {
     return (

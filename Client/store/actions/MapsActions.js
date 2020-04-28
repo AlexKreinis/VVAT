@@ -73,9 +73,10 @@ export const getEvents = (lat, lon) => async (dispatch) => {
     let serverData = await res.json();
     dispatch({
       type: GET_EVENTS,
-      payload: serverData.data,
+      payload: serverData.events,
     });
   } catch (err) {
+    console.log(err.message);
     throw err;
   }
 };

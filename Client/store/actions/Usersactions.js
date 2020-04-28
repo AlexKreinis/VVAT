@@ -1,8 +1,8 @@
 export const SIGNUP = "SIGNUP";
 
 import { LOGIN, REGISTER, GET_USER } from "../actions/const";
-//const youripadress = "https://vvat.herokuapp.com";
-const youripadress = "http://localhost:5000";
+const youripadress = "https://vvat.herokuapp.com";
+//const youripadress = "http://localhost:5000";
 
 export const register = (data) => async (dispatch) => {
   try {
