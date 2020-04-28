@@ -71,6 +71,10 @@ const Calender = (props) => {
       setError("Start time cannot be earlier then end time");
       return;
     }
+    if (!eventName) {
+      setError("You mast add name to your event");
+      return;
+    }
     try {
       dispatch(
         await createEvent({
