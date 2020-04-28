@@ -1,125 +1,190 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, createContext } from "react";
 import {
   StyleSheet,
   View,
-  Button,
   Text,
   TextInput,
   TouchableOpacity,
+  Alert,
 } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { useDispatch, useSelector } from "react-redux";
 import { createEvent } from "../store/actions/MapsActions";
 
-const Calender = () => {
+const Calender = (props) => {
   const mapData = useSelector((state) => state.maps.selectedMapData);
   const dispatch = useDispatch();
 
-  const [date, setDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(new Date());
   const [startDate, setStartDate] = useState(new Date());
   const [mode, setMode] = useState("date");
   const [show, setShow] = useState(false);
+  const [showEnd, setShowEnd] = useState(false);
   const [eventName, setEventName] = useState("");
+  const [error, setError] = useState("");
 
   const onChange = (event, selectedDate) => {
-    const currentDate = selectedDate || date;
+    const currentDate = selectedDate || startDate;
     setShow(Platform.OS === "ios");
-    setDate(currentDate);
+    setStartDate(currentDate);
   };
+  const onChangeEnd = (event, selectedDate) => {
+    const currentDate = selectedDate || endDate;
+    setShowEnd(Platform.OS === "ios");
+    setEndDate(currentDate);
+  };
+  useEffect(() => {
+    if (error) {
+      Alert.alert("An Error Occurred!", error, [{ text: "Okay" }]);
+    }
+  }, [error]);
 
   const showMode = (currentMode) => {
     setShow(true);
     setMode(currentMode);
   };
-
+  const showEndMode = (currentMode) => {
+    setShowEnd(true);
+    setMode(currentMode);
+  };
   const showDatepicker = () => {
-    setStartDate(new Date(date));
+    setStartDate(new Date(startDate));
+    setEndDate(new Date(startDate));
     showMode("date");
   };
 
   const showTimepicker = () => {
-    console.log(date);
     showMode("time");
   };
   const handleEndTime = () => {
-    setStartDate(new Date(date));
-    showMode("time");
+    showEndMode("time");
   };
-  const onSubmit = () => {
-    dispatch(
-      createEvent({
-        name: eventName,
-        start: startDate,
-        end: date,
-        lat: mapData.lat,
-        lon: mapData.lon,
-      })
-    );
+  const onSubmit = async () => {
+    setError(null);
+    let tempStart = new Date(startDate);
+    let tempEnd = new Date(endDate);
+    if (tempStart.getTime() === tempEnd.getTime()) {
+      setError("Start and end time cannot be the same");
+      return;
+    } else if (tempStart.getTime() > tempEnd.getTime()) {
+      setError("Start time cannot be earlier then end time");
+      return;
+    }
+    try {
+      dispatch(
+        await createEvent({
+          name: eventName,
+          start: startDate,
+          end: endDate,
+          lat: mapData.lat,
+          lon: mapData.lon,
+        })
+      );
+      Alert.alert("Added Event successfully");
+      props.nav.navigate("Events");
+    } catch (err) {
+      setError(err.message);
+    }
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Insert event information</Text>
-      <View style={styles.inputSection}>
-        <View style={styles.row}>
-          <TouchableOpacity style={styles.button} onPress={showDatepicker}>
-            <Text style={styles.btnText}>Date</Text>
-          </TouchableOpacity>
-          <Text style={styles.outputText}>Date: {date.getDate()}</Text>
-        </View>
-
-        <View style={styles.row}>
-          <TouchableOpacity style={styles.button} onPress={showTimepicker}>
-            <Text style={styles.btnText}>Start Time</Text>
-          </TouchableOpacity>
-          <Text style={styles.outputText}>
-            Starting time: {startDate.getHours()}
-          </Text>
-        </View>
-
-        <View style={styles.row}>
-          <TouchableOpacity style={styles.button} onPress={handleEndTime}>
-            <Text style={styles.btnText}>End Time</Text>
-          </TouchableOpacity>
-          <Text style={styles.outputText}>Ending Time: {date.getHours()}</Text>
-        </View>
-      </View>
       <View>
-        {show && (
-          <DateTimePicker
-            testID="dateTimePicker"
-            timeZoneOffsetInMinutes={0}
-            value={date}
-            mode={mode}
-            is24Hour={true}
-            display="default"
-            onChange={onChange}
+        <Text style={styles.title}>Insert event information</Text>
+        <View style={styles.inputSection}>
+          <View style={styles.row}>
+            <TouchableOpacity style={styles.button} onPress={showDatepicker}>
+              <Text style={styles.btnText}>Date</Text>
+            </TouchableOpacity>
+            <Text style={styles.outputText}>{startDate.toDateString()}</Text>
+          </View>
+
+          <View style={styles.row}>
+            <TouchableOpacity style={styles.button} onPress={showTimepicker}>
+              <Text style={styles.btnText}>Start Time</Text>
+            </TouchableOpacity>
+            <Text style={styles.outputText}>
+              {startDate.toLocaleTimeString().slice(0, -3)}
+            </Text>
+          </View>
+
+          <View style={styles.row}>
+            <TouchableOpacity style={styles.button} onPress={handleEndTime}>
+              <Text style={styles.btnText}>End Time</Text>
+            </TouchableOpacity>
+            <Text style={styles.outputText}>
+              {endDate.toLocaleTimeString().slice(0, -3)}
+            </Text>
+          </View>
+        </View>
+        <View>
+          {show && (
+            <DateTimePicker
+              testID="dateTimePicker"
+              timeZoneOffsetInMinutes={0}
+              value={startDate}
+              mode={mode}
+              is24Hour={true}
+              display="default"
+              onChange={onChange}
+            />
+          )}
+
+          {showEnd && (
+            <DateTimePicker
+              testID="dateTimePicker"
+              timeZoneOffsetInMinutes={0}
+              value={endDate}
+              mode={mode}
+              is24Hour={true}
+              display="default"
+              onChange={onChangeEnd}
+            />
+          )}
+        </View>
+        <View
+          style={{
+            alignItems: "center",
+            justifyContent: "center",
+            padding: 10,
+          }}
+        >
+          <TextInput
+            placeholder="Event Name"
+            style={{
+              height: 40,
+              backgroundColor: "#f8f0fa",
+              width: "80%",
+            }}
+            placeholderTextColor="#000"
+            onChangeText={(text) => setEventName(text)}
+            value={eventName}
+            textAlign={"center"}
           />
-        )}
+        </View>
+        <View
+          style={{
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <TouchableOpacity style={styles.button} onPress={onSubmit}>
+            <Text style={styles.btnText}>Create Event</Text>
+          </TouchableOpacity>
+        </View>
       </View>
-      <View>
-        <TextInput
-          placeholder="Event Name"
-          style={{ height: 40, backgroundColor: "#f8f0fa" }}
-          placeholderTextColor="#000"
-          onChangeText={(text) => setEventName(text)}
-          value={eventName}
-        />
-      </View>
-      <TouchableOpacity style={styles.button} onPress={onSubmit}>
-        <Text style={styles.btnText}>Create Event</Text>
-      </TouchableOpacity>
     </View>
   );
 };
 const styles = StyleSheet.create({
   container: {
     height: "90%",
-
     width: "100%",
+    alignItems: "center",
+    justifyContent: "center",
   },
   button: {
-    width: "40%",
+    width: "50%",
     margin: 4,
     display: "flex",
     backgroundColor: "#ac588c",
@@ -135,10 +200,10 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 15,
     fontWeight: "bold",
+    textAlign: "center",
   },
   row: {
     display: "flex",
-    flex: 1,
     flexDirection: "row",
     justifyContent: "space-evenly",
     alignItems: "center",
@@ -146,16 +211,18 @@ const styles = StyleSheet.create({
   inputSection: {
     flex: 1,
     display: "flex",
-    justifyContent: "space-around",
-    flexDirection: "column",
+    justifyContent: "space-between",
   },
   outputText: {
     flex: 2,
+    marginLeft: 25,
+    fontSize: 20,
   },
   title: {
     fontFamily: "averia-libre",
     fontSize: 22,
     color: "black",
+    marginBottom: 15,
   },
 });
 

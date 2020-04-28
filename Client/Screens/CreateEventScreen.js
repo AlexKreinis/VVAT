@@ -2,10 +2,10 @@ import React from "react";
 import { StyleSheet, View } from "react-native";
 import Calender from "../Components/Calender";
 
-const CreateEventScreen = () => {
+const CreateEventScreen = (props) => {
   return (
     <View style={styles.container}>
-      <Calender />
+      <Calender nav={props.navigation} />
     </View>
   );
 };

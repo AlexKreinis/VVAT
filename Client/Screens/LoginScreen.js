@@ -32,6 +32,7 @@ const Login = (props) => {
   const dispatch = useDispatch();
   const loginHandler = async () => {
     Keyboard.dismiss;
+    setError(null);
     try {
       await dispatch(
         login({

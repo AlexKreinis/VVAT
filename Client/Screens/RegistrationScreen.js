@@ -28,6 +28,7 @@ const Registration = (props) => {
 
   const dispatch = useDispatch();
   const registerHandler = async () => {
+    setError(null);
     if (password != password2) {
       setError("Password doesn't match!");
       return;

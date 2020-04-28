@@ -47,10 +47,9 @@ export const createEvent = (data) => async (dispatch) => {
     //   payload: json.token,
     // });
     // return json;
-    console.log(json);
+    return json;
   } catch (err) {
-    //throw err;
-    console.log(err);
+    throw err;
   }
 };
 export const selectedMapsDetails = (marker) => (dispatch) => {
