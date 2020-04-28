@@ -20,10 +20,8 @@ router.get("/getevents/:lat/:lon", async (req, res) => {
     let lat = req.params.lat;
     let lon = req.params.lon;
 
-    let location = await Location.findOne({ lat, lon }).populate("event");
-
-    console.log("location:", location.events);
-
+    let location = await Location.findOne({ lat, lon }).populate("events");
+    console.log(location);
     //res.json({ events: location.events });
   } catch (error) {
     console.log(error);
