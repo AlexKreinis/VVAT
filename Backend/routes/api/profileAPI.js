@@ -11,3 +11,5 @@ router.get("/getprofile", async (req, res) => {
     res.status(500).send("Server error at getprofile");
   }
 });
+
+module.exports = router;
