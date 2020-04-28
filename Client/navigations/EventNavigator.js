@@ -16,7 +16,7 @@ const EventNav = createStackNavigator(
   },
   {
     defaultNavigationOptions: {
-      //headerShown: false,
+      headerShown: false,
     },
   }
 );
