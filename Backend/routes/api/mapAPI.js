@@ -45,7 +45,8 @@ router.get("/getevents", async (req, res) => {
 
 router.post("/addevent", async (req, res) => {
   try {
-    const { start, end, lat, lon, name } = req.body;
+    const { end, start, lon, lat, name } = req.body;
+
     let location = await Location.findOne({ lat, lon });
     const newEvent = new Event({
       start: start,
