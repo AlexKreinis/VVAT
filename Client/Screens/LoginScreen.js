@@ -40,7 +40,7 @@ const Login = (props) => {
           password,
         })
       );
-      props.navigation.navigate("Main");
+      props.navigation.navigate("tab");
     } catch (err) {
       setError(err.message);
     }
