@@ -9,12 +9,12 @@ import {
 } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { useDispatch, useSelector } from "react-redux";
-import { createEvent } from "../store/actions/MapsActions";
+import { createEvent, getEvents } from "../store/actions/MapsActions";
 
 const Calender = (props) => {
   const mapData = useSelector((state) => state.maps.selectedMapData);
   const dispatch = useDispatch();
-
+  const selectedMapsData = useSelector((state) => state.maps.selectedMapData);
   const [endDate, setEndDate] = useState(new Date());
   const [startDate, setStartDate] = useState(new Date());
   const [mode, setMode] = useState("date");
@@ -59,6 +59,7 @@ const Calender = (props) => {
   const handleEndTime = () => {
     showEndMode("time");
   };
+
   const onSubmit = async () => {
     setError(null);
     let tempStart = new Date(startDate);
@@ -81,6 +82,7 @@ const Calender = (props) => {
         })
       );
       Alert.alert("Added Event successfully");
+      await dispatch(getEvents(selectedMapsData.lat, selectedMapsData.lon));
       props.nav.navigate("Events");
     } catch (err) {
       setError(err.message);

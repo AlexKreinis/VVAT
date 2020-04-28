@@ -1,7 +1,12 @@
 //const youripadress = "http://localhost:5000";
 const youripadress = "https://vvat.herokuapp.com";
 
-import { GET_MAPS, SELECTED_MAP_DATA, GET_EVENTS } from "./const";
+import {
+  GET_MAPS,
+  SELECTED_MAP_DATA,
+  GET_EVENTS,
+  DELETE_EVENTS,
+} from "./const";
 
 export const maps = () => async (dispatch) => {
   try {
@@ -60,6 +65,12 @@ export const selectedMapsDetails = (marker) => (dispatch) => {
   });
 };
 
+export const deleteEvents = () => (dispatch) => {
+  dispatch({
+    type: DELETE_EVENTS,
+  });
+};
+
 export const getEvents = (lat, lon) => async (dispatch) => {
   try {
     const res = await fetch(`${youripadress}/api/maps/getevents/${lat}/${lon}`);
@@ -75,6 +86,7 @@ export const getEvents = (lat, lon) => async (dispatch) => {
       type: GET_EVENTS,
       payload: serverData.events,
     });
+    return serverData;
   } catch (err) {
     console.log(err.message);
     throw err;

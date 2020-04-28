@@ -18,12 +18,16 @@ const EventList = (props) => {
 
   useEffect(() => {
     setDetails(selectedMapsData);
-  }, [selectedMapsData]);
+  }, [selectedEvents]);
+
+  useEffect(() => {
+    console.log("getting events in component");
+    setEvents(selectedEvents);
+  }, [selectedEvents]);
 
   const handleGetEvents = async () => {
     try {
       await dispatch(getEvents(details.lat, details.lon));
-      setEvents(selectedEvents);
     } catch (error) {
       console.log(error);
     }

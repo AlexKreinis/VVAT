@@ -5,12 +5,17 @@ import {
   View,
   Modal,
   TouchableHighlight,
-  TouchableWithoutFeedback,
 } from "react-native";
 import ModalNavigator from "./innerComponents/ModalNavigator";
+import { deleteEvents } from "../store/actions/MapsActions";
+import { useDispatch } from "react-redux";
 
 const ModalComp = (props) => {
-  //console.log(props);
+  const dispatch = useDispatch();
+  const cleanStore = () => {
+    dispatch(deleteEvents());
+  };
+
   const showInnerComponent = () => {
     if (props.choice === "ModalNavigator") {
       return <ModalNavigator />;
@@ -26,26 +31,21 @@ const ModalComp = (props) => {
           Alert.alert("Modal has been closed.");
         }}
       >
-        <TouchableWithoutFeedback
-          onPress={() => {
-            props.setIsOpen(false);
-          }}
-        >
-          <View style={styles.centeredView}>
-            <View style={styles.modalView}>
-              {showInnerComponent()}
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            {showInnerComponent()}
 
-              <TouchableHighlight
-                style={{ ...styles.openButton, backgroundColor: "#2196F9" }}
-                onPress={() => {
-                  props.setIsOpen(false);
-                }}
-              >
-                <Text style={styles.textStyle}>X</Text>
-              </TouchableHighlight>
-            </View>
+            <TouchableHighlight
+              style={{ ...styles.openButton, backgroundColor: "#2196F9" }}
+              onPress={() => {
+                cleanStore();
+                props.setIsOpen(false);
+              }}
+            >
+              <Text style={styles.textStyle}>X</Text>
+            </TouchableHighlight>
           </View>
-        </TouchableWithoutFeedback>
+        </View>
       </Modal>
     </View>
   );
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
     marginTop: 22,
   },
   modalView: {
-    height: "90%",
+    height: 550,
     width: "80%",
     margin: 20,
     backgroundColor: "white",
