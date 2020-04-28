@@ -25,6 +25,8 @@ const EventList = (props) => {
   const handleGetEvents = async () => {
     try {
       await dispatch(getEvents(details.lat, details.lon));
+      console.log("selectedEvents");
+      setEvents(selectedEvents);
     } catch (error) {
       console.log(error);
     }
