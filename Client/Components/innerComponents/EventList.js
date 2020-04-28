@@ -31,7 +31,6 @@ const EventList = (props) => {
   };
 
   useEffect(() => {
-    console.log("details", details);
     if (details.lat && details.lon) {
       handleGetEvents();
     }
@@ -43,28 +42,65 @@ const EventList = (props) => {
         onPress={() => props.navigation.navigate("EventDetails")}
       >
         <View style={styles.listItem}>
-          <Text style={{ fontWeight: "bold" }}>{itemData.item.time}</Text>
-          <Text>{itemData.item.type}</Text>
+          <Text style={{ fontWeight: "bold", fontSize: 22 }}>
+            {" "}
+            {itemData.item.name}
+          </Text>
+          <Text>
+            <Text style={{ fontWeight: "bold" }}>At</Text>{" "}
+            {new Date(itemData.item.start).toDateString()}
+          </Text>
+          <Text>
+            <Text style={{ fontWeight: "bold" }}>From </Text>{" "}
+            {new Date(itemData.item.start).toLocaleTimeString().slice(0, -3)}
+          </Text>
+          <Text style={{ fontWeight: "bold" }}>
+            <Text style={{ fontWeight: "bold" }}>To</Text>{" "}
+            {new Date(itemData.item.start).toLocaleTimeString().slice(0, -3)}
+          </Text>
         </View>
       </TouchableOpacity>
     );
+  };
+
+  const List = () => {
+    if (events.length > 0) {
+      return (
+        <FlatList
+          data={events}
+          renderItem={renderEventItem}
+          keyExtractor={(item, index) => item._id}
+        />
+      );
+    } else {
+      return (
+        <View style={{ height: "90%" }}>
+          <Text style={{ fontSize: 25, textAlign: "center" }}>
+            There are no upcoming events in this location
+          </Text>
+        </View>
+      );
+    }
   };
   return (
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.title}>{details.name}</Text>
       </View>
-      <View style={styles.list}>
-        <FlatList
-          data={events}
-          renderItem={renderEventItem}
-          keyExtractor={(item, index) => item.id}
-        ></FlatList>
-
-        <Button
-          title="Add your event"
+      <View style={styles.list}>{List()}</View>
+      <View>
+        <TouchableOpacity
+          style={{
+            margin: "auto",
+            backgroundColor: "lightblue",
+            padding: 10,
+            borderRadius: 10,
+            marginTop: 30,
+          }}
           onPress={() => props.navigation.navigate("CreateEvent")}
-        />
+        >
+          <Text style={{ fontSize: 18 }}>Add your event</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -76,6 +112,8 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor: "white",
+    height: "100%",
   },
   title: {
     fontFamily: "dancing-script",
@@ -88,15 +126,18 @@ const styles = StyleSheet.create({
   },
   list: {
     flex: 3,
-    width: "95%",
+    width: "100%",
   },
   listItem: {
     flex: 1,
-    flexDirection: "row",
-    justifyContent: "space-between",
+    flexDirection: "column",
     alignItems: "center",
-    margin: 15,
-    height: 40,
+    margin: 10,
+    backgroundColor: "lightblue",
+    padding: 5,
+    borderRadius: 10,
+    overflow: "hidden",
+    elevation: 15,
   },
 });
 
