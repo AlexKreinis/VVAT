@@ -58,8 +58,6 @@ export const login = (data) => async (dispatch) => {
       type: LOGIN,
       payload: { token: serverData.token, email: data.email },
     });
-    //console.log("hi", serverData);
-
     return serverData;
   } catch (err) {
     throw err;

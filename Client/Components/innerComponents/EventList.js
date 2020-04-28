@@ -7,7 +7,6 @@ import {
   FlatList,
   TouchableOpacity,
 } from "react-native";
-import { EVENTS } from "../../dummy-data/dummy-data";
 import { useSelector, useDispatch } from "react-redux";
 import { getEvents } from "../../store/actions/MapsActions";
 
@@ -25,7 +24,6 @@ const EventList = (props) => {
   const handleGetEvents = async () => {
     try {
       await dispatch(getEvents(details.lat, details.lon));
-      console.log("selectedEvents");
       setEvents(selectedEvents);
     } catch (error) {
       console.log(error);
@@ -33,8 +31,11 @@ const EventList = (props) => {
   };
 
   useEffect(() => {
-    handleGetEvents();
-  }, []);
+    console.log("details", details);
+    if (details.lat && details.lon) {
+      handleGetEvents();
+    }
+  }, [details]);
 
   const renderEventItem = (itemData) => {
     return (

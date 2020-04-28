@@ -7,22 +7,24 @@ const Location = require("../../models/Location");
 
 router.get("/getmaps", async (req, res) => {
   try {
-    console.log("entered\n");
     res.json({ data: sportdata });
   } catch (err) {
     console.error(err.message);
-    res.status(500).send("Server error");
+    res.status(500).json({ errors: [{ msg: err.message }] });
   }
 });
 
 router.get("/getevents/:lat/:lon", async (req, res) => {
   try {
+    console.log("entered\n");
     let lat = req.params.lat;
     let lon = req.params.lon;
     let location = await Location.findOne({ lat, lon }).populate("events");
-    res.json({ events: location.events });
-  } catch (error) {
-    console.log(error);
+    if (location) {
+      res.json({ events: location.events });
+    } else res.json({ events: [] });
+  } catch (err) {
+    res.status(500).json({ errors: [{ msg: err.message }] });
   }
 });
 
@@ -50,9 +52,9 @@ router.post("/addevent", async (req, res) => {
       await newLocation.save();
     }
     res.json({ msg: "location and event added" });
-  } catch (error) {
+  } catch (err) {
     console.error(err.message);
-    res.status(500).send("Server error");
+    res.status(500).json({ errors: [{ msg: err.message }] });
   }
 });
 

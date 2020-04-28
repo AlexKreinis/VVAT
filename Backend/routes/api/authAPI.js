@@ -62,7 +62,7 @@ router.post(
       );
     } catch (err) {
       console.error(err);
-      res.status(500).send(err.message);
+      res.status(500).json({ errors: [{ msg: err.message }] });
     }
   }
 );
@@ -117,7 +117,7 @@ router.post(
       );
     } catch (err) {
       console.error(err);
-      res.status(500).send(err.message);
+      res.status(500).json({ errors: [{ msg: err.message }] });
     }
   }
 );
@@ -129,7 +129,7 @@ router.delete("/delete/:email", async (req, res) => {
     res.json({ msg: "Deleted Successfully" });
   } catch (err) {
     console.error(err);
-    res.status(500).send(err.message);
+    res.status(500).json({ errors: [{ msg: err.message }] });
   }
 });
 
