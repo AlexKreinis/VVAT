@@ -1,9 +1,10 @@
-import { GET_MAPS, SELECTED_MAP_DATA } from "../actions/const";
+import { GET_MAPS, SELECTED_MAP_DATA, GET_EVENTS } from "../actions/const";
 import { ActionSheetIOS } from "react-native";
 
 const initialState = {
   sportsCenters: [],
   selectedMapData: { lat: "", lon: "", name: "" },
+  events: [],
 };
 
 const MapsReducers = (state = initialState, action) => {
@@ -21,6 +22,9 @@ const MapsReducers = (state = initialState, action) => {
           name: action.payload.name,
         },
       };
+
+    case GET_EVENTS:
+      return { ...state, events: [...action.payload] };
     default:
       return state;
   }

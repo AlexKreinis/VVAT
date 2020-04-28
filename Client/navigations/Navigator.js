@@ -6,6 +6,7 @@ import RegistrationScreen from "../Screens/RegistrationScreen";
 import MapScreen from "../Screens/MapScreen";
 import EventScreen from "../Screens/EventScreen";
 import ProfileScreen from "../Screens/ProfileScreen";
+import { createDrawerNavigator } from "react-navigation";
 
 const LoginRegisterNav = createStackNavigator(
   {

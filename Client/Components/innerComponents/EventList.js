@@ -9,14 +9,27 @@ import {
 } from "react-native";
 import { EVENTS } from "../../dummy-data/dummy-data";
 import { useSelector, useDispatch } from "react-redux";
+import { getEvents } from "../../store/actions/MapsActions";
 
 const EventList = (props) => {
   const [details, setDetails] = useState({ name: "", lat: "", lon: "" });
+  const [events, setEvents] = useState([]);
   const selectedMapsData = useSelector((state) => state.maps.selectedMapData);
+  const selectedEvents = useSelector((state) => state.maps.events);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     setDetails(selectedMapsData);
   }, [selectedMapsData]);
+
+  try {
+    useEffect(() => {
+      dispatch(getEvents(details.lat, details.lon));
+      setEvents(selectedEvents);
+    }, [selectedEvents]);
+  } catch (err) {
+    setError(err.message);
+  }
 
   const renderEventItem = (itemData) => {
     return (
@@ -37,7 +50,7 @@ const EventList = (props) => {
       </View>
       <View style={styles.list}>
         <FlatList
-          data={EVENTS}
+          data={events}
           renderItem={renderEventItem}
           keyExtractor={(item, index) => item.id}
         ></FlatList>
