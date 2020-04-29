@@ -21,6 +21,17 @@ it("OK. get maps", (done) => {
     .catch((err) => done(err));
 });
 
+it("OK. got schedule", (done) => {
+  request(app)
+    .get("/api/maps/getevents/100/200") //<--STATIC VARS
+    .then((res) => {
+      const body = res.body;
+      expect(body).to.contain.property("events");
+      done();
+    })
+    .catch((err) => done(err));
+});
+
 // it("OK. got events", (done) => {
 //   request(app)
 //     .get("/api/maps/getevents")
@@ -49,14 +60,3 @@ it("OK. added event", (done) => {
     })
     .catch((err) => done(err));
 });
-
-// it("OK. got schedule", (done) => {
-//   request(app)
-//     .get("/api/maps/getevents")
-//     .then((res) => {
-//       const body = res.body;
-//       expect(body).to.contain.property("events");
-//       done();
-//     })
-//     .catch((err) => done(err));
-// });
