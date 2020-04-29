@@ -4,7 +4,6 @@ import {
   Text,
   View,
   Image,
-  TouchableOpacity,
   TouchableHighlight,
 } from "react-native";
 import { useSelector } from "react-redux";
@@ -130,6 +129,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     position: "absolute",
     backgroundColor: "#ffffff",
+    elevation: 3,
   },
   detailContent: {
     margin: 10,
