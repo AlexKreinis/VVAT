@@ -9,9 +9,11 @@ import {
 import ModalNavigator from "./innerComponents/ModalNavigator";
 import { deleteEvents } from "../store/actions/MapsActions";
 import { useDispatch } from "react-redux";
+import { Ionicons } from "@expo/vector-icons";
 
 const ModalComp = (props) => {
   const dispatch = useDispatch();
+
   const cleanStore = () => {
     dispatch(deleteEvents());
   };
@@ -36,13 +38,13 @@ const ModalComp = (props) => {
             {showInnerComponent()}
 
             <TouchableHighlight
-              style={{ ...styles.openButton, backgroundColor: "#2196F9" }}
+              style={{ marginTop: 15 }}
               onPress={() => {
                 cleanStore();
                 props.setIsOpen(false);
               }}
             >
-              <Text style={styles.textStyle}>X</Text>
+              <Ionicons name="ios-close" size={35} color="red" />
             </TouchableHighlight>
           </View>
         </View>

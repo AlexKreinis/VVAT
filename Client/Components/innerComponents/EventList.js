@@ -21,7 +21,6 @@ const EventList = (props) => {
   }, [selectedEvents]);
 
   useEffect(() => {
-    console.log("getting events in component");
     setEvents(selectedEvents);
   }, [selectedEvents]);
 
@@ -90,6 +89,11 @@ const EventList = (props) => {
       <View style={styles.header}>
         <Text style={styles.title}>{details.name}</Text>
       </View>
+      <View style={{ marginBottom: 14 }}>
+        <Text style={{ fontSize: 18, color: "darkgrey", fontWeight: "bold" }}>
+          Upcoming Events
+        </Text>
+      </View>
       <View style={styles.list}>{List()}</View>
       <View>
         <TouchableOpacity
@@ -128,19 +132,20 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   list: {
-    flex: 3,
+    flex: 5,
     width: "100%",
   },
   listItem: {
     flex: 1,
     flexDirection: "column",
     alignItems: "center",
-    margin: 10,
+    marginTop: 10,
+    marginBottom: 30,
     backgroundColor: "lightblue",
     padding: 5,
     borderRadius: 10,
     overflow: "hidden",
-    elevation: 15,
+    elevation: 10,
   },
 });
 
