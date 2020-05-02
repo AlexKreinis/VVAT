@@ -22,7 +22,7 @@ router.get("/getusr/:email", async (req, res) => {
   try {
     const email = req.params.email;
     const user = await User.findOne({ email });
-    console.log("ho", user);
+    //console.log("ho", user);
     res.json(user);
   } catch (err) {
     console.error(err.message);
