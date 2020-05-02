@@ -8,8 +8,21 @@ const config = require("config");
 const bcrypt = require("bcryptjs");
 
 router.get("/getuser", auth, async (req, res) => {
+  console.error(err.message);
   try {
     const user = await User.findById(req.user.id).select("-password");
+    res.json(user);
+  } catch (err) {
+    res.status(500).send("Server error");
+  }
+});
+
+router.get("/getusr/:email", async (req, res) => {
+  //console.log("mail: ", email);
+  try {
+    const email = req.params.email;
+    const user = await User.findOne({ email });
+    console.log("ho", user);
     res.json(user);
   } catch (err) {
     console.error(err.message);
@@ -24,6 +37,8 @@ router.post(
     check("password", "Password is required is required").exists(),
   ],
   async (req, res) => {
+    // console.log("hi", auth);
+
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
