@@ -8,7 +8,7 @@ const config = require("config");
 const bcrypt = require("bcryptjs");
 
 router.get("/getuser", auth, async (req, res) => {
-  console.error(err.message);
+  //console.error(err.message);
   try {
     const user = await User.findById(req.user.id).select("-password");
     res.json(user);
@@ -139,7 +139,7 @@ router.post(
 
 router.delete("/delete/:email", async (req, res) => {
   try {
-    console.log(req.params.email);
+    //console.log(req.params.email);
     await User.deleteOne({ email: req.params.email });
     res.json({ msg: "Deleted Successfully" });
   } catch (err) {
