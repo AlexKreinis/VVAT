@@ -4,12 +4,12 @@ import MapView, { Overlay } from "react-native-maps";
 import { Marker } from "react-native-maps";
 import { useDispatch, useSelector } from "react-redux";
 import { maps, selectedMapsDetails } from "../store/actions/MapsActions";
+import { getUser } from "../store/actions/Usersactions";
 import * as Location from "expo-location";
 import * as Permissions from "expo-permissions";
 import ModalComp from "../Components/ModalComp";
 
 const MapScreen = (props) => {
-  // console.log(props);
   const [pickedLocation, setPickedLocation] = useState({
     latitude: 31.255161367000028,
     longitude: 34.77513006300006,
@@ -18,13 +18,13 @@ const MapScreen = (props) => {
   });
   const Maps = useSelector((state) => state.maps.sportsCenters);
   const [openModal, setOpenModal] = useState(false);
-  const [mapDetail, setMapDetail] = useState({ lat: "", lon: "" });
   const [sportsLocations, setSportsLocations] = useState([]);
   const dispatch = useDispatch();
 
   useEffect(() => {
     setSportsLocations([...Maps]);
   }, [Maps]);
+
   const verifyPermissions = async () => {
     const result = await Permissions.askAsync(Permissions.LOCATION);
     if (result.status !== "granted") {
@@ -64,6 +64,7 @@ const MapScreen = (props) => {
     useEffect(() => {
       getLocationHandler();
       dispatch(maps());
+      dispatch(getUser());
     }, []);
   } catch (err) {
     setError(err.message);
