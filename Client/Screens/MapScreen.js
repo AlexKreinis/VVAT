@@ -133,7 +133,7 @@ const MapScreen = (props) => {
 
 MapScreen.navigationOptions = (navData) => {
   return {
-    headerTitle: "Maps",
+    headerTitle: "Map",
     headerLeft: () => (
       <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
         <Item

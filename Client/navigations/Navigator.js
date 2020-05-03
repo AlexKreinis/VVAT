@@ -18,7 +18,7 @@ const defaultStackNavOptions = {
     backgroundColor: Platform.OS === "android" ? Colors.primaryColor : "",
   },
   headerTintColor: Platform.OS === "android" ? "white" : Colors.primaryColor,
-  headerTitle: "A Screen",
+  headerTitleAlign: "center",
 };
 const LoginRegisterNav = createStackNavigator(
   {
@@ -36,6 +36,16 @@ const MapNav = createStackNavigator(
   {
     Main: {
       screen: MapScreen,
+    },
+  },
+  {
+    defaultNavigationOptions: defaultStackNavOptions,
+  }
+);
+const SettingsNavigator = createStackNavigator(
+  {
+    Main: {
+      screen: SettingsScreen,
     },
   },
   {
@@ -87,7 +97,7 @@ const MainNavigator = createDrawerNavigator({
     },
   },
 
-  Settings: SettingsScreen,
+  Settings: SettingsNavigator,
 });
 
 const Navigator = createSwitchNavigator({
