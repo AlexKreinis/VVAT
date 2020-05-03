@@ -114,7 +114,7 @@ const MainNavigator = createDrawerNavigator({
 });
 
 const Navigator = createSwitchNavigator({
-  //loginregister: LoginRegisterNav,
+  loginregister: LoginRegisterNav,
   tab: MainNavigator,
 });
 
