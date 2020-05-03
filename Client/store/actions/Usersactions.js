@@ -89,7 +89,5 @@ export const getUser = () => async (dispatch, getState) => {
       type: GET_USER,
       payload: { name: serverData.name, email: serverData.email },
     });
-  } catch (err) {
-    throw err;
   }
 };

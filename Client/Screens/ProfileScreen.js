@@ -6,30 +6,39 @@ import {
   Image,
   TouchableHighlight,
 } from "react-native";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import Colors from "../constants/Colors";
+import { getuser } from "../store/actions/Usersactions";
 
 const ProfileScreen = () => {
   const [details, setDetails] = useState({ userId: "", name: "" });
   const userDetails = useSelector((state) => state.users);
+  const dispatch = useDispatch();
   //console.log(userDetails);
   useEffect(() => {
     setDetails(userDetails);
   }, [userDetails]);
+
+  const getUserDetails = async () => {
+    try {
+      //console.log(details.userId);
+      await dispatch(getuser(details.userId));
+    } catch (err) {
+      //setError(err.message);
+    }
+  };
+
+  getUserDetails();
+
   //console.log(details);
   // const u = User.findOne(userDetails.token);
   return (
     <View style={styles.container}>
       <View style={styles.header}>
         <View style={styles.headerContent}>
-          <Image
-            style={styles.avatar}
-            source={require("../assets/profile.png")}
-          />
-          <Text style={styles.name}>Vladis Markin{details.name}</Text>
-          <Text style={styles.name}>
-            vladismarkin@gmail.com{details.userId}
-          </Text>
+          <Image style={styles.avatar} source={require("../assets/pro2.png")} />
+          <Text style={styles.name}>{details.name}</Text>
+          <Text style={styles.name}>{details.userId}</Text>
         </View>
       </View>
 
@@ -91,11 +100,7 @@ const ProfileScreen = () => {
               />
             </TouchableHighlight>
           </View>
-          <Text style={styles.description}>
-            Hello, My name is Vladis Markin, I really like to organize events in
-            the city of Beer Sheva. Love to program on React Native and I'm sick
-            of Alex Chorkin
-          </Text>
+          <Text style={styles.description}></Text>
         </View>
       </View>
     </View>

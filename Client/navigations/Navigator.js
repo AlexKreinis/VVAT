@@ -11,7 +11,16 @@ import { Ionicons } from "@expo/vector-icons";
 import React from "react";
 import { createMaterialBottomTabNavigator } from "react-navigation-material-bottom-tabs";
 import Colors from "../constants/Colors";
-import SettingsScreen from "../Screens/SettingsScreen";
+import DemoScreen1 from "../Screens/DemoScreen1";
+import DemoScreen2 from "../Screens/DemoScreen2";
+
+const defaultStackNavOptions = {
+  headerStyle: {
+    backgroundColor: Platform.OS === "android" ? Colors.primaryColor : "",
+  },
+  headerTintColor: Platform.OS === "android" ? "white" : Colors.primaryColor,
+  headerTitleAlign: "center",
+};
 const LoginRegisterNav = createStackNavigator(
   {
     Login: LoginScreen,
@@ -24,15 +33,41 @@ const LoginRegisterNav = createStackNavigator(
   }
 );
 
-const MapNav = createStackNavigator({
-  Main: {
-    screen: MapScreen,
+const MapNav = createStackNavigator(
+  {
+    Main: {
+      screen: MapScreen,
+    },
   },
-});
+  {
+    defaultNavigationOptions: defaultStackNavOptions,
+  }
+);
+const Demo1Navigator = createStackNavigator(
+  {
+    Main: {
+      screen: DemoScreen1,
+    },
+  },
+  {
+    defaultNavigationOptions: defaultStackNavOptions,
+  }
+);
+
+const Demo2Navigator = createStackNavigator(
+  {
+    Main: {
+      screen: DemoScreen2,
+    },
+  },
+  {
+    defaultNavigationOptions: defaultStackNavOptions,
+  }
+);
 
 const appTabNavigator = {
   Map: {
-    screen: MapScreen,
+    screen: MapNav,
     navigationOptions: {
       tabBarIcon: ({ tabInfo }) => {
         return <Ionicons name="ios-map" size={20} color={tabInfo} />;
@@ -51,7 +86,7 @@ const appTabNavigator = {
   },
 };
 
-const MealsFavTabNavigator =
+const MapProfileTabNavigator =
   Platform.OS === "android"
     ? createMaterialBottomTabNavigator(appTabNavigator, {
         activeTintColor: "white",
@@ -66,22 +101,17 @@ const MealsFavTabNavigator =
         },
       });
 
-const MainNavigator = createDrawerNavigator(
-  {
-    MealsFavs: {
-      screen: MealsFavTabNavigator,
-      navigationOptions: {
-        drawerLabel: "Meals",
-      },
+const MainNavigator = createDrawerNavigator({
+  MapProfile: {
+    screen: MapProfileTabNavigator,
+    navigationOptions: {
+      drawerLabel: "Maps",
     },
-    Settings: SettingsScreen,
   },
-  {
-    contentOptions: {
-      activeTintColor: Colors.accentColor,
-    },
-  }
-);
+
+  Demo1: Demo1Navigator,
+  Demo2: Demo2Navigator,
+});
 
 const Navigator = createSwitchNavigator({
   loginregister: LoginRegisterNav,

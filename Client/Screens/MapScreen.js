@@ -8,6 +8,8 @@ import { getUser } from "../store/actions/Usersactions";
 import * as Location from "expo-location";
 import * as Permissions from "expo-permissions";
 import ModalComp from "../Components/ModalComp";
+import { HeaderButtons, Item } from "react-navigation-header-buttons";
+import CustomHeaderButton from "../Components/CustomHeaderButton";
 
 const MapScreen = (props) => {
   const [pickedLocation, setPickedLocation] = useState({
@@ -81,7 +83,7 @@ const MapScreen = (props) => {
           flexDirection: "row",
         }}
       >
-        <Button
+        {/* <Button
           style={{
             backgroundColor: "green",
             width: "80%",
@@ -97,7 +99,7 @@ const MapScreen = (props) => {
               longitudeDelta: 0.009,
             })
           }
-        />
+        /> */}
       </View>
       <View style={styles.mapContainer}>
         <ModalComp
@@ -128,6 +130,23 @@ const MapScreen = (props) => {
       </View>
     </View>
   );
+};
+
+MapScreen.navigationOptions = (navData) => {
+  return {
+    headerTitle: "Map",
+    headerLeft: () => (
+      <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
+        <Item
+          title="Menu"
+          iconName="ios-menu"
+          onPress={() => {
+            navData.navigation.toggleDrawer();
+          }}
+        />
+      </HeaderButtons>
+    ),
+  };
 };
 
 const styles = StyleSheet.create({
