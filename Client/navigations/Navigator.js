@@ -32,7 +32,7 @@ const MapNav = createStackNavigator({
 
 const appTabNavigator = {
   Map: {
-    screen: MapScreen,
+    screen: MapNav,
     navigationOptions: {
       tabBarIcon: ({ tabInfo }) => {
         return <Ionicons name="ios-map" size={20} color={tabInfo} />;
@@ -51,7 +51,7 @@ const appTabNavigator = {
   },
 };
 
-const MealsFavTabNavigator =
+const MapProfileTabNavigator =
   Platform.OS === "android"
     ? createMaterialBottomTabNavigator(appTabNavigator, {
         activeTintColor: "white",
@@ -66,25 +66,19 @@ const MealsFavTabNavigator =
         },
       });
 
-const MainNavigator = createDrawerNavigator(
-  {
-    MealsFavs: {
-      screen: MealsFavTabNavigator,
-      navigationOptions: {
-        drawerLabel: "Meals",
-      },
+const MainNavigator = createDrawerNavigator({
+  MapProfile: {
+    screen: MapProfileTabNavigator,
+    navigationOptions: {
+      drawerLabel: "Maps",
     },
-    Settings: SettingsScreen,
   },
-  {
-    contentOptions: {
-      activeTintColor: Colors.accentColor,
-    },
-  }
-);
+
+  Settings: SettingsScreen,
+});
 
 const Navigator = createSwitchNavigator({
-  loginregister: LoginRegisterNav,
+  //loginregister: LoginRegisterNav,
   tab: MainNavigator,
 });
 
