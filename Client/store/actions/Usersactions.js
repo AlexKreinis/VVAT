@@ -85,14 +85,10 @@ export const getUser = () => async (dispatch, getState) => {
     }
 
     let serverData = await res.json();
-    console.log("hi", serverData);
-    console.log("user data is", serverData.name, serverData.email);
     dispatch({
       type: GET_USER,
       payload: { name: serverData.name, email: serverData.email },
     });
-
-    console.log(serverData);
   } catch (err) {
     throw err;
   }
