@@ -13,7 +13,7 @@ const DemoScreen1 = () => {
 
 DemoScreen1.navigationOptions = (navData) => {
   return {
-    headerTitle: "Settings",
+    headerTitle: "Demo1",
     headerLeft: () => (
       <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
         <Item
