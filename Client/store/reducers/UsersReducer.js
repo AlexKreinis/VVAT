@@ -1,14 +1,13 @@
 import { LOGIN, REGISTER, GET_USER } from "../actions/const";
 const initialState = {
   token: "",
-  userId: "",
+  email: "",
   name: "",
 };
 
 const UsersReducers = (state = initialState, action) => {
   switch (action.type) {
     case LOGIN:
-      //console.log(action.email);
       return {
         token: action.payload.token,
         userId: action.payload.email,
@@ -16,15 +15,12 @@ const UsersReducers = (state = initialState, action) => {
     case REGISTER:
       return {
         token: action.token,
-        // userId: action.id,
-        // name: action.name,
       };
 
     case GET_USER:
-      //console.log(payload);
       return {
         token: state.token,
-        userId: action.payload.email,
+        email: action.payload.email,
         name: action.payload.name,
       };
     default:

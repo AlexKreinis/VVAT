@@ -6,39 +6,24 @@ import {
   Image,
   TouchableHighlight,
 } from "react-native";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import Colors from "../constants/Colors";
-import { getuser } from "../store/actions/Usersactions";
 
 const ProfileScreen = () => {
-  const [details, setDetails] = useState({ userId: "", name: "" });
+  const [details, setDetails] = useState({ email: "", name: "" });
   const userDetails = useSelector((state) => state.users);
-  const dispatch = useDispatch();
-  //console.log(userDetails);
+
   useEffect(() => {
     setDetails(userDetails);
   }, [userDetails]);
 
-  const getUserDetails = async () => {
-    try {
-      //console.log(details.userId);
-      await dispatch(getuser(details.userId));
-    } catch (err) {
-      //setError(err.message);
-    }
-  };
-
-  getUserDetails();
-
-  //console.log(details);
-  // const u = User.findOne(userDetails.token);
   return (
     <View style={styles.container}>
       <View style={styles.header}>
         <View style={styles.headerContent}>
           <Image style={styles.avatar} source={require("../assets/pro2.png")} />
           <Text style={styles.name}>{details.name}</Text>
-          <Text style={styles.name}>{details.userId}</Text>
+          <Text style={styles.name}>{details.email}</Text>
         </View>
       </View>
 

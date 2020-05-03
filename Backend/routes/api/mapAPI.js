@@ -16,9 +16,7 @@ router.get("/getmaps", async (req, res) => {
 
 router.get("/getevents/:lat/:lon", async (req, res) => {
   try {
-    console.log("entered\n");
-    let lat = req.params.lat;
-    let lon = req.params.lon;
+    const { lat, lon } = req.params;
     let location = await Location.findOne({ lat, lon }).populate("events");
     if (location) {
       res.json({ events: location.events });
@@ -31,7 +29,6 @@ router.get("/getevents/:lat/:lon", async (req, res) => {
 router.post("/addevent", async (req, res) => {
   try {
     const { start, end, lat, lon, name } = req.body;
-
     let location = await Location.findOne({ lat, lon });
     const newEvent = new Event({
       start: start,
@@ -39,7 +36,6 @@ router.post("/addevent", async (req, res) => {
       name: name,
     });
     await newEvent.save();
-
     if (location) {
       location.events.push(newEvent._id);
       await location.save();

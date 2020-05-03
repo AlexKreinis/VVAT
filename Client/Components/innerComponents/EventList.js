@@ -58,7 +58,7 @@ const EventList = (props) => {
           </Text>
           <Text style={{ fontWeight: "bold" }}>
             <Text style={{ fontWeight: "bold" }}>To</Text>{" "}
-            {new Date(itemData.item.start).toLocaleTimeString().slice(0, -3)}
+            {new Date(itemData.item.finish).toLocaleTimeString().slice(0, -3)}
           </Text>
         </View>
       </TouchableOpacity>
