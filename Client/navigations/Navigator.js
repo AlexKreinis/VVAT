@@ -12,6 +12,14 @@ import React from "react";
 import { createMaterialBottomTabNavigator } from "react-navigation-material-bottom-tabs";
 import Colors from "../constants/Colors";
 import SettingsScreen from "../Screens/SettingsScreen";
+
+const defaultStackNavOptions = {
+  headerStyle: {
+    backgroundColor: Platform.OS === "android" ? Colors.primaryColor : "",
+  },
+  headerTintColor: Platform.OS === "android" ? "white" : Colors.primaryColor,
+  headerTitle: "A Screen",
+};
 const LoginRegisterNav = createStackNavigator(
   {
     Login: LoginScreen,
@@ -24,11 +32,16 @@ const LoginRegisterNav = createStackNavigator(
   }
 );
 
-const MapNav = createStackNavigator({
-  Main: {
-    screen: MapScreen,
+const MapNav = createStackNavigator(
+  {
+    Main: {
+      screen: MapScreen,
+    },
   },
-});
+  {
+    defaultNavigationOptions: defaultStackNavOptions,
+  }
+);
 
 const appTabNavigator = {
   Map: {
