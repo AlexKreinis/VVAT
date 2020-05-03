@@ -3,15 +3,15 @@ import { Text, View } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import CustomHeaderButton from "../Components/CustomHeaderButton";
 
-const SettingsScreen = () => {
+const DemoScreen2 = () => {
   return (
-    <View>
-      <Text>Demo</Text>
+    <View style={{ justifyContent: "center", alignItems: "center", flex: 1 }}>
+      <Text>A demo page.</Text>
     </View>
   );
 };
 
-SettingsScreen.navigationOptions = (navData) => {
+DemoScreen2.navigationOptions = (navData) => {
   return {
     headerTitle: "Settings",
     headerLeft: () => (
@@ -28,4 +28,4 @@ SettingsScreen.navigationOptions = (navData) => {
   };
 };
 
-export default SettingsScreen;
+export default DemoScreen2;

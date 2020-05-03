@@ -11,7 +11,8 @@ import { Ionicons } from "@expo/vector-icons";
 import React from "react";
 import { createMaterialBottomTabNavigator } from "react-navigation-material-bottom-tabs";
 import Colors from "../constants/Colors";
-import SettingsScreen from "../Screens/SettingsScreen";
+import DemoScreen1 from "../Screens/DemoScreen1";
+import DemoScreen2 from "../Screens/DemoScreen2";
 
 const defaultStackNavOptions = {
   headerStyle: {
@@ -42,10 +43,21 @@ const MapNav = createStackNavigator(
     defaultNavigationOptions: defaultStackNavOptions,
   }
 );
-const SettingsNavigator = createStackNavigator(
+const Demo1Navigator = createStackNavigator(
   {
     Main: {
-      screen: SettingsScreen,
+      screen: DemoScreen1,
+    },
+  },
+  {
+    defaultNavigationOptions: defaultStackNavOptions,
+  }
+);
+
+const Demo2Navigator = createStackNavigator(
+  {
+    Main: {
+      screen: DemoScreen2,
     },
   },
   {
@@ -97,7 +109,8 @@ const MainNavigator = createDrawerNavigator({
     },
   },
 
-  Settings: SettingsNavigator,
+  Demo1: Demo1Navigator,
+  Demo2: Demo2Navigator,
 });
 
 const Navigator = createSwitchNavigator({
