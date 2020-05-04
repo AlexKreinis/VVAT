@@ -152,10 +152,10 @@ const styles = StyleSheet.create({
     marginTop: -422,
     height: 22,
     flexDirection: "row",
-    justifyContent: "flex-start",
+    justifyContent: "flex-end",
     alignItems: "center",
     marginBottom: 12,
-    width: 380,
+    width: 345,
     borderRadius: 30,
   },
   description: {

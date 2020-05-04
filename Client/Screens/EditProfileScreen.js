@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, View, TextInput, Header } from "react-native";
+import { StyleSheet, Text, View, TextInput, Button } from "react-native";
 
 import { useSelector } from "react-redux";
 const EditProfileScreen = () => {
@@ -9,7 +9,9 @@ const EditProfileScreen = () => {
     name: userDetails.name,
     description: "",
   });
-
+  const clickHandler = () => {
+    //dipatch function from useractions that go to the server and fetch post action that send new user profile details in the body of the req to the route
+  };
   return (
     <View style={{ justifyContent: "center", alignItems: "center", flex: 1 }}>
       <Text>Name: </Text>
@@ -48,6 +50,7 @@ const EditProfileScreen = () => {
           })
         }
       />
+      <Button title="Save" onPress={() => clickHandler} />
     </View>
   );
 };
