@@ -1,9 +1,25 @@
 const mongoose = require("mongoose");
-const UserSchema = new mongoose.Schema({
+const ProfileSchema = new mongoose.Schema({
   description: {
     type: String,
-    //required: true,
   },
+
+  rating: {
+    type: String,
+  },
+
+  events: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "event",
+    },
+  ],
+  frinedList: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "user",
+    },
+  ],
 });
 
-module.exports = User = mongoose.model("profile", UserSchema);
+module.exports = Profile = mongoose.model("profile", ProfileSchema);
