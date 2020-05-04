@@ -5,11 +5,12 @@ import {
   View,
   Image,
   TouchableHighlight,
+  Button,
 } from "react-native";
 import { useSelector } from "react-redux";
 import Colors from "../constants/Colors";
 
-const ProfileScreen = () => {
+const ProfileScreen = (props) => {
   const [details, setDetails] = useState({ email: "", name: "" });
   const userDetails = useSelector((state) => state.users);
 
@@ -26,7 +27,6 @@ const ProfileScreen = () => {
           <Text style={styles.name}>{details.email}</Text>
         </View>
       </View>
-
       <View style={styles.profileDetail}>
         <View style={styles.detailContent}>
           <Text style={styles.title}>Friends</Text>
@@ -41,7 +41,6 @@ const ProfileScreen = () => {
           <Text style={styles.count}>200</Text>
         </View>
       </View>
-
       <View style={styles.body}>
         <View style={styles.bodyContent}>
           <View style={styles.buttonMenuContainer}>
@@ -86,6 +85,12 @@ const ProfileScreen = () => {
             </TouchableHighlight>
           </View>
           <Text style={styles.description}></Text>
+          <View style={styles.buttonContainer}>
+            <Button
+              title="edit profile"
+              onPress={() => props.navigation.navigate("editProfile")}
+            ></Button>
+          </View>
         </View>
       </View>
     </View>
@@ -144,15 +149,14 @@ const styles = StyleSheet.create({
     color: "#696969",
   },
   buttonContainer: {
-    marginTop: 85,
-    height: 45,
+    marginTop: -422,
+    height: 22,
     flexDirection: "row",
-    justifyContent: "center",
+    justifyContent: "flex-start",
     alignItems: "center",
-    marginBottom: 20,
-    width: 250,
+    marginBottom: 12,
+    width: 380,
     borderRadius: 30,
-    backgroundColor: "#00CED1",
   },
   description: {
     fontSize: 20,

@@ -3,6 +3,7 @@ const initialState = {
   token: "",
   email: "",
   name: "",
+  profile: {},
 };
 
 const UsersReducers = (state = initialState, action) => {
@@ -22,6 +23,7 @@ const UsersReducers = (state = initialState, action) => {
         token: state.token,
         email: action.payload.email,
         name: action.payload.name,
+        profile: action.payload.profile,
       };
     default:
       return state;

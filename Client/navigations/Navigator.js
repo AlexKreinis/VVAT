@@ -6,6 +6,7 @@ import LoginScreen from "../Screens/LoginScreen";
 import RegistrationScreen from "../Screens/RegistrationScreen";
 import MapScreen from "../Screens/MapScreen";
 import ProfileScreen from "../Screens/ProfileScreen";
+import EditProfileScreen from "../Screens/EditProfileScreen";
 import { createBottomTabNavigator } from "react-navigation-tabs";
 import { Ionicons } from "@expo/vector-icons";
 import React from "react";
@@ -43,6 +44,36 @@ const MapNav = createStackNavigator(
     defaultNavigationOptions: defaultStackNavOptions,
   }
 );
+
+const ProfileNav = createStackNavigator(
+  {
+    profile: ProfileScreen,
+    editProfile: EditProfileScreen,
+  },
+  {
+    defaultNavigationOptions: {
+      headerShown: false,
+    },
+  }
+);
+
+// const editProfileNav = createStackNavigator(
+//   {
+//     EditProfile: EditProfileScreen,
+//   },
+//   {
+//     defaultNavigationOptions: {
+//       title: "Edit Profile",
+//       headerTitleAlign: "center",
+//     },
+//   }
+// );
+
+// const ProfileSwitchNav = createSwitchNavigator({
+//   profile: ProfileNav,
+//   editProfile: editProfileNav,
+// });
+
 const Demo1Navigator = createStackNavigator(
   {
     Main: {
@@ -76,7 +107,7 @@ const appTabNavigator = {
     },
   },
   Profile: {
-    screen: ProfileScreen,
+    screen: ProfileNav,
     navigationOptions: {
       tabBarIcon: ({ tabInfo }) => {
         return <Ionicons name="md-contact" size={20} color={tabInfo} />;

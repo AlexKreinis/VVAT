@@ -87,7 +87,11 @@ export const getUser = () => async (dispatch, getState) => {
     let serverData = await res.json();
     dispatch({
       type: GET_USER,
-      payload: { name: serverData.name, email: serverData.email },
+      payload: {
+        name: serverData.name,
+        email: serverData.email,
+        profile: serverData.profile,
+      },
     });
   } catch (err) {
     throw err;
