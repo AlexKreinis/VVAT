@@ -14,8 +14,9 @@ const UsersReducers = (state = initialState, action) => {
         userId: action.payload.email,
       };
     case REGISTER:
+      // console.log(action.payload);
       return {
-        token: action.token,
+        token: action.payload.token,
       };
 
     case GET_USER:

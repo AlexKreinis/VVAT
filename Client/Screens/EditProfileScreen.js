@@ -6,7 +6,6 @@ import { saveProfile } from "../store/actions/Usersactions";
 const EditProfileScreen = (props) => {
   const userDetails = useSelector((state) => state.users);
   const [details, setDetails] = useState({
-    oldemail: userDetails.email,
     email: userDetails.email,
     name: userDetails.name,
     description: userDetails.description,
@@ -17,10 +16,8 @@ const EditProfileScreen = (props) => {
     //dipatch function from useractions that go to the server and fetch post action that send new user profile details in the body of the req to the route
 
     try {
-      //console.log(details);
       await (dispatch(saveProfile(details)),
       props.navigation.navigate("profile"));
-      //console.log("hi2");
     } catch (err) {
       //  setError(err.message);
     }
@@ -36,7 +33,6 @@ const EditProfileScreen = (props) => {
             name: text,
             email: details.email,
             description: details.description,
-            oldemail: details.oldemail,
           })
         }
       />
@@ -49,7 +45,6 @@ const EditProfileScreen = (props) => {
             name: details.name,
             email: text,
             description: details.description,
-            oldemail: details.oldemail,
           })
         }
       />
@@ -62,7 +57,6 @@ const EditProfileScreen = (props) => {
             name: details.name,
             email: details.email,
             description: text,
-            oldemail: details.oldemail,
           })
         }
       />

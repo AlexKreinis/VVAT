@@ -26,7 +26,8 @@ export const register = (data) => async (dispatch) => {
     let json = await res.json();
     dispatch({
       type: REGISTER,
-      payload: json.token,
+
+      payload: { token: json.token },
     });
     return json;
   } catch (err) {
@@ -67,6 +68,7 @@ export const login = (data) => async (dispatch) => {
 export const getUser = () => async (dispatch, getState) => {
   try {
     const token = getState().users.token;
+
     const res = await fetch(`${youripadress}/api/auth/getuser`, {
       method: "GET",
       headers: {
@@ -75,7 +77,6 @@ export const getUser = () => async (dispatch, getState) => {
         "x-auth-token": token,
       },
     });
-
     if (!res.ok) {
       const errorResData = await res.json();
       let message = "Something went wrong!";
@@ -83,31 +84,43 @@ export const getUser = () => async (dispatch, getState) => {
         message = errorResData.errors[0].msg;
       throw new Error(message);
     }
-
     let serverData = await res.json();
-    dispatch({
-      type: GET_USER,
-      payload: {
-        name: serverData.name,
-        email: serverData.email,
-        description: serverData.description,
-      },
-    });
+    if (typeof serverData.profile !== "undefined") {
+      dispatch({
+        type: GET_USER,
+        payload: {
+          name: serverData.name,
+          email: serverData.email,
+          description: serverData.profile.description,
+        },
+      });
+    } else {
+      dispatch({
+        type: GET_USER,
+        payload: {
+          name: serverData.name,
+          email: serverData.email,
+          description: "",
+        },
+      });
+    }
   } catch (err) {
     throw err;
   }
 };
 
-export const saveProfile = (data) => async (dispatch) => {
+export const saveProfile = (data) => async (dispatch, getState) => {
   //.log("enterd");
 
   try {
-    //console.log("enterd");
+    const token = getState().users.token;
+
     const res = await fetch(`${youripadress}/api/auth/saveprofile`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
+        "x-auth-token": token,
       },
       body: JSON.stringify(data),
     });
@@ -121,7 +134,6 @@ export const saveProfile = (data) => async (dispatch) => {
     }
 
     let serverData = await res.json();
-    //console.log(data);
     dispatch({
       type: SAVE_PROFILE,
       payload: {
