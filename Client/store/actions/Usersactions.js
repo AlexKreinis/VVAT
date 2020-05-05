@@ -1,6 +1,6 @@
 export const SIGNUP = "SIGNUP";
 
-import { LOGIN, REGISTER, GET_USER } from "../actions/const";
+import { LOGIN, REGISTER, GET_USER, SAVE_PROFILE } from "../actions/const";
 const youripadress = "https://vvat.herokuapp.com";
 //const youripadress = "http://localhost:5000";
 
@@ -90,7 +90,44 @@ export const getUser = () => async (dispatch, getState) => {
       payload: {
         name: serverData.name,
         email: serverData.email,
-        profile: serverData.profile,
+        description: serverData.description,
+      },
+    });
+  } catch (err) {
+    throw err;
+  }
+};
+
+export const saveProfile = (data) => async (dispatch) => {
+  //.log("enterd");
+
+  try {
+    //console.log("enterd");
+    const res = await fetch(`${youripadress}/api/auth/saveprofile`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+
+    if (!res.ok) {
+      const errorResData = await res.json();
+      let message = "Something went wrong!";
+      if (errorResData && errorResData.errors.length > 0)
+        message = errorResData.errors[0].msg;
+      throw new Error(message);
+    }
+
+    let serverData = await res.json();
+    //console.log(data);
+    dispatch({
+      type: SAVE_PROFILE,
+      payload: {
+        name: data.name,
+        email: data.email,
+        description: data.description,
       },
     });
   } catch (err) {

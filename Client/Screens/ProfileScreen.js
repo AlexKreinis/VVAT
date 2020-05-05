@@ -11,7 +11,11 @@ import { useSelector } from "react-redux";
 import Colors from "../constants/Colors";
 
 const ProfileScreen = (props) => {
-  const [details, setDetails] = useState({ email: "", name: "" });
+  const [details, setDetails] = useState({
+    email: "",
+    name: "",
+    description: "",
+  });
   const userDetails = useSelector((state) => state.users);
 
   useEffect(() => {
@@ -84,7 +88,7 @@ const ProfileScreen = (props) => {
               />
             </TouchableHighlight>
           </View>
-          <Text style={styles.description}></Text>
+          <Text style={styles.description}>{details.description}</Text>
           <View style={styles.buttonContainer}>
             <Button
               title="edit profile"

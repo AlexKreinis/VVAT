@@ -18,10 +18,13 @@ const UserSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
-  profile: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "profile",
+  description: {
+    type: String,
   },
+  // profile: {
+  //   type: mongoose.Schema.Types.ObjectId,
+  //   ref: "profile",
+  // },
 });
 
 module.exports = User = mongoose.model("user", UserSchema);

@@ -7,6 +7,20 @@ const jwt = require("jsonwebtoken");
 const config = require("config");
 const bcrypt = require("bcryptjs");
 
+router.post("/saveprofile", async (req, res) => {
+  try {
+    const { name, email, oldemail, description } = req.body;
+    var query = { email: oldemail };
+    const update = { name: name, email: email, description: description };
+
+    const user = await User.findOneAndUpdate(query, update);
+    res.json(user);
+  } catch (err) {
+    console.log("error");
+    res.status(500).send("Server error");
+  }
+});
+
 router.get("/getuser", auth, async (req, res) => {
   //console.error(err.message);
   try {

@@ -1,16 +1,29 @@
 import React, { useState } from "react";
 import { StyleSheet, Text, View, TextInput, Button } from "react-native";
 
-import { useSelector } from "react-redux";
-const EditProfileScreen = () => {
+import { useSelector, useDispatch } from "react-redux";
+import { saveProfile } from "../store/actions/Usersactions";
+const EditProfileScreen = (props) => {
   const userDetails = useSelector((state) => state.users);
   const [details, setDetails] = useState({
+    oldemail: userDetails.email,
     email: userDetails.email,
     name: userDetails.name,
-    description: "",
+    description: userDetails.description,
   });
-  const clickHandler = () => {
+  const dispatch = useDispatch();
+
+  const clickHandler = async () => {
     //dipatch function from useractions that go to the server and fetch post action that send new user profile details in the body of the req to the route
+
+    try {
+      //console.log(details);
+      await (dispatch(saveProfile(details)),
+      props.navigation.navigate("profile"));
+      //console.log("hi2");
+    } catch (err) {
+      //  setError(err.message);
+    }
   };
   return (
     <View style={{ justifyContent: "center", alignItems: "center", flex: 1 }}>
@@ -23,6 +36,7 @@ const EditProfileScreen = () => {
             name: text,
             email: details.email,
             description: details.description,
+            oldemail: details.oldemail,
           })
         }
       />
@@ -35,6 +49,7 @@ const EditProfileScreen = () => {
             name: details.name,
             email: text,
             description: details.description,
+            oldemail: details.oldemail,
           })
         }
       />
@@ -47,10 +62,11 @@ const EditProfileScreen = () => {
             name: details.name,
             email: details.email,
             description: text,
+            oldemail: details.oldemail,
           })
         }
       />
-      <Button title="Save" onPress={() => clickHandler} />
+      <Button title="Save" onPress={clickHandler} />
     </View>
   );
 };

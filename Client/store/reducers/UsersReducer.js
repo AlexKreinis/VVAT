@@ -1,9 +1,9 @@
-import { LOGIN, REGISTER, GET_USER } from "../actions/const";
+import { LOGIN, REGISTER, GET_USER, SAVE_PROFILE } from "../actions/const";
 const initialState = {
   token: "",
   email: "",
   name: "",
-  profile: {},
+  description: "",
 };
 
 const UsersReducers = (state = initialState, action) => {
@@ -23,7 +23,15 @@ const UsersReducers = (state = initialState, action) => {
         token: state.token,
         email: action.payload.email,
         name: action.payload.name,
-        profile: action.payload.profile,
+        description: action.payload.description,
+      };
+    case SAVE_PROFILE:
+      // console.log(payload);
+      return {
+        token: state.token,
+        email: action.payload.email,
+        name: action.payload.name,
+        description: action.payload.description,
       };
     default:
       return state;
