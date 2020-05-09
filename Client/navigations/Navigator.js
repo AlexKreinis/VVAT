@@ -12,7 +12,7 @@ import { Ionicons } from "@expo/vector-icons";
 import React from "react";
 import { createMaterialBottomTabNavigator } from "react-navigation-material-bottom-tabs";
 import Colors from "../constants/Colors";
-import DemoScreen1 from "../Screens/DemoScreen1";
+import SportCentersList from "../Screens/SportCentersList";
 import DemoScreen2 from "../Screens/DemoScreen2";
 
 const defaultStackNavOptions = {
@@ -74,10 +74,10 @@ const ProfileNav = createStackNavigator(
 //   editProfile: editProfileNav,
 // });
 
-const Demo1Navigator = createStackNavigator(
+const SportCentersListNav = createStackNavigator(
   {
     Main: {
-      screen: DemoScreen1,
+      screen: SportCentersList,
     },
   },
   {
@@ -140,7 +140,7 @@ const MainNavigator = createDrawerNavigator({
     },
   },
 
-  Demo1: Demo1Navigator,
+  SportCentersList: SportCentersListNav,
   Demo2: Demo2Navigator,
 });
 
