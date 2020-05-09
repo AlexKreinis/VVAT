@@ -20,7 +20,6 @@ router.post("/saveprofile", auth, async (req, res) => {
     const Finduser = await User.findById(req.user.id);
 
     const { name, description } = req.body;
-    var query = { email: Finduser.email };
     if (!Finduser.profile) {
       let profile = new Profile({ description: description });
 

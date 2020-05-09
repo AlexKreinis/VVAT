@@ -4,7 +4,7 @@
   "description": "backend for hackathon",
   "main": "server.js",
   "scripts": {
-    "start": "node server",
+    "start": "nodemon server",
     "server": "nodemon server",
     "test": "mocha --recursive --exit"
   },

@@ -1,8 +1,17 @@
-import React, { useState } from "react";
-import { StyleSheet, Text, View, TextInput, Button } from "react-native";
-
+import React, { useState, useEffect } from "react";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  Button,
+  TextInput,
+  KeyboardAvoidingView,
+} from "react-native";
 import { useSelector, useDispatch } from "react-redux";
+import Colors from "../constants/Colors";
 import { saveProfile } from "../store/actions/Usersactions";
+
 const EditProfileScreen = (props) => {
   const userDetails = useSelector((state) => state.users);
   const [details, setDetails] = useState({
@@ -22,47 +31,86 @@ const EditProfileScreen = (props) => {
     }
   };
   return (
-    <View style={{ justifyContent: "center", alignItems: "center", flex: 1 }}>
-      <Text>Name: </Text>
-      <TextInput
-        style={{ height: 40, borderColor: "gray", borderWidth: 1 }}
-        value={details.name}
-        onChangeText={(text) =>
-          setDetails({
-            name: text,
-
-            description: details.description,
-          })
-        }
-      />
-      <Text>email: </Text>
-      <TextInput
-        style={{ height: 40, borderColor: "gray", borderWidth: 1 }}
-        value={details.email}
-        onChangeText={(text) =>
-          setDetails({
-            name: details.name,
-            email: text,
-            description: details.description,
-          })
-        }
-      />
-      <Text>descripton: </Text>
-      <TextInput
-        style={{ height: 40, borderColor: "gray", borderWidth: 1 }}
-        value={details.description}
-        onChangeText={(text) =>
-          setDetails({
-            name: details.name,
-            email: details.email,
-            description: text,
-          })
-        }
-      />
-      <Button title="Save" onPress={clickHandler} />
-    </View>
+    <KeyboardAvoidingView behavior="padding" style={styles.container}>
+      <View style={styles.container}>
+        <View style={styles.header}>
+          <Image style={styles.avatar} source={require("../assets/pro2.png")} />
+          <Button
+            title="Go back"
+            onPress={() => props.navigation.navigate("profile")}
+          ></Button>
+          <Text style={styles.name}>Edit your profile</Text>
+        </View>
+        <View style={styles.bodyContent}>
+          <View>
+            <Text>Name: </Text>
+            <TextInput
+              style={styles.input}
+              value={details.name}
+              onChangeText={(text) =>
+                setDetails({
+                  ...details,
+                  name: text,
+                })
+              }
+            />
+            <Text>Age: </Text>
+            <TextInput style={styles.input} />
+            <Text>Facebook: </Text>
+            <TextInput style={styles.input} />
+            <Text>description: </Text>
+            <TextInput
+              style={styles.input}
+              value={details.description}
+              onChangeText={(text) =>
+                setDetails({
+                  ...details,
+                  description: text,
+                })
+              }
+            />
+            <Button title="Save Changes" onPress={clickHandler}></Button>
+          </View>
+        </View>
+      </View>
+    </KeyboardAvoidingView>
   );
 };
+const styles = StyleSheet.create({
+  container: { flex: 1 },
+  header: {
+    backgroundColor: Colors.accentColor,
+    padding: 45,
+    alignItems: "center",
+  },
 
-const styles = StyleSheet.create({});
+  avatar: {
+    width: 130,
+    height: 130,
+    borderRadius: 63,
+    borderWidth: 4,
+    borderColor: "white",
+    marginBottom: 10,
+  },
+  name: {
+    fontSize: 22,
+    color: "#FFFFFF",
+    alignItems: "center",
+    fontWeight: "600",
+    justifyContent: "center",
+  },
+  bodyContent: {
+    padding: 10,
+  },
+  input: {
+    height: 40,
+    borderBottomColor: "#43226e",
+    borderBottomWidth: 1,
+    borderColor: "#000",
+    marginBottom: 10,
+    color: "#3c1762",
+    paddingHorizontal: 10,
+  },
+});
+
 export default EditProfileScreen;
