@@ -3,6 +3,7 @@ const request = require("supertest");
 
 const app = require("../../../server.js");
 const connectDB = require("../../../config/db");
+let authToken;
 
 describe("Register user", () => {
   before((done) => {
@@ -27,11 +28,26 @@ it("OK. loginuser", (done) => {
     .send({ email: "testname@mail.com", password: "123456" })
     .then((res) => {
       const body = res.body;
+      authToken = body.token;
       expect(body).to.contain.property("token");
       done();
     })
     .catch((err) => done(err));
 });
+
+it("OK. editprofile", (done) => {
+  request(app)
+    .post("/api/profile/saveprofile")
+    .send({ name: "testnameedit", description: "testdesc" })
+    .set({ "x-auth-token": authToken })
+    .then((res) => {
+      const body = res.body;
+      expect(body).to.contain.property("user");
+      done();
+    })
+    .catch((err) => done(err));
+});
+
 it("OK. deleteuser", (done) => {
   request(app)
     .delete("/api/auth/delete/testname@mail.com")

@@ -133,7 +133,6 @@ export const saveProfile = (data) => async (dispatch, getState) => {
       throw new Error(message);
     }
 
-    let serverData = await res.json();
     dispatch({
       type: SAVE_PROFILE,
       payload: {

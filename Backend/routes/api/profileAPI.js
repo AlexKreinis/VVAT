@@ -35,7 +35,7 @@ router.post("/saveprofile", auth, async (req, res) => {
 
     Finduser.name = name;
     await Finduser.save();
-    res.json(Finduser);
+    res.json({ user: Finduser });
   } catch (err) {
     console.log("error");
     res.status(500).send("Server error");
