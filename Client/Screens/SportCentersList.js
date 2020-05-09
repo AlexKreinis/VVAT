@@ -35,7 +35,7 @@ const SportCentersList = (props) => {
       <TouchableOpacity onPress={() => handleOpenModal(itemData)}>
         <View style={styles.listItem}>
           <Text style={{ fontWeight: "bold", fontSize: 22 }}>
-            {itemData["Name"]}
+            {itemData.item["Name"]}
           </Text>
         </View>
       </TouchableOpacity>
@@ -54,12 +54,14 @@ const SportCentersList = (props) => {
 
   return (
     <View style={styles.container}>
-      <ModalComp
-        isOpen={openModal}
-        setIsOpen={setOpenModal}
-        choice="ModalNavigator"
-      />
       <View style={styles.list}>{List()}</View>
+      <View style={{ height: 0 }}>
+        <ModalComp
+          isOpen={openModal}
+          setIsOpen={setOpenModal}
+          choice="ModalNavigator"
+        />
+      </View>
     </View>
   );
 };
