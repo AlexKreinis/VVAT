@@ -1,8 +1,8 @@
 export const SIGNUP = "SIGNUP";
 
 import { LOGIN, REGISTER, GET_USER, SAVE_PROFILE } from "../actions/const";
-//const youripadress = "https://vvat.herokuapp.com";
-const youripadress = "http://localhost:5000";
+const youripadress = "https://vvat.herokuapp.com";
+//const youripadress = "http://localhost:5000";
 
 export const register = (data) => async (dispatch) => {
   try {
@@ -115,7 +115,7 @@ export const saveProfile = (data) => async (dispatch, getState) => {
   try {
     const token = getState().users.token;
 
-    const res = await fetch(`${youripadress}/api/profile/saveprofile`, {
+    const res = await fetch(`${youripadress}/api/auth/saveprofile`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
