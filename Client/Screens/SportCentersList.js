@@ -10,10 +10,13 @@ import { useSelector, useDispatch } from "react-redux";
 import { maps } from "../store/actions/MapsActions";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import CustomHeaderButton from "../Components/CustomHeaderButton";
+import ModalComp from "../Components/ModalComp";
+import { selectedMapsDetails } from "../store/actions/MapsActions";
 
 const SportCentersList = (props) => {
   const Maps = useSelector((state) => state.maps.sportsCenters);
   const dispatch = useDispatch();
+  const [openModal, setOpenModal] = useState(false);
   try {
     useEffect(() => {
       dispatch(maps());
@@ -22,12 +25,17 @@ const SportCentersList = (props) => {
     setError(err.message);
   }
 
+  const handleOpenModal = (marker) => {
+    setOpenModal(true);
+    dispatch(selectedMapsDetails(marker));
+  };
+
   const renderSportcenterItem = (itemData) => {
     return (
-      <TouchableOpacity onPress={() => {}}>
+      <TouchableOpacity onPress={() => handleOpenModal(itemData)}>
         <View style={styles.listItem}>
           <Text style={{ fontWeight: "bold", fontSize: 22 }}>
-            {itemData.item}
+            {itemData["Name"]}
           </Text>
         </View>
       </TouchableOpacity>
@@ -35,11 +43,9 @@ const SportCentersList = (props) => {
   };
 
   const List = () => {
-    let arr = [];
-    Maps.map((sc) => arr.push(sc["Name"]));
     return (
       <FlatList
-        data={arr}
+        data={Maps}
         renderItem={renderSportcenterItem}
         keyExtractor={(item, index) => "key" + index}
       />
@@ -48,6 +54,11 @@ const SportCentersList = (props) => {
 
   return (
     <View style={styles.container}>
+      <ModalComp
+        isOpen={openModal}
+        setIsOpen={setOpenModal}
+        choice="ModalNavigator"
+      />
       <View style={styles.list}>{List()}</View>
     </View>
   );
