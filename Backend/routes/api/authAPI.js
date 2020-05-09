@@ -14,21 +14,8 @@ router.get("/getuser", auth, async (req, res) => {
       .select("-password")
       .populate("profile");
 
-    res.json(user);
+    res.json({ user });
   } catch (err) {
-    res.status(500).send("Server error");
-  }
-});
-
-router.get("/getusr/:email", async (req, res) => {
-  //console.log("mail: ", email);
-  try {
-    const email = req.params.email;
-    const user = await User.findOne({ email });
-    //console.log("ho", user);
-    res.json(user);
-  } catch (err) {
-    console.error(err.message);
     res.status(500).send("Server error");
   }
 });

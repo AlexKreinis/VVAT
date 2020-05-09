@@ -89,9 +89,9 @@ export const getUser = () => async (dispatch, getState) => {
       dispatch({
         type: GET_USER,
         payload: {
-          name: serverData.name,
-          email: serverData.email,
-          description: serverData.profile.description,
+          name: serverData.user.name,
+          email: serverData.user.email,
+          description: serverData.user.profile.description,
         },
       });
     } else {
