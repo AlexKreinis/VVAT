@@ -8,6 +8,8 @@ import {
 } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { maps } from "../store/actions/MapsActions";
+import { HeaderButtons, Item } from "react-navigation-header-buttons";
+import CustomHeaderButton from "../Components/CustomHeaderButton";
 
 const SportCentersList = (props) => {
   const Maps = useSelector((state) => state.maps.sportsCenters);
@@ -49,6 +51,23 @@ const SportCentersList = (props) => {
       <View style={styles.list}>{List()}</View>
     </View>
   );
+};
+
+SportCentersList.navigationOptions = (navData) => {
+  return {
+    headerTitle: "Sport Centers",
+    headerLeft: () => (
+      <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
+        <Item
+          title="Menu"
+          iconName="ios-menu"
+          onPress={() => {
+            navData.navigation.toggleDrawer();
+          }}
+        />
+      </HeaderButtons>
+    ),
+  };
 };
 const styles = StyleSheet.create({
   container: {
