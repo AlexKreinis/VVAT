@@ -48,6 +48,18 @@ it("OK. editprofile", (done) => {
     .catch((err) => done(err));
 });
 
+it("OK. getprofile", (done) => {
+  request(app)
+    .get("/api/auth/getuser")
+    .set({ "x-auth-token": authToken })
+    .then((res) => {
+      const body = res.body;
+      expect(body).to.contain.property("user");
+      done();
+    })
+    .catch((err) => done(err));
+});
+
 it("OK. deleteuser", (done) => {
   request(app)
     .delete("/api/auth/delete/testname@mail.com")

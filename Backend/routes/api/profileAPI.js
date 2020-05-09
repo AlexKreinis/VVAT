@@ -3,13 +3,14 @@ const router = express.Router();
 const User = require("../../models/User");
 const Profile = require("../../models/Profile");
 const auth = require("../../middleware/auth");
+
 router.get("/getprofile", async (req, res) => {
   try {
     const user = await User.findById(req.user.id)
       .select("-password")
       .populate("profile");
 
-    res.json(user);
+    res.json({ user: user });
   } catch (err) {
     res.status(500).send("Server error");
   }
