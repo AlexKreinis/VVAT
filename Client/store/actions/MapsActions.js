@@ -1,4 +1,4 @@
-//const youripadress = "http://10.100.102.11:5000";
+//const youripadress = "http://localhost:5000";
 const youripadress = "https://vvat.herokuapp.com";
 
 import {
