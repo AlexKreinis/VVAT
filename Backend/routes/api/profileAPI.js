@@ -4,7 +4,7 @@ const User = require("../../models/User");
 const Profile = require("../../models/Profile");
 const auth = require("../../middleware/auth");
 
-router.get("/getprofile", async (req, res) => {
+/* router.get("/getprofile", async (req, res) => {
   try {
     const user = await User.findById(req.user.id)
       .select("-password")
@@ -14,7 +14,7 @@ router.get("/getprofile", async (req, res) => {
   } catch (err) {
     res.status(500).send("Server error");
   }
-});
+}); */
 
 router.post("/saveprofile", auth, async (req, res) => {
   try {

@@ -50,7 +50,7 @@ const ProfileScreen = (props) => {
           <View style={styles.buttonMenuContainer}>
             <TouchableHighlight
               style={[styles.button, styles.buttonAddUser]}
-              //onPress={}
+              onPress={() => props.navigation.navigate("addFriend")}
             >
               <Image
                 style={styles.icon}
