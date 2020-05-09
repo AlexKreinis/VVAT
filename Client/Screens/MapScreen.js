@@ -82,25 +82,7 @@ const MapScreen = (props) => {
         style={{
           flexDirection: "row",
         }}
-      >
-        {/* <Button
-          style={{
-            backgroundColor: "green",
-            width: "80%",
-            height: 60,
-            flex: 1,
-          }}
-          title="go to beersheba"
-          onPress={() =>
-            setPickedLocation({
-              latitude: 31.255161367000028,
-              longitude: 34.77513006300006,
-              latitudeDelta: 0.009,
-              longitudeDelta: 0.009,
-            })
-          }
-        /> */}
-      </View>
+      ></View>
       <View style={styles.mapContainer}>
         <ModalComp
           isOpen={openModal}
