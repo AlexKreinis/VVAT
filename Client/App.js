@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { AppLoading } from "expo"; //prolongs app start untill fonts loaded
+import { AppLoading } from "expo";
 import * as Font from "expo-font";
 import { createStore, combineReducers, applyMiddleware } from "redux";
 import UsersReducer from "./store/reducers/UsersReducer";

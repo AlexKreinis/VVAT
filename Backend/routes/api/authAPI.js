@@ -9,6 +9,34 @@ const jwt = require("jsonwebtoken");
 const config = require("config");
 const bcrypt = require("bcryptjs");
 
+router.get("/getuser", auth, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id)
+      .select("-password")
+      .populate("profile");
+
+    console.log("entered");
+    res.json(user);
+  } catch (err) {
+    console.log("entered");
+
+    res.status(500).send("Server error");
+  }
+});
+
+/* router.get("/getuser/:email", async (req, res) => {
+  //console.log("mail: ", email);
+  try {
+    const email = req.params.email;
+    const user = await User.findOne({ email });
+    //console.log("ho", user);
+    res.json(user);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server error");
+  }
+}); */
+
 router.post("/saveprofile", auth, async (req, res) => {
   try {
     const Finduser = await User.findById(req.user.id);
@@ -42,35 +70,6 @@ router.post("/saveprofile", auth, async (req, res) => {
     res.json(user);
   } catch (err) {
     console.log("error");
-    res.status(500).send("Server error");
-  }
-});
-
-router.get("/getuser", auth, async (req, res) => {
-  console.log("hi");
-  try {
-    const user = await User.findById(req.user.id)
-      .select("-password")
-      .populate("profile");
-
-    console.log("entered");
-    res.json(user);
-  } catch (err) {
-    console.log("entered");
-
-    res.status(500).send("Server error");
-  }
-});
-
-router.get("/getusr/:email", async (req, res) => {
-  //console.log("mail: ", email);
-  try {
-    const email = req.params.email;
-    const user = await User.findOne({ email });
-    //console.log("ho", user);
-    res.json(user);
-  } catch (err) {
-    console.error(err.message);
     res.status(500).send("Server error");
   }
 });
