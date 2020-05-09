@@ -1,14 +1,45 @@
 const express = require("express");
 const router = express.Router();
 const User = require("../../models/User");
-
+const Profile = require("../../models/Profile");
+const auth = require("../../middleware/auth");
 router.get("/getprofile", async (req, res) => {
   try {
-    const user = await User.findById(req.user.id).select("-password");
+    const user = await User.findById(req.user.id)
+      .select("-password")
+      .populate("profile");
+
     res.json(user);
   } catch (err) {
-    console.error(err.message);
-    res.status(500).send("Server error at getprofile");
+    res.status(500).send("Server error");
+  }
+});
+
+router.post("/saveprofile", auth, async (req, res) => {
+  try {
+    const Finduser = await User.findById(req.user.id);
+
+    const { name, description } = req.body;
+    var query = { email: Finduser.email };
+    if (!Finduser.profile) {
+      let profile = new Profile({ description: description });
+
+      await profile.save();
+
+      Finduser.profile = profile._id;
+      await Finduser.save();
+    } else {
+      profile = await Profile.findById(Finduser.profile);
+      profile.description = description;
+      await profile.save();
+    }
+
+    Finduser.name = name;
+    await Finduser.save();
+    res.json(Finduser);
+  } catch (err) {
+    console.log("error");
+    res.status(500).send("Server error");
   }
 });
 

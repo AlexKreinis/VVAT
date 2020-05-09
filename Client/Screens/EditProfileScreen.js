@@ -6,7 +6,6 @@ import { saveProfile } from "../store/actions/Usersactions";
 const EditProfileScreen = (props) => {
   const userDetails = useSelector((state) => state.users);
   const [details, setDetails] = useState({
-    email: userDetails.email,
     name: userDetails.name,
     description: userDetails.description,
   });
@@ -31,7 +30,7 @@ const EditProfileScreen = (props) => {
         onChangeText={(text) =>
           setDetails({
             name: text,
-            email: details.email,
+
             description: details.description,
           })
         }

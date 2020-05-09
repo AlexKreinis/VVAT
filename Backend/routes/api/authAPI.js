@@ -2,62 +2,20 @@ const express = require("express");
 const router = express.Router();
 const auth = require("../../middleware/auth");
 const User = require("../../models/User");
-const Profile = require("../../models/Profile");
 
 const { check, validationResult } = require("express-validator");
 const jwt = require("jsonwebtoken");
 const config = require("config");
 const bcrypt = require("bcryptjs");
 
-router.post("/saveprofile", auth, async (req, res) => {
-  try {
-    const Finduser = await User.findById(req.user.id);
-
-    const { name, email, description } = req.body;
-    var query = { email: Finduser.email };
-    if (!Finduser.profile) {
-      let profile = new Profile({ description: description });
-
-      await profile.save();
-
-      Finduser.profile = profile._id;
-      await Finduser.save();
-    } else {
-      profile = await Profile.findById(Finduser.profile);
-      profile.description = description;
-      await profile.save();
-    }
-
-    u = await User.findOne({ email });
-
-    console.log(u.profile.description);
-    console.log(Finduser.profile.description);
-
-    const update = {
-      name: name,
-      email: email,
-    };
-
-    const user = await User.findOneAndUpdate(query, update);
-    res.json(user);
-  } catch (err) {
-    console.log("error");
-    res.status(500).send("Server error");
-  }
-});
-
 router.get("/getuser", auth, async (req, res) => {
-  console.log("hi");
   try {
     const user = await User.findById(req.user.id)
       .select("-password")
       .populate("profile");
 
-    console.log("entered");
     res.json(user);
   } catch (err) {
-    console.log("entered");
-
     res.status(500).send("Server error");
   }
 });

@@ -115,7 +115,7 @@ export const saveProfile = (data) => async (dispatch, getState) => {
   try {
     const token = getState().users.token;
 
-    const res = await fetch(`${youripadress}/api/auth/saveprofile`, {
+    const res = await fetch(`${youripadress}/api/profile/saveprofile`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
