@@ -37,6 +37,9 @@ const SportCentersList = (props) => {
           <Text style={{ fontWeight: "bold", fontSize: 22 }}>
             {itemData.item["Name"]}
           </Text>
+          <Text style={{ fontWeight: "bold", fontSize: 17 }}>
+            {itemData.item["Type"]}
+          </Text>
         </View>
       </TouchableOpacity>
     );

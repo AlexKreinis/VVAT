@@ -85,13 +85,14 @@ export const getUser = () => async (dispatch, getState) => {
       throw new Error(message);
     }
     let serverData = await res.json();
+    console.log(serverData);
     if (typeof serverData.profile !== "undefined") {
       dispatch({
         type: GET_USER,
         payload: {
-          name: serverData.user.name,
-          email: serverData.user.email,
-          description: serverData.user.profile.description,
+          name: serverData.name,
+          email: serverData.email,
+          description: serverData.profile.description,
         },
       });
     } else {
