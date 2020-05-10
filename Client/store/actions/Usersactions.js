@@ -85,23 +85,30 @@ export const getUser = () => async (dispatch, getState) => {
       throw new Error(message);
     }
     let serverData = await res.json();
-    console.log(serverData);
-    if (typeof serverData.profile !== "undefined") {
+
+    //*** important: change to serverData.user.FieldName after alex push to heroku,
+    if (typeof serverData.user.profile !== "undefined") {
       dispatch({
         type: GET_USER,
         payload: {
-          name: serverData.name,
-          email: serverData.email,
-          description: serverData.profile.description,
+          //*** important: change to serverData.user.FieldName after alex push to heroku,
+          name: serverData.user.name,
+          email: serverData.user.email,
+          description: serverData.user.profile.description,
+          age: serverData.user.profile.age,
+          facebook: serverData.user.profile.facebook,
+          //*** important: change to serverData.user.FieldName after alex push to heroku
         },
       });
     } else {
       dispatch({
         type: GET_USER,
         payload: {
-          name: serverData.name,
-          email: serverData.email,
+          name: serverData.user.name,
+          email: serverData.user.email,
           description: "",
+          age: "",
+          facebook: "",
         },
       });
     }
@@ -116,7 +123,7 @@ export const saveProfile = (data) => async (dispatch, getState) => {
   try {
     const token = getState().users.token;
 
-    const res = await fetch(`${youripadress}/api/auth/saveprofile`, {
+    const res = await fetch(`${youripadress}/api/profile/saveprofile`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -133,13 +140,16 @@ export const saveProfile = (data) => async (dispatch, getState) => {
         message = errorResData.errors[0].msg;
       throw new Error(message);
     }
+    let serverData = await res.json();
 
     dispatch({
       type: SAVE_PROFILE,
       payload: {
-        name: data.name,
-        email: data.email,
-        description: data.description,
+        name: serverData.user.name,
+        email: serverData.user.email,
+        description: serverData.user.profile.description,
+        age: serverData.user.profile.age,
+        facebook: serverData.user.profile.facebook,
       },
     });
   } catch (err) {

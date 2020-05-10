@@ -17,6 +17,8 @@ const EditProfileScreen = (props) => {
   const [details, setDetails] = useState({
     name: userDetails.name,
     description: userDetails.description,
+    age: userDetails.age,
+    facebook: userDetails.facebook,
   });
   const dispatch = useDispatch();
 
@@ -55,9 +57,27 @@ const EditProfileScreen = (props) => {
               }
             />
             <Text>Age: </Text>
-            <TextInput style={styles.input} />
+            <TextInput
+              style={styles.input}
+              value={details.age}
+              onChangeText={(text) =>
+                setDetails({
+                  ...details,
+                  age: text,
+                })
+              }
+            />
             <Text>Facebook: </Text>
-            <TextInput style={styles.input} />
+            <TextInput
+              style={styles.input}
+              value={details.facebook}
+              onChangeText={(text) =>
+                setDetails({
+                  ...details,
+                  facebook: text,
+                })
+              }
+            />
             <Text>description: </Text>
             <TextInput
               style={styles.input}

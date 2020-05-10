@@ -4,6 +4,8 @@ const initialState = {
   email: "",
   name: "",
   description: "",
+  age: "",
+  facebook: "",
 };
 
 const UsersReducers = (state = initialState, action) => {
@@ -19,11 +21,14 @@ const UsersReducers = (state = initialState, action) => {
       };
 
     case GET_USER:
+      //console.log("enttt", payload);
       return {
         token: state.token,
         email: action.payload.email,
         name: action.payload.name,
         description: action.payload.description,
+        age: action.payload.age,
+        facebook: action.payload.facebook,
       };
     case SAVE_PROFILE:
       // console.log(payload);
@@ -32,6 +37,8 @@ const UsersReducers = (state = initialState, action) => {
         email: action.payload.email,
         name: action.payload.name,
         description: action.payload.description,
+        age: action.payload.age,
+        facebook: action.payload.facebook,
       };
     default:
       return state;

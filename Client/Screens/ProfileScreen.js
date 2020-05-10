@@ -15,11 +15,14 @@ const ProfileScreen = (props) => {
     email: "",
     name: "",
     description: "",
+    facebook: "",
+    age: "",
   });
   const userDetails = useSelector((state) => state.users);
 
   useEffect(() => {
     setDetails(userDetails);
+    //console.log(userDetails);
   }, [userDetails]);
 
   return (
@@ -88,6 +91,14 @@ const ProfileScreen = (props) => {
               />
             </TouchableHighlight>
           </View>
+
+          <Text style={styles.description}>Age: {details.age}</Text>
+
+          <Text style={styles.description}>
+            Facebook:
+            {details.facebook}
+          </Text>
+
           <Text style={styles.description}>{details.description}</Text>
           <View style={styles.buttonContainer}>
             <Button
@@ -153,12 +164,22 @@ const styles = StyleSheet.create({
     color: "#696969",
   },
   buttonContainer: {
-    marginTop: -422,
-    height: 22,
+    marginTop: -500,
+    height: 25,
     flexDirection: "row",
     justifyContent: "flex-end",
     alignItems: "center",
-    marginBottom: 12,
+    marginBottom: 52,
+    width: 345,
+    borderRadius: 30,
+  },
+  buttonContainer2: {
+    marginTop: -220,
+    height: 100,
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    alignItems: "center",
+    marginBottom: 52,
     width: 345,
     borderRadius: 30,
   },

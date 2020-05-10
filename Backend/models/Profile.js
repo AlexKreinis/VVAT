@@ -3,7 +3,12 @@ const ProfileSchema = new mongoose.Schema({
   description: {
     type: String,
   },
-
+  age: {
+    type: String,
+  },
+  facebook: {
+    type: String,
+  },
   rating: {
     type: String,
   },
