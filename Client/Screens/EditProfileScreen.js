@@ -60,6 +60,7 @@ const EditProfileScreen = (props) => {
             <TextInput
               style={styles.input}
               value={details.age}
+              keyboardType="numeric"
               onChangeText={(text) =>
                 setDetails({
                   ...details,
