@@ -53,7 +53,7 @@ const ProfileScreen = (props) => {
           <View style={styles.buttonMenuContainer}>
             <TouchableHighlight
               style={[styles.button, styles.buttonAddUser]}
-              onPress={() => props.navigation.navigate("addFriend")}
+              //onPress={}
             >
               <Image
                 style={styles.icon}
@@ -105,6 +105,11 @@ const ProfileScreen = (props) => {
               title="edit profile"
               onPress={() => props.navigation.navigate("editProfile")}
             ></Button>
+            <Button
+              title="find users"
+              onPress={() => props.navigation.navigate("addFriend")}
+              color="#f1948a"
+            />
           </View>
         </View>
       </View>
@@ -165,10 +170,11 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     marginTop: -500,
-    height: 25,
-    flexDirection: "row",
-    justifyContent: "flex-end",
-    alignItems: "center",
+    marginLeft: 50,
+    height: 125,
+    flexDirection: "column",
+    justifyContent: "space-evenly",
+    alignItems: "flex-end",
     marginBottom: 52,
     width: 345,
     borderRadius: 30,
