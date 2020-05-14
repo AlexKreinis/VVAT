@@ -25,6 +25,12 @@ const ProfileSchema = new mongoose.Schema({
       ref: "user",
     },
   ],
+  friendRequest: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "user",
+    },
+  ],
 });
 
 module.exports = Profile = mongoose.model("profile", ProfileSchema);

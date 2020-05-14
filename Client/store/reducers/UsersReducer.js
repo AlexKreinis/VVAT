@@ -12,6 +12,9 @@ const initialState = {
   description: "",
   age: "",
   facebook: "",
+  events: [],
+  friendList: [],
+  friendRequest: [],
 };
 
 const UsersReducers = (state = initialState, action) => {
@@ -35,6 +38,9 @@ const UsersReducers = (state = initialState, action) => {
         description: action.payload.description,
         age: action.payload.age,
         facebook: action.payload.facebook,
+        events: action.payload.events,
+        friendList: action.payload.friendList,
+        friendRequest: action.payload.friendRequest,
       };
     case SAVE_PROFILE:
       // console.log(payload);

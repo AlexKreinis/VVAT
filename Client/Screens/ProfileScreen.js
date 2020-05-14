@@ -7,8 +7,10 @@ import {
   TouchableHighlight,
   Button,
 } from "react-native";
+import { Badge } from "react-native-elements";
 import { useSelector } from "react-redux";
 import Colors from "../constants/Colors";
+import ModalComp from "../Components/ModalComp";
 
 const ProfileScreen = (props) => {
   const [details, setDetails] = useState({
@@ -17,16 +19,36 @@ const ProfileScreen = (props) => {
     description: "",
     facebook: "",
     age: "",
+    events: [],
+    friendList: [],
+    friendRequest: [],
   });
+  const [isOpen, setIsOpen] = useState(false);
   const userDetails = useSelector((state) => state.users);
 
   useEffect(() => {
-    setDetails(userDetails);
-    //console.log(userDetails);
+    const tempDetails = {
+      email: userDetails.email ? userDetails.email : "",
+      name: userDetails.name ? userDetails.name : "",
+      description: userDetails.description ? userDetails.description : "",
+      facebook: userDetails.facebook ? userDetails.facebook : "",
+      age: userDetails.age ? userDetails.age : "",
+      events: userDetails.events ? userDetails.events : [],
+      friendList: userDetails.friendList ? userDetails.friendList : [],
+      friendRequest: userDetails.friendRequest ? userDetails.friendRequest : [],
+    };
+    setDetails(tempDetails);
   }, [userDetails]);
 
   return (
     <View style={styles.container}>
+      <View style={{ marginTop: -25 }}>
+        <ModalComp
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
+          choice="acceptFriendList"
+        />
+      </View>
       <View style={styles.header}>
         <View style={styles.headerContent}>
           <Image style={styles.avatar} source={require("../assets/pro2.png")} />
@@ -37,11 +59,11 @@ const ProfileScreen = (props) => {
       <View style={styles.profileDetail}>
         <View style={styles.detailContent}>
           <Text style={styles.title}>Friends</Text>
-          <Text style={styles.count}>200</Text>
+          <Text style={styles.count}>{details.friendList.length}</Text>
         </View>
         <View style={styles.detailContent}>
           <Text style={styles.title}>Events</Text>
-          <Text style={styles.count}>200</Text>
+          <Text style={styles.count}>{details.events.length}</Text>
         </View>
         <View style={styles.detailContent}>
           <Text style={styles.title}>Rating</Text>
@@ -53,12 +75,34 @@ const ProfileScreen = (props) => {
           <View style={styles.buttonMenuContainer}>
             <TouchableHighlight
               style={[styles.button, styles.buttonAddUser]}
-              //onPress={}
+              onPress={() => setIsOpen(true)}
             >
-              <Image
-                style={styles.icon}
-                source={require("../assets/add-user.png")}
-              />
+              <>
+                <Image
+                  style={styles.icon}
+                  source={require("../assets/add-user.png")}
+                />
+                {details.friendRequest.length > 0 && (
+                  <Badge
+                    status="error"
+                    containerStyle={{
+                      position: "absolute",
+                      top: 1,
+                      right: 1,
+                    }}
+                    value={
+                      details.friendRequest.length > 0
+                        ? details.friendRequest.length
+                        : ""
+                    }
+                    badgeStyle={{
+                      height: 25,
+                      width: 25,
+                      borderRadius: 1000,
+                    }}
+                  />
+                )}
+              </>
             </TouchableHighlight>
 
             <TouchableHighlight

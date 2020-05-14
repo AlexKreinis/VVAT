@@ -7,6 +7,7 @@ import {
   TouchableHighlight,
 } from "react-native";
 import ModalNavigator from "./innerComponents/ModalNavigator";
+import AcceptFriendList from "./innerComponents/AcceptFriendList";
 import { deleteEvents } from "../store/actions/MapsActions";
 import { useDispatch } from "react-redux";
 import { Ionicons } from "@expo/vector-icons";
@@ -21,6 +22,9 @@ const ModalComp = (props) => {
   const showInnerComponent = () => {
     if (props.choice === "ModalNavigator") {
       return <ModalNavigator />;
+    }
+    if (props.choice === "acceptFriendList") {
+      return <AcceptFriendList />;
     }
   };
   return (

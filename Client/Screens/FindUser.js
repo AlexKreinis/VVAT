@@ -1,22 +1,26 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, Button, TextInput } from "react-native";
 import { findUserProfile } from "../store/actions/Usersactions";
+import { sendFriendRequest } from "../store/actions/profileActions";
 import { useDispatch } from "react-redux";
 
 const AddFriendScreen = (props) => {
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
-  const [profile, setProfile] = useState({
-    name: "",
-    email: "",
-    profile: { age: "", facebook: "", description: "" },
-  });
+  const [profile, setProfile] = useState(null);
 
   const getProfileHandler = async () => {
     try {
       const userProfile = await dispatch(findUserProfile(email));
-      console.log(userProfile);
       setProfile(userProfile.other);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  const addFriend = async () => {
+    try {
+      console.log("clicked");
+      await dispatch(sendFriendRequest(profile._id));
     } catch (err) {
       console.log(err);
     }
@@ -35,13 +39,16 @@ const AddFriendScreen = (props) => {
         <Button title="Search" onPress={getProfileHandler} />
       </View>
 
-      <View>
-        <Text>name: {profile.name}</Text>
-        <Text>email: {profile.email}</Text>
-        <Text>age: {profile.profile.age}</Text>
-        <Text>facebook: {profile.profile.facebook}</Text>
-        <Text>description: {profile.profile.description}</Text>
-      </View>
+      {profile && (
+        <View>
+          <Text>name: {profile.name}</Text>
+          <Text>email: {profile.email}</Text>
+          <Text>age: {profile.profile.age}</Text>
+          <Text>facebook: {profile.profile.facebook}</Text>
+          <Text>description: {profile.profile.description}</Text>
+          <Button title="add friend" onPress={addFriend} />
+        </View>
+      )}
       <Button
         title="Go back"
         onPress={() => props.navigation.navigate("profile")}
