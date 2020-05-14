@@ -4,17 +4,20 @@ const User = require("../../models/User");
 const Profile = require("../../models/Profile");
 const auth = require("../../middleware/auth");
 
-/* router.get("/getprofile", async (req, res) => {
+router.get("/finduserprofile/:email", async (req, res) => {
+  console.log(req.params.email);
+  otherEmail = req.params.email;
   try {
-    const user = await User.findById(req.user.id)
+    const otherUser = await User.findOne({ email: otherEmail })
+
       .select("-password")
       .populate("profile");
-
-    res.json({ user: user });
+    console.log(otherUser);
+    res.json({ otherUser });
   } catch (err) {
-    res.status(500).send("Server error");
+    res.status(500).send("finduserprofile error");
   }
-}); */
+});
 
 router.post("/saveprofile", auth, async (req, res) => {
   try {

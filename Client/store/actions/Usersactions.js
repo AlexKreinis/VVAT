@@ -1,6 +1,12 @@
 export const SIGNUP = "SIGNUP";
 
-import { LOGIN, REGISTER, GET_USER, SAVE_PROFILE } from "../actions/const";
+import {
+  LOGIN,
+  REGISTER,
+  GET_USER,
+  SAVE_PROFILE,
+  GET_USER_PROFILE,
+} from "../actions/const";
 const youripadress = "https://vvat.herokuapp.com";
 //const youripadress = "http://localhost:5000";
 //try
@@ -112,6 +118,36 @@ export const getUser = () => async (dispatch, getState) => {
         },
       });
     }
+  } catch (err) {
+    throw err;
+  }
+};
+
+export const findUserProfile = (email) => async (dispatch) => {
+  try {
+    const res = await fetch(
+      `${youripadress}/api/profile/finduserprofile/${email}`
+    );
+
+    if (!res.ok) {
+      const errorResData = await res.json();
+      let message = "Something went wrong!";
+      if (errorResData && errorResData.errors.length > 0)
+        message = errorResData.errors[0].msg;
+      throw new Error(message);
+    }
+    let serverData = await res.json();
+
+    dispatch({
+      type: GET_USER_PROFILE,
+      payload: {
+        name: serverData.user.name,
+        email: serverData.user.email,
+        description: serverData.user.profile.description,
+        age: serverData.user.profile.age,
+        facebook: serverData.user.profile.facebook,
+      },
+    });
   } catch (err) {
     throw err;
   }
