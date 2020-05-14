@@ -6,7 +6,11 @@ import { useDispatch } from "react-redux";
 const AddFriendScreen = (props) => {
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
-  const [profile, setProfile] = useState({});
+  const [profile, setProfile] = useState({
+    name: "",
+    email: "",
+    profile: { age: "", facebook: "", description: "" },
+  });
 
   const getProfileHandler = async () => {
     try {
@@ -36,7 +40,7 @@ const AddFriendScreen = (props) => {
         <Text>email: {profile.email}</Text>
         <Text>age: {profile.profile.age}</Text>
         <Text>facebook: {profile.profile.facebook}</Text>
-        <Text>desc: {profile.profile.description}</Text>
+        <Text>description: {profile.profile.description}</Text>
       </View>
       <Button
         title="Go back"

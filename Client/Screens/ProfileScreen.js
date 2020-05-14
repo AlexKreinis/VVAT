@@ -106,7 +106,7 @@ const ProfileScreen = (props) => {
               onPress={() => props.navigation.navigate("editProfile")}
             ></Button>
             <Button
-              title="find users"
+              title="find user"
               onPress={() => props.navigation.navigate("addFriend")}
               color="#f1948a"
             />

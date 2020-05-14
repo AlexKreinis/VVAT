@@ -5,7 +5,6 @@ const Profile = require("../../models/Profile");
 const auth = require("../../middleware/auth");
 
 router.get("/finduserprofile/:email", async (req, res) => {
-  console.log(req.params.email);
   otherEmail = req.params.email;
   try {
     const otherUser = await User.findOne({ email: otherEmail })
