@@ -14,7 +14,7 @@ import { createMaterialBottomTabNavigator } from "react-navigation-material-bott
 import Colors from "../constants/Colors";
 import SportCentersList from "../Screens/SportCentersList";
 import DemoScreen2 from "../Screens/DemoScreen2";
-import AddFriendScreen from "../Screens/AddFriendScreen";
+import FindUser from "../Screens/FindUser";
 
 const defaultStackNavOptions = {
   headerStyle: {
@@ -50,7 +50,7 @@ const ProfileNav = createStackNavigator(
   {
     profile: ProfileScreen,
     editProfile: EditProfileScreen,
-    addFriend: AddFriendScreen,
+    addFriend: FindUser,
   },
   {
     defaultNavigationOptions: {
