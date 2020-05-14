@@ -19,7 +19,6 @@ const AddFriendScreen = (props) => {
   };
   const addFriend = async () => {
     try {
-      console.log("clicked");
       await dispatch(sendFriendRequest(profile._id));
     } catch (err) {
       console.log(err);

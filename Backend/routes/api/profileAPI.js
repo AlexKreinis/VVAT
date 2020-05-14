@@ -4,9 +4,21 @@ const User = require("../../models/User");
 const Profile = require("../../models/Profile");
 const auth = require("../../middleware/auth");
 
-router.post("/sendfriendrequest", auth, async (req, res) => {
+router.get("/getfriendrequests", auth, async (req, res) => {
   try {
     console.log("entered route");
+    const foundUser = User.findById(req.user.id);
+    const foundProfile = Profile.findById(foundUser.profile).populate(
+      "friendRequest"
+    );
+    console.log(foundProfile);
+  } catch (error) {
+    console.log("error");
+    res.status(500).send("Server error");
+  }
+});
+router.post("/sendfriendrequest", auth, async (req, res) => {
+  try {
     const { id } = req.body;
     const FriendRequestUser = await User.findById(id);
     const friendRequestProfile = await Profile.findById(
