@@ -12,8 +12,8 @@ router.get("/finduserprofile/:email", async (req, res) => {
 
       .select("-password")
       .populate("profile");
-    console.log(otherUser);
-    res.json({ otherUser });
+
+    res.json({ other: otherUser });
   } catch (err) {
     res.status(500).send("finduserprofile error");
   }

@@ -7,8 +7,8 @@ import {
   SAVE_PROFILE,
   GET_USER_PROFILE,
 } from "../actions/const";
-const youripadress = "https://vvat.herokuapp.com";
-//const youripadress = "http://localhost:5000";
+//const youripadress = "https://vvat.herokuapp.com";
+const youripadress = "http://192.168.0.86:5000";
 //try
 export const register = (data) => async (dispatch) => {
   try {
@@ -125,6 +125,7 @@ export const getUser = () => async (dispatch, getState) => {
 
 export const findUserProfile = (email) => async (dispatch) => {
   try {
+    console.log("email:", email);
     const res = await fetch(
       `${youripadress}/api/profile/finduserprofile/${email}`
     );
@@ -138,16 +139,8 @@ export const findUserProfile = (email) => async (dispatch) => {
     }
     let serverData = await res.json();
 
-    dispatch({
-      type: GET_USER_PROFILE,
-      payload: {
-        name: serverData.user.name,
-        email: serverData.user.email,
-        description: serverData.user.profile.description,
-        age: serverData.user.profile.age,
-        facebook: serverData.user.profile.facebook,
-      },
-    });
+    console.log(serverData);
+    return serverData;
   } catch (err) {
     throw err;
   }

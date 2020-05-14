@@ -12,13 +12,6 @@ const initialState = {
   description: "",
   age: "",
   facebook: "",
-  otherUser: {
-    other_email: "",
-    other_name: "",
-    other_description: "",
-    other_age: "",
-    other_facebook: "",
-  },
 };
 
 const UsersReducers = (state = initialState, action) => {
@@ -45,18 +38,13 @@ const UsersReducers = (state = initialState, action) => {
       };
     case SAVE_PROFILE:
       // console.log(payload);
-      return {};
-    case GET_USER_PROFILE:
-      // console.log(payload);
       return {
-        ...state,
-        otherUser: {
-          other_email: action.payload.email,
-          other_name: action.payload.name,
-          other_description: action.payload.description,
-          other_age: action.payload.age,
-          other_facebook: action.payload.facebook,
-        },
+        token: state.token,
+        email: action.payload.email,
+        name: action.payload.name,
+        description: action.payload.description,
+        age: action.payload.age,
+        facebook: action.payload.facebook,
       };
     default:
       return state;
