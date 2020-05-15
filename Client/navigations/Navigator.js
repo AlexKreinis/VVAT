@@ -13,7 +13,7 @@ import React from "react";
 import { createMaterialBottomTabNavigator } from "react-navigation-material-bottom-tabs";
 import Colors from "../constants/Colors";
 import SportCentersList from "../Screens/SportCentersList";
-import DemoScreen2 from "../Screens/DemoScreen2";
+import TermsAndConditions from "../Screens/TermsAndConditions";
 import FindUser from "../Screens/FindUser";
 
 const defaultStackNavOptions = {
@@ -87,10 +87,10 @@ const SportCentersListNav = createStackNavigator(
   }
 );
 
-const Demo2Navigator = createStackNavigator(
+const TermsAndConditionsNavigator = createStackNavigator(
   {
     Main: {
-      screen: DemoScreen2,
+      screen: TermsAndConditions,
     },
   },
   {
@@ -143,7 +143,7 @@ const MainNavigator = createDrawerNavigator({
   },
 
   SportCentersList: SportCentersListNav,
-  Demo2: Demo2Navigator,
+  TermsAndConditions: TermsAndConditionsNavigator,
 });
 
 const Navigator = createSwitchNavigator({
