@@ -1,6 +1,5 @@
 const expect = require("chai").expect;
 const request = require("supertest");
-
 const app = require("../../../server.js");
 const connectDB = require("../../../config/db");
 
@@ -56,6 +55,17 @@ it("OK. added event", (done) => {
     .then((res) => {
       const body = res.body;
       expect(body).to.contain.property("msg");
+      done();
+    })
+    .catch((err) => done(err));
+});
+
+it("OK. get rating for event", (done) => {
+  request(app)
+    .get("/api/maps/getratings/5ebe8e5d0ae82225701e01ae")
+    .then((res) => {
+      const body = res.body;
+      expect(body).to.contain.property("rating");
       done();
     })
     .catch((err) => done(err));

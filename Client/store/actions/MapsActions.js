@@ -1,6 +1,8 @@
 //const youripadress = "http://localhost:5000";
 
-const youripadress = "https://vvat.herokuapp.com";
+//const youripadress = "https://vvat.herokuapp.com";
+
+const youripadress = "http://192.168.1.35:5000";
 
 import {
   GET_MAPS,
@@ -108,7 +110,7 @@ export const getRating = (eventid) => async (dispatch) => {
 
     dispatch({
       type: GET_RATING,
-      payload: serverData,
+      payload: serverData.rating,
     });
   } catch (err) {
     throw err;
