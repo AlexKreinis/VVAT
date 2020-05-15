@@ -7,3 +7,5 @@ export const GET_EVENTS = "GET_EVENTS";
 export const DELETE_EVENTS = "DELETE_EVENTS";
 export const SAVE_PROFILE = "SAVE_PROFILE";
 export const GET_USER_PROFILE = "GET_USER_PROFILE";
+export const ADD_RATING = "ADD_RATING";
+export const GET_RATING = "GET_RATING";

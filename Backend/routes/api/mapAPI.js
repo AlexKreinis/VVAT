@@ -54,4 +54,37 @@ router.post("/addevent", async (req, res) => {
   }
 });
 
+router.post("/addrating", async (req, res) => {
+  try {
+    //  const { rating, eventId } = req.params;
+
+    const { rating, eventId } = req.body;
+
+    event = await Event.findById(eventId);
+
+    event.ratings.push(rating);
+    await event.save();
+
+    events = await Event.findById(eventId);
+
+    res.json(events.ratings);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).json({ errors: [{ msg: err.message }] });
+  }
+});
+
+router.get("/getratings/:eventid", async (req, res) => {
+  try {
+    const { eventid } = req.params;
+
+    event = await Event.findById(eventid);
+
+    res.json(event.ratings);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).json({ errors: [{ msg: err.message }] });
+  }
+});
+
 module.exports = router;
