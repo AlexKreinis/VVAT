@@ -24,6 +24,7 @@ const ProfileScreen = (props) => {
     friendRequest: [],
   });
   const [isOpen, setIsOpen] = useState(false);
+
   const userDetails = useSelector((state) => state.users);
 
   useEffect(() => {

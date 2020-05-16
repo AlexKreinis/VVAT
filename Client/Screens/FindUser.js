@@ -1,20 +1,27 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, Button, TextInput } from "react-native";
 import { findUserProfile } from "../store/actions/Usersactions";
 import { sendFriendRequest } from "../store/actions/profileActions";
 import { useDispatch } from "react-redux";
 
 const AddFriendScreen = (props) => {
+  useEffect(() => {
+    if (error) {
+      Alert.alert("An Error Occurred!", error, [{ text: "Okay" }]);
+    }
+  }, [error]);
+
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [profile, setProfile] = useState(null);
+  const [error, setError] = useState(null);
 
   const getProfileHandler = async () => {
     try {
       const userProfile = await dispatch(findUserProfile(email));
       setProfile(userProfile.other);
     } catch (err) {
-      console.log(err);
+      setError(err.message);
     }
   };
   const addFriend = async () => {
@@ -22,7 +29,7 @@ const AddFriendScreen = (props) => {
       console.log("clicked");
       await dispatch(sendFriendRequest(profile._id));
     } catch (err) {
-      console.log(err);
+      setError(err.message);
     }
   };
 

@@ -14,12 +14,18 @@ import { saveProfile } from "../store/actions/Usersactions";
 
 const EditProfileScreen = (props) => {
   const userDetails = useSelector((state) => state.users);
+  const [error, setError] = useState(null);
   const [details, setDetails] = useState({
     name: userDetails.name,
     description: userDetails.description,
     age: userDetails.age,
     facebook: userDetails.facebook,
   });
+  useEffect(() => {
+    if (error) {
+      Alert.alert("An Error Occurred!", error, [{ text: "Okay" }]);
+    }
+  }, [error]);
   const dispatch = useDispatch();
 
   const clickHandler = async () => {
@@ -29,7 +35,7 @@ const EditProfileScreen = (props) => {
       await (dispatch(saveProfile(details)),
       props.navigation.navigate("profile"));
     } catch (err) {
-      //  setError(err.message);
+      setError(err.message);
     }
   };
   return (
