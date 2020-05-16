@@ -54,4 +54,77 @@ router.post("/addevent", async (req, res) => {
   }
 });
 
+router.post("/addrating", async (req, res) => {
+  try {
+    //  const { rating, eventId } = req.params;
+
+    const { rating, eventId } = req.body;
+
+    event = await Event.findById(eventId);
+
+    event.ratings.push(rating);
+    await event.save();
+
+    events = await Event.findById(eventId);
+
+    res.json(events.ratings);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).json({ errors: [{ msg: err.message }] });
+  }
+});
+
+router.get("/getratings/:eventid", async (req, res) => {
+  try {
+    const { eventid } = req.params;
+
+    event = await Event.findById(eventid);
+
+    res.json({ rating: event.ratings });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).json({ errors: [{ msg: err.message }] });
+  }
+});
+
+router.post("/addatendee", async (req, res) => {
+  try {
+    //  const { rating, eventId } = req.params;
+
+    const { name, email, eventid } = req.body;
+
+    event = await Event.findById(eventid);
+    var found = false;
+    for (var i = 0; i < event.atendees.length; i++) {
+      if (event.atendees[i].email == email) {
+        found = true;
+        break;
+      }
+    }
+    if (!found) event.atendees.push({ name: name, email: email });
+
+    await event.save();
+
+    events = await Event.findById(eventid);
+
+    res.json(events.atendees);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).json({ errors: [{ msg: err.message }] });
+  }
+});
+
+router.get("/getatendees/:eventid", async (req, res) => {
+  try {
+    const { eventid } = req.params;
+
+    event = await Event.findById(eventid);
+
+    res.json({ atendees: event.atendees });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).json({ errors: [{ msg: err.message }] });
+  }
+});
+
 module.exports = router;

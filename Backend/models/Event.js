@@ -12,10 +12,15 @@ const EventSchema = new mongoose.Schema({
     type: String,
     rquired: true,
   },
+  ratings: [
+    {
+      type: Number,
+    },
+  ],
   atendees: [
     {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Atendee",
+      name: { type: String },
+      email: { type: String },
     },
   ],
 });

@@ -7,8 +7,14 @@ import {
   SAVE_PROFILE,
   GET_USER_PROFILE,
 } from "../actions/const";
+<<<<<<< HEAD
 //const youripadress = "https://vvat.herokuapp.com";
 const youripadress = "http://192.168.0.86:5000";
+=======
+const youripadress = "https://vvat.herokuapp.com";
+//const youripadress = "http://localhost:5000";
+
+>>>>>>> 57b7fc5e5b4236a0b037ec7bc1658c27970aea3e
 //try
 export const register = (data) => async (dispatch) => {
   try {

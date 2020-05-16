@@ -32,7 +32,7 @@ const SportCentersList = (props) => {
 
   const renderSportcenterItem = (itemData) => {
     return (
-      <TouchableOpacity onPress={() => handleOpenModal(itemData)}>
+      <TouchableOpacity onPress={() => handleOpenModal(itemData.item)}>
         <View style={styles.listItem}>
           <Text style={{ fontWeight: "bold", fontSize: 22 }}>
             {itemData.item["Name"]}
