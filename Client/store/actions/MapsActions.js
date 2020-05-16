@@ -9,6 +9,8 @@ import {
   DELETE_EVENTS,
   ADD_RATING,
   GET_RATING,
+  ADD_ATENDEE,
+  GET_ATENDEE,
 } from "./const";
 
 export const maps = () => async (dispatch) => {
@@ -146,6 +148,61 @@ export const getEvents = (lat, lon) => async (dispatch) => {
     return serverData;
   } catch (err) {
     console.log(err.message);
+    throw err;
+  }
+};
+
+export const addAtendee = (name, email, eventid) => async (dispatch) => {
+  console.log("here");
+
+  try {
+    const res = await fetch(`${youripadress}/api/maps/addatendee`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify({ name: name, email: email, eventid: eventid }),
+    });
+
+    if (!res.ok) {
+      const errorResData = await res.json();
+      let message = "Something went wrong!";
+      if (errorResData && errorResData.errors.length > 0)
+        message = errorResData.errors[0].msg;
+      throw new Error(message);
+    }
+
+    let serverData = await res.json();
+    console.log("here", serverData);
+    dispatch({
+      type: ADD_ATENDEE,
+      payload: serverData,
+    });
+  } catch (err) {
+    throw err;
+  }
+};
+
+export const getAtendees = (eventid) => async (dispatch) => {
+  try {
+    const res = await fetch(`${youripadress}/api/maps/getatendees/${eventid}`);
+
+    if (!res.ok) {
+      const errorResData = await res.json();
+      let message = "Something went wrong!";
+      if (errorResData && errorResData.errors.length > 0)
+        message = errorResData.errors[0].msg;
+      throw new Error(message);
+    }
+
+    let serverData = await res.json();
+
+    dispatch({
+      type: GET_ATENDEE,
+      payload: serverData.atendees,
+    });
+  } catch (err) {
     throw err;
   }
 };

@@ -19,8 +19,8 @@ const EventSchema = new mongoose.Schema({
   ],
   atendees: [
     {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Atendee",
+      name: { type: String },
+      email: { type: String },
     },
   ],
 });

@@ -44,7 +44,7 @@ const EventList = (props) => {
       <TouchableOpacity
         onPress={() =>
           props.navigation.navigate("EventDetails", {
-            itemId: itemData.item._id,
+            item: itemData.item,
           })
         }
       >

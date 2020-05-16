@@ -1,17 +1,31 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View, Button } from "react-native";
-import { Rating, AirbnbRating } from "react-native-elements";
+import { AirbnbRating } from "react-native-elements";
 import { useDispatch, useSelector } from "react-redux";
-import { addRating, getRating } from "../store/actions/MapsActions";
-
+import { addRating, getRating, addAtendee } from "../store/actions/MapsActions";
+import { getUser } from "../store/actions/Usersactions";
 const EventScreen = (props) => {
-  //  console.log();
   const dispatch = useDispatch();
   const [avgRating, setAvgRating] = useState(0);
   const eventRatings = useSelector((state) => state.maps.eventRatings);
+  const userDetails = useSelector((state) => state.users);
   const ratingCompleted = async (rating) => {
     try {
-      await dispatch(addRating(rating, props.navigation.state.params.itemId));
+      await dispatch(addRating(rating, props.navigation.state.params.item._id));
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const RegForEventHandler = () => {
+    try {
+      dispatch(
+        addAtendee(
+          userDetails.name,
+          userDetails.email,
+          props.navigation.state.params.item._id
+        )
+      );
     } catch (err) {
       console.log(err);
     }
@@ -28,11 +42,19 @@ const EventScreen = (props) => {
 
   useEffect(() => {
     try {
-      dispatch(getRating(props.navigation.state.params.itemId));
+      dispatch(getRating(props.navigation.state.params.item._id));
     } catch (err) {
       console.log(err);
     }
   }, []);
+
+  useEffect(() => {
+    try {
+      dispatch(getUser());
+    } catch (err) {
+      console.log(err);
+    }
+  }, [userDetails]);
 
   return (
     <View style={styles.container}>
@@ -47,15 +69,25 @@ const EventScreen = (props) => {
       />
 
       <View style={styles.eventDetails}>
-        <Text>EVENT DETAILS GOES HERE</Text>
+        <Text>event name: {props.navigation.state.params.item.name}</Text>
+        <Text>start time: {props.navigation.state.params.item.start}</Text>
+        <Text>end time: {props.navigation.state.params.item.finish}</Text>
       </View>
 
       <Text>event avg rating: {avgRating}</Text>
 
       <View style={styles.footer}>
+        <Button title="REGISTER FOR EVENT" onPress={RegForEventHandler} />
+      </View>
+
+      <View style={styles.footer}>
         <Button
           title="List of Attendees"
-          onPress={() => props.navigation.navigate("Attendees")}
+          onPress={() =>
+            props.navigation.navigate("Attendees", {
+              eventId: props.navigation.state.params.item._id,
+            })
+          }
         />
       </View>
     </View>

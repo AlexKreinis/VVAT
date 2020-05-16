@@ -5,6 +5,8 @@ import {
   DELETE_EVENTS,
   ADD_RATING,
   GET_RATING,
+  ADD_ATENDEE,
+  GET_ATENDEE,
 } from "../actions/const";
 
 const initialState = {
@@ -12,6 +14,7 @@ const initialState = {
   selectedMapData: { lat: "", lon: "", name: "" },
   events: [],
   eventRatings: [],
+  atten: [],
 };
 
 const MapsReducers = (state = initialState, action) => {
@@ -40,6 +43,11 @@ const MapsReducers = (state = initialState, action) => {
       return { ...state, events: [] };
     case GET_RATING:
       return { ...state, eventRatings: action.payload };
+    case ADD_ATENDEE:
+      return { ...state, atten: action.payload };
+
+    case GET_ATENDEE:
+      return { ...state, atten: action.payload };
     default:
       return state;
   }

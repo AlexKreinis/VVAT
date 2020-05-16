@@ -1,8 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { StyleSheet, View, Text, FlatList } from "react-native";
 import { USERS } from "../../dummy-data/dummy-data";
+import { useSelector, useDispatch } from "react-redux";
+import { getAtendees } from "../../store/actions/MapsActions";
+const Attendees = (props) => {
+  const dispatch = useDispatch();
 
-const Attendees = () => {
+  useEffect(() => {
+    try {
+      dispatch(getAtendees(props.navigation.state.params.eventId));
+    } catch (err) {
+      console.log(err);
+    }
+  }, [AttendeesList]);
+
+  const AttendeesList = useSelector((state) => state.maps.atten);
+
   const renderUserItem = (itemData) => {
     return (
       <View style={styles.listItem}>
@@ -19,9 +32,9 @@ const Attendees = () => {
       </View>
       <View style={styles.list}>
         <FlatList
-          data={USERS}
+          data={AttendeesList}
           renderItem={renderUserItem}
-          keyExtractor={(item, index) => item.id}
+          keyExtractor={(item, index) => "key" + index}
         ></FlatList>
       </View>
     </View>
