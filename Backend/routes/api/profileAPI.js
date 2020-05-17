@@ -4,21 +4,58 @@ const User = require("../../models/User");
 const Profile = require("../../models/Profile");
 const auth = require("../../middleware/auth");
 
+router.post("/acceptfriendrequest", auth, async (req, res) => {
+  try {
+    const foundUser = await User.findById(req.user.id);
+    const foundProfile = await Profile.findById(foundUser.profile);
+    const filteredFriendReuqest = foundProfile.friendRequest.filter(
+      (request) => request != req.body.id
+    );
+    foundProfile.friendRequest = filteredFriendReuqest;
+    foundProfile.friendList.push(req.body.id);
+    foundProfile.save();
+    res.json({ msg: "accepted the friend request" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ errors: [{ msg: error.message }] });
+  }
+});
+router.post("/deletefriendrequest", auth, async (req, res) => {
+  try {
+    const foundUser = await User.findById(req.user.id);
+    const foundProfile = await Profile.findById(foundUser.profile);
+    const filteredFriendReuqest = foundProfile.friendRequest.filter(
+      (request) => request != req.body.id
+    );
+    foundProfile.friendRequest = filteredFriendReuqest;
+    foundProfile.save();
+    console.log(foundProfile);
+    res.json({ msg: "you have deleted the request" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ errors: [{ msg: error.message }] });
+  }
+});
+
 router.get("/getfriendrequests", auth, async (req, res) => {
   try {
-    console.log("entered route");
-    const foundUser = User.findById(req.user.id);
-    const foundProfile = Profile.findById(foundUser.profile).populate(
+    const foundUser = await User.findById(req.user.id);
+    const foundProfile = await Profile.findById(foundUser.profile).populate(
       "friendRequest"
     );
-    console.log(foundProfile);
+    if (foundProfile.friendRequest.length > 0) {
+      res.json({ friendRequests: foundProfile.friendRequest });
+    } else {
+      res.json({ friendRequests: [] });
+    }
   } catch (error) {
-    console.log("error");
-    res.status(500).send("Server error");
+    console.error(err);
+    res.status(500).json({ errors: [{ msg: err.message }] });
   }
 });
 router.post("/sendfriendrequest", auth, async (req, res) => {
   try {
+    console.log("entered send friend request");
     const { id } = req.body;
     const FriendRequestUser = await User.findById(id);
     const friendRequestProfile = await Profile.findById(
@@ -28,8 +65,8 @@ router.post("/sendfriendrequest", auth, async (req, res) => {
     await friendRequestProfile.save();
     res.json({ msg: "success" });
   } catch (err) {
-    console.log("error");
-    res.status(500).send("Server error");
+    console.error(err);
+    res.status(500).json({ errors: [{ msg: err.message }] });
   }
 });
 
@@ -42,7 +79,8 @@ router.get("/finduserprofile/:email", async (req, res) => {
 
     res.json({ other: otherUser });
   } catch (err) {
-    res.status(500).send("finduserprofile error");
+    console.error(err);
+    res.status(500).json({ errors: [{ msg: err.message }] });
   }
 });
 
@@ -71,8 +109,8 @@ router.post("/saveprofile", auth, async (req, res) => {
     const user = await User.findById(req.user.id).populate("profile");
     res.json({ user: user });
   } catch (err) {
-    console.log("error");
-    res.status(500).send("Server error");
+    console.error(err);
+    res.status(500).json({ errors: [{ msg: err.message }] });
   }
 });
 

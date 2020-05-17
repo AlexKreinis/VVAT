@@ -7,6 +7,8 @@ import {
   Button,
   TextInput,
   KeyboardAvoidingView,
+  Alert,
+  ScrollView,
 } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import Colors from "../constants/Colors";
@@ -30,11 +32,11 @@ const EditProfileScreen = (props) => {
 
   const clickHandler = async () => {
     //dipatch function from useractions that go to the server and fetch post action that send new user profile details in the body of the req to the route
-
     try {
-      await (dispatch(saveProfile(details)),
-      props.navigation.navigate("profile"));
+      await dispatch(saveProfile(details));
+      props.navigation.navigate("profile");
     } catch (err) {
+      console.log("error catched", err);
       setError(err.message);
     }
   };
@@ -42,7 +44,7 @@ const EditProfileScreen = (props) => {
     <KeyboardAvoidingView behavior="padding" style={styles.container}>
       <View style={styles.container}>
         <View style={styles.header}>
-          <Image style={styles.avatar} source={require("../assets/pro2.png")} />
+          {/* <Image style={styles.avatar} source={require("../assets/pro2.png")} /> */}
           <Button
             title="Go back"
             onPress={() => props.navigation.navigate("profile")}

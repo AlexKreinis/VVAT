@@ -7,14 +7,8 @@ import {
   SAVE_PROFILE,
   GET_USER_PROFILE,
 } from "../actions/const";
-<<<<<<< HEAD
 //const youripadress = "https://vvat.herokuapp.com";
-const youripadress = "http://192.168.0.86:5000";
-=======
-const youripadress = "https://vvat.herokuapp.com";
-//const youripadress = "http://localhost:5000";
-
->>>>>>> 57b7fc5e5b4236a0b037ec7bc1658c27970aea3e
+const youripadress = "http://192.168.56.1:5000";
 //try
 export const register = (data) => async (dispatch) => {
   try {
@@ -98,7 +92,7 @@ export const getUser = () => async (dispatch, getState) => {
     }
     let serverData = await res.json();
 
-    if (typeof serverData.user.profile !== "undefined") {
+    if (serverData.user.profile) {
       dispatch({
         type: GET_USER,
         payload: {
@@ -153,7 +147,6 @@ export const findUserProfile = (email) => async (dispatch) => {
 export const saveProfile = (data) => async (dispatch, getState) => {
   try {
     const token = getState().users.token;
-
     const res = await fetch(`${youripadress}/api/profile/saveprofile`, {
       method: "POST",
       headers: {
@@ -163,7 +156,6 @@ export const saveProfile = (data) => async (dispatch, getState) => {
       },
       body: JSON.stringify(data),
     });
-
     if (!res.ok) {
       const errorResData = await res.json();
       let message = "Something went wrong!";

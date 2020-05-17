@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, Button, TextInput } from "react-native";
+import { View, Text, StyleSheet, Button, TextInput, Alert } from "react-native";
 import { findUserProfile } from "../store/actions/Usersactions";
 import { sendFriendRequest } from "../store/actions/profileActions";
 import { useDispatch } from "react-redux";
@@ -27,6 +27,10 @@ const AddFriendScreen = (props) => {
   const addFriend = async () => {
     try {
       await dispatch(sendFriendRequest(profile._id));
+      Alert.alert("Success", "Friend Reuqest has been sent", [
+        { text: "Okay" },
+      ]);
+      props.navigation.navigate("profile");
     } catch (err) {
       setError(err.message);
     }
@@ -49,9 +53,13 @@ const AddFriendScreen = (props) => {
         <View>
           <Text>name: {profile.name}</Text>
           <Text>email: {profile.email}</Text>
-          <Text>age: {profile.profile.age}</Text>
-          <Text>facebook: {profile.profile.facebook}</Text>
-          <Text>description: {profile.profile.description}</Text>
+          {profile.profile && (
+            <>
+              <Text>age: {profile.profile.age}</Text>
+              <Text>facebook: {profile.profile.facebook}</Text>
+              <Text>description: {profile.profile.description}</Text>
+            </>
+          )}
           <Button title="add friend" onPress={addFriend} />
         </View>
       )}

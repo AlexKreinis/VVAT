@@ -19,7 +19,7 @@ const ProfileSchema = new mongoose.Schema({
       ref: "event",
     },
   ],
-  frinedList: [
+  friendList: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: "user",
