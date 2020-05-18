@@ -72,6 +72,17 @@ it("OK. get event history", (done) => {
     .catch((err) => done(err));
 });
 
+it("OK. getUserProfile", (done) => {
+  request(app)
+    .get("/api/profile/finduserprofile/testname@mail.com")
+    .then((res) => {
+      const body = res.body;
+      expect(body).to.contain.property("other");
+      done();
+    })
+    .catch((err) => done(err));
+});
+
 it("OK. deleteuser", (done) => {
   request(app)
     .delete("/api/auth/delete/testname@mail.com")
