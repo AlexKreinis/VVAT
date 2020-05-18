@@ -12,8 +12,8 @@ router.get("/eventhistory", auth, async (req, res) => {
     );
     res.json({ eventHistory: foundProfile.events });
   } catch (err) {
-    console.error(error);
-    res.status(500).json({ errors: [{ msg: error.message }] });
+    console.error(err);
+    res.status(500).json({ errors: [{ msg: err.message }] });
   }
 });
 

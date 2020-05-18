@@ -60,13 +60,13 @@ it("OK. added event", (done) => {
     .catch((err) => done(err));
 });
 
-it("OK. get rating for event", (done) => {
-  request(app)
-    .get("/api/maps/getratings/5ebe8e5d0ae82225701e01ae")
-    .then((res) => {
-      const body = res.body;
-      expect(body).to.contain.property("rating");
-      done();
-    })
-    .catch((err) => done(err));
-});
+// it("OK. get rating for event", (done) => {
+//   request(app)
+//     .get("/api/maps/getratings/5ebe8e5d0ae82225701e01ae")
+//     .then((res) => {
+//       const body = res.body;
+//       expect(body).to.contain.property("rating");
+//       done();
+//     })
+//     .catch((err) => done(err));
+// });

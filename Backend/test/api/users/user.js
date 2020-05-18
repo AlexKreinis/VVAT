@@ -60,24 +60,24 @@ it("OK. getprofile", (done) => {
     .catch((err) => done(err));
 });
 
+it("OK. get event history", (done) => {
+  request(app)
+    .get("/api/profile/eventhistory")
+    .set({ "x-auth-token": authToken })
+    .then((res) => {
+      const body = res.body;
+      expect(body).to.contain.property("eventHistory");
+      done();
+    })
+    .catch((err) => done(err));
+});
+
 it("OK. deleteuser", (done) => {
   request(app)
     .delete("/api/auth/delete/testname@mail.com")
     .then((res) => {
       const body = res.body;
       expect(body).to.contain.property("msg");
-      done();
-    })
-    .catch((err) => done(err));
-});
-
-it("OK. get event history", (done) => {
-  request(app)
-    .get("/api/profile/eventhistory")
-    .set({ "x-auth-token": authToken })
-    .then((res) => {
-      //console.log(res.body);
-      expect(body).to.contain.property("eventHistory");
       done();
     })
     .catch((err) => done(err));
