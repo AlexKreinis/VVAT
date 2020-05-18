@@ -1,8 +1,8 @@
 export const SIGNUP = "SIGNUP";
 import {} from "../actions/const";
 
-//const youripadress = "https://vvat.herokuapp.com";
-const youripadress = "http://192.168.56.1:5000";
+const youripadress = "https://vvat.herokuapp.com";
+//const youripadress = "http://localhost:5000";
 
 const handleRes = async (res) => {
   const errorResData = await res.json();
