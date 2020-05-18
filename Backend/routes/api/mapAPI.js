@@ -83,8 +83,8 @@ router.get("/getratings/:eventid", async (req, res) => {
     const { eventid } = req.params;
 
     event = await Event.findById(eventid);
-
-    res.json({ rating: event.ratings });
+    if (event) res.json({ rating: event.ratings });
+    else res.json({ rating: [] });
   } catch (err) {
     console.error(err.message);
     res.status(500).json({ errors: [{ msg: err.message }] });
