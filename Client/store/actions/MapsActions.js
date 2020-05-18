@@ -1,5 +1,5 @@
-//const youripadress = "http://localhost:5000";
-const youripadress = "https://vvat.herokuapp.com";
+const youripadress = "http://192.168.56.1:5000";
+//const youripadress = "https://vvat.herokuapp.com";
 
 import {
   GET_MAPS,
@@ -32,13 +32,15 @@ export const maps = () => async (dispatch) => {
   }
 };
 
-export const createEvent = (data) => async (dispatch) => {
+export const createEvent = (data) => async (dispatch, getState) => {
   try {
+    const token = getState().users.token;
     const res = await fetch(`${youripadress}/api/maps/addevent`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
+        "x-auth-token": token,
       },
       body: JSON.stringify(data),
     });

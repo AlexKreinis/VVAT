@@ -26,7 +26,7 @@ router.get("/getevents/:lat/:lon", async (req, res) => {
   }
 });
 
-router.post("/addevent", async (req, res) => {
+router.post("/addevent", auth, async (req, res) => {
   try {
     const { start, end, lat, lon, name } = req.body;
     let location = await Location.findOne({ lat, lon });
@@ -36,6 +36,10 @@ router.post("/addevent", async (req, res) => {
       name: name,
     });
     await newEvent.save();
+    const foundUser = await User.findById(req.user.id);
+    const foundProfile = await Profile.findById(foundUser.profile);
+    foundProfile.events.push(newEvent._id);
+    await foundProfile.save();
     if (location) {
       location.events.push(newEvent._id);
       await location.save();

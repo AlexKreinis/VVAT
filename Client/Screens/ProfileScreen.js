@@ -6,6 +6,7 @@ import {
   Image,
   TouchableHighlight,
   Button,
+  TouchableOpacity,
 } from "react-native";
 import { Badge } from "react-native-elements";
 import { useSelector } from "react-redux";
@@ -63,7 +64,13 @@ const ProfileScreen = (props) => {
           <Text style={styles.count}>{details.friendList.length}</Text>
         </View>
         <View style={styles.detailContent}>
-          <Text style={styles.title}>Events</Text>
+          <TouchableOpacity
+            onPress={() => {
+              props.navigation.navigate("history");
+            }}
+          >
+            <Text style={styles.title}>Events</Text>
+          </TouchableOpacity>
           <Text style={styles.count}>{details.events.length}</Text>
         </View>
         <View style={styles.detailContent}>

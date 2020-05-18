@@ -4,6 +4,20 @@ const User = require("../../models/User");
 const Profile = require("../../models/Profile");
 const auth = require("../../middleware/auth");
 
+router.get("/eventhistory", auth, async (req, res) => {
+  try {
+    const foundUser = await User.findById(req.user.id);
+    const foundProfile = await Profile.findById(foundUser.profile).populate(
+      "events"
+    );
+    console.log(foundProfile);
+    res.json({ eventHistory: foundProfile.events });
+  } catch (err) {
+    console.error(error);
+    res.status(500).json({ errors: [{ msg: error.message }] });
+  }
+});
+
 router.post("/acceptfriendrequest", auth, async (req, res) => {
   try {
     const foundUser = await User.findById(req.user.id);
@@ -20,6 +34,7 @@ router.post("/acceptfriendrequest", auth, async (req, res) => {
     res.status(500).json({ errors: [{ msg: error.message }] });
   }
 });
+
 router.post("/deletefriendrequest", auth, async (req, res) => {
   try {
     const foundUser = await User.findById(req.user.id);

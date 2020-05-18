@@ -15,6 +15,7 @@ import Colors from "../constants/Colors";
 import SportCentersList from "../Screens/SportCentersList";
 import TermsAndConditions from "../Screens/TermsAndConditions";
 import FindUser from "../Screens/FindUser";
+import EventHistory from "../Screens/EventHistory";
 
 const defaultStackNavOptions = {
   headerStyle: {
@@ -51,6 +52,7 @@ const ProfileNav = createStackNavigator(
     profile: ProfileScreen,
     editProfile: EditProfileScreen,
     addFriend: FindUser,
+    history: EventHistory,
   },
   {
     defaultNavigationOptions: {
@@ -58,23 +60,6 @@ const ProfileNav = createStackNavigator(
     },
   }
 );
-
-// const editProfileNav = createStackNavigator(
-//   {
-//     EditProfile: EditProfileScreen,
-//   },
-//   {
-//     defaultNavigationOptions: {
-//       title: "Edit Profile",
-//       headerTitleAlign: "center",
-//     },
-//   }
-// );
-
-// const ProfileSwitchNav = createSwitchNavigator({
-//   profile: ProfileNav,
-//   editProfile: editProfileNav,
-// });
 
 const SportCentersListNav = createStackNavigator(
   {
