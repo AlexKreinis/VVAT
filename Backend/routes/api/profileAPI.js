@@ -10,7 +10,6 @@ router.get("/eventhistory", auth, async (req, res) => {
     const foundProfile = await Profile.findById(foundUser.profile).populate(
       "events"
     );
-    console.log(foundProfile);
     res.json({ eventHistory: foundProfile.events });
   } catch (err) {
     console.error(error);
