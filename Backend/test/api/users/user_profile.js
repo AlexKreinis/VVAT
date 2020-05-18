@@ -22,6 +22,7 @@ it("OK. register new user first", (done) => {
     })
     .catch((err) => done(err));
 });
+
 it("OK. loginuser", (done) => {
   request(app)
     .post("/api/auth/login")
@@ -88,7 +89,7 @@ it("OK. deleteuser", (done) => {
     .delete("/api/auth/delete/testname@mail.com")
     .then((res) => {
       const body = res.body;
-      expect(body).to.contain.property("msg");
+      expect(body).to.contain.property("msg123");
       done();
     })
     .catch((err) => done(err));
