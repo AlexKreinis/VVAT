@@ -89,7 +89,7 @@ it("OK. deleteuser", (done) => {
     .delete("/api/auth/delete/testname@mail.com")
     .then((res) => {
       const body = res.body;
-      expect(body).to.contain.property("msg123");
+      expect(body).to.contain.property("msg");
       done();
     })
     .catch((err) => done(err));
