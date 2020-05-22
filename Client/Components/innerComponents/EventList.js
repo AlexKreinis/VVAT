@@ -5,23 +5,29 @@ import {
   StyleSheet,
   FlatList,
   TouchableOpacity,
+  ActivityIndicator,
 } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { getEvents } from "../../store/actions/MapsActions";
 
 const EventList = (props) => {
   const [details, setDetails] = useState({ name: "", lat: "", lon: "" });
-  const [events, setEvents] = useState([]);
+  const [events, setEvents] = useState(null);
   const selectedMapsData = useSelector((state) => state.maps.selectedMapData);
   const selectedEvents = useSelector((state) => state.maps.events);
+  const [isLoading, setIsLoading] = useState(true);
+  const reduxLoading = useSelector((state) => state.maps.isLoading);
   const dispatch = useDispatch();
 
   useEffect(() => {
     setDetails(selectedMapsData);
-  }, [selectedEvents]);
+  }, [selectedMapsData]);
 
   useEffect(() => {
-    setEvents(selectedEvents);
+    if (!reduxLoading) {
+      setEvents(selectedEvents);
+      setIsLoading(false);
+    }
   }, [selectedEvents]);
 
   const handleGetEvents = async () => {
@@ -39,7 +45,6 @@ const EventList = (props) => {
   }, [details]);
 
   const renderEventItem = (itemData) => {
-    //console.log(itemData);
     return (
       <TouchableOpacity
         onPress={() =>
@@ -71,22 +76,24 @@ const EventList = (props) => {
   };
 
   const List = () => {
-    if (events.length > 0) {
-      return (
-        <FlatList
-          data={events}
-          renderItem={renderEventItem}
-          keyExtractor={(item, index) => item._id}
-        />
-      );
-    } else {
-      return (
-        <View style={{ height: "90%" }}>
-          <Text style={{ fontSize: 25, textAlign: "center" }}>
-            There are no upcoming events in this location
-          </Text>
-        </View>
-      );
+    if (events) {
+      if (events.length > 0) {
+        return (
+          <FlatList
+            data={events}
+            renderItem={renderEventItem}
+            keyExtractor={(item, index) => item._id}
+          />
+        );
+      } else {
+        return (
+          <View style={{ height: "90%" }}>
+            <Text style={{ fontSize: 25, textAlign: "center" }}>
+              There are no upcoming events in this location
+            </Text>
+          </View>
+        );
+      }
     }
   };
   return (
@@ -99,7 +106,13 @@ const EventList = (props) => {
           Upcoming Events
         </Text>
       </View>
-      <View style={styles.list}>{List()}</View>
+      {(reduxLoading || isLoading) && events ? (
+        <View style={{ flex: 1, justifyContent: "center" }}>
+          <ActivityIndicator size="large" color="#0000ff" />
+        </View>
+      ) : (
+        <View style={styles.list}>{List()}</View>
+      )}
       <View>
         <TouchableOpacity
           style={{

@@ -6,22 +6,24 @@ import {
   ActivityIndicator,
   FlatList,
 } from "react-native";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Icon, Card, Text, Button } from "react-native-elements";
 import { getEventHistory } from "../store/actions/profileActions";
 
 const EventHistory = (props) => {
   const dispatch = useDispatch();
+  const eventHistory = useSelector((state) => state.profiles.events);
+  const isLoading = useSelector((state) => state.profiles.isLoading);
+  const [isLocalLoading, setIsLocalLoading] = useState(true);
   const [events, setEvents] = useState([]);
   const [error, setError] = useState();
-  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     (async function () {
       try {
-        const backendEvents = await dispatch(getEventHistory());
-        setEvents([...backendEvents]);
-        setIsLoading(false);
+        await dispatch(getEventHistory());
+        setEvents([...eventHistory]);
+        setIsLocalLoading(false);
       } catch (err) {
         setError(err.message);
       }
@@ -35,16 +37,20 @@ const EventHistory = (props) => {
   }, [error]);
 
   const showContent = () => {
-    if (isLoading) {
+    if (isLocalLoading || isLoading) {
       return (
-        <View style={{ height: "100%", justifyContent: "center" }}>
+        <View style={{ height: "85%", justifyContent: "center" }}>
           <ActivityIndicator size="large" color="#0000ff" />
         </View>
       );
     } else if (events.length === 0) {
       return (
         <View
-          style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+          style={{
+            height: "85%",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
         >
           <Text>You have no events</Text>
         </View>

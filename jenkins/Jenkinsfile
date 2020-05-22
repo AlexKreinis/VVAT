@@ -33,6 +33,7 @@ pipeline {
           mail to: 'alexakr3@ac.sce.ac.il',
               subject: "Failed Pipeline: ${currentBuild.fullDisplayName}",
               body: "Something is wrong with ${env.BUILD_URL}"
+              
     } 
 }
 }

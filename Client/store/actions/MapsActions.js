@@ -1,5 +1,5 @@
-const youripadress = "192.168.31.161:5000";
-//const youripadress = "https://vvat.herokuapp.com";
+//const youripadress = "http://localhost:5000";
+const youripadress = "https://vvat.herokuapp.com";
 
 import {
   GET_MAPS,
@@ -10,6 +10,7 @@ import {
   GET_RATING,
   ADD_ATENDEE,
   GET_ATENDEE,
+  LOADING_EVENTS,
 } from "./const";
 
 export const maps = () => async (dispatch) => {
@@ -34,6 +35,8 @@ export const maps = () => async (dispatch) => {
 
 export const createEvent = (data) => async (dispatch, getState) => {
   try {
+    console.log("data is", data);
+    dispatch({ type: LOADING_EVENTS });
     const token = getState().users.token;
     const res = await fetch(`${youripadress}/api/maps/addevent`, {
       method: "POST",
@@ -54,11 +57,7 @@ export const createEvent = (data) => async (dispatch, getState) => {
     }
 
     let json = await res.json();
-    // dispatch({
-    //   type: REGISTER,
-    //   payload: json.token,
-    // });
-    // return json;
+    dispatch(getEvents(data.lat, data.lon));
     return json;
   } catch (err) {
     throw err;
@@ -133,6 +132,7 @@ export const deleteEvents = () => (dispatch) => {
 
 export const getEvents = (lat, lon) => async (dispatch) => {
   try {
+    dispatch({ type: LOADING_EVENTS });
     const res = await fetch(`${youripadress}/api/maps/getevents/${lat}/${lon}`);
     if (!res.ok) {
       const errorResData = await res.json();
@@ -154,8 +154,6 @@ export const getEvents = (lat, lon) => async (dispatch) => {
 };
 
 export const addAtendee = (name, email, eventid) => async (dispatch) => {
-  console.log("here");
-
   try {
     const res = await fetch(`${youripadress}/api/maps/addatendee`, {
       method: "POST",
@@ -175,7 +173,6 @@ export const addAtendee = (name, email, eventid) => async (dispatch) => {
     }
 
     let serverData = await res.json();
-    console.log("here", serverData);
     dispatch({
       type: ADD_ATENDEE,
       payload: serverData,

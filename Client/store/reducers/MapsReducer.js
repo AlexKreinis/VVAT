@@ -7,6 +7,7 @@ import {
   GET_RATING,
   ADD_ATENDEE,
   GET_ATENDEE,
+  LOADING_EVENTS,
 } from "../actions/const";
 
 const initialState = {
@@ -15,6 +16,7 @@ const initialState = {
   events: [],
   eventRatings: [],
   atten: [],
+  isLoading: true,
 };
 
 const MapsReducers = (state = initialState, action) => {
@@ -38,7 +40,7 @@ const MapsReducers = (state = initialState, action) => {
         eventRatings: action.payload,
       };
     case GET_EVENTS:
-      return { ...state, events: [...action.payload] };
+      return { ...state, events: [...action.payload], isLoading: false };
     case DELETE_EVENTS:
       return { ...state, events: [] };
     case GET_RATING:
@@ -48,6 +50,8 @@ const MapsReducers = (state = initialState, action) => {
 
     case GET_ATENDEE:
       return { ...state, atten: action.payload };
+    case LOADING_EVENTS:
+      return { ...state, isLoading: true };
     default:
       return state;
   }

@@ -11,10 +11,12 @@ import {
   acceptFriendRequest,
   deleteFriendRequest,
 } from "../../store/actions/profileActions";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Icon, Card, Text } from "react-native-elements";
 
 const AcceptFriendList = () => {
+  const friendRequest = useSelector((state) => state.profiles.friendRequest);
+  const reduxLoading = useSelector((state) => state.profiles.isLoading);
   const [error, setError] = useState();
   const [message, setMessage] = useState();
   useEffect(() => {
@@ -35,20 +37,21 @@ const AcceptFriendList = () => {
   useEffect(() => {
     (async function () {
       try {
-        const friendRequests = await dispatch(getFriendRequests());
-        setFriendReq([...friendRequests]);
+        await dispatch(getFriendRequests());
+        setFriendReq([...friendRequest]);
         setIsLoading(false);
       } catch (err) {
         console.log(err.message);
         setError(err.message);
       }
     })();
-  }, [message, error]);
+  }, []);
 
   const acceptReuqest = async (id) => {
     try {
       setIsLoading(true);
       const answer = await dispatch(acceptFriendRequest(id));
+      setFriendReq(friendReq.filter((friend) => friend._id != id));
       setMessage(answer);
     } catch (err) {
       console.log(err);
@@ -60,6 +63,8 @@ const AcceptFriendList = () => {
       setIsLoading(true);
       const answer = await dispatch(deleteFriendRequest(id));
       setMessage(answer);
+      setFriendReq(friendReq.filter((friend) => friend._id != id));
+      setIsLoading(false);
     } catch (err) {
       console.log(err);
       setError(err.message);

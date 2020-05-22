@@ -1,20 +1,8 @@
-import {
-  LOGIN,
-  REGISTER,
-  GET_USER,
-  SAVE_PROFILE,
-  GET_USER_PROFILE,
-} from "../actions/const";
+import { LOGIN, REGISTER, GET_USER } from "../actions/const";
 const initialState = {
   token: "",
   email: "",
   name: "",
-  description: "",
-  age: "",
-  facebook: "",
-  events: [],
-  friendList: [],
-  friendRequest: [],
 };
 
 const UsersReducers = (state = initialState, action) => {
@@ -24,33 +12,15 @@ const UsersReducers = (state = initialState, action) => {
         token: action.payload.token,
       };
     case REGISTER:
-      // console.log(action.payload);
       return {
         token: action.payload.token,
       };
 
     case GET_USER:
-      //console.log("enttt", payload);
       return {
         token: state.token,
         email: action.payload.email,
         name: action.payload.name,
-        description: action.payload.description,
-        age: action.payload.age,
-        facebook: action.payload.facebook,
-        events: action.payload.events,
-        friendList: action.payload.friendList,
-        friendRequest: action.payload.friendRequest,
-      };
-    case SAVE_PROFILE:
-      // console.log(payload);
-      return {
-        token: state.token,
-        email: action.payload.email,
-        name: action.payload.name,
-        description: action.payload.description,
-        age: action.payload.age,
-        facebook: action.payload.facebook,
       };
     default:
       return state;

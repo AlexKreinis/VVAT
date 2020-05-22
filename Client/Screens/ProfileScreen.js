@@ -9,7 +9,8 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { Badge } from "react-native-elements";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { getProfile } from "../store/actions/profileActions";
 import Colors from "../constants/Colors";
 import ModalComp from "../Components/ModalComp";
 
@@ -27,20 +28,26 @@ const ProfileScreen = (props) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const userDetails = useSelector((state) => state.users);
-
+  const profileDetails = useSelector((state) => state.profiles);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getProfile());
+  }, []);
   useEffect(() => {
     const tempDetails = {
       email: userDetails.email ? userDetails.email : "",
       name: userDetails.name ? userDetails.name : "",
-      description: userDetails.description ? userDetails.description : "",
-      facebook: userDetails.facebook ? userDetails.facebook : "",
-      age: userDetails.age ? userDetails.age : "",
-      events: userDetails.events ? userDetails.events : [],
-      friendList: userDetails.friendList ? userDetails.friendList : [],
-      friendRequest: userDetails.friendRequest ? userDetails.friendRequest : [],
+      description: profileDetails.description ? profileDetails.description : "",
+      facebook: profileDetails.facebook ? profileDetails.facebook : "",
+      age: profileDetails.age ? profileDetails.age : "",
+      events: profileDetails.events ? profileDetails.events : [],
+      friendList: profileDetails.friendList ? profileDetails.friendList : [],
+      friendRequest: profileDetails.friendRequest
+        ? profileDetails.friendRequest
+        : [],
     };
     setDetails(tempDetails);
-  }, [userDetails]);
+  }, [userDetails, profileDetails]);
 
   return (
     <View style={styles.container}>

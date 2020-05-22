@@ -12,13 +12,14 @@ import {
 } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import Colors from "../constants/Colors";
-import { saveProfile } from "../store/actions/Usersactions";
+import { saveProfile } from "../store/actions/profileActions";
 
 const EditProfileScreen = (props) => {
-  const userDetails = useSelector((state) => state.users);
+  const userDetails = useSelector((state) => state.profiles);
+  const userName = useSelector((state) => state.users);
   const [error, setError] = useState(null);
   const [details, setDetails] = useState({
-    name: userDetails.name,
+    name: userName.name,
     description: userDetails.description,
     age: userDetails.age,
     facebook: userDetails.facebook,
@@ -31,7 +32,6 @@ const EditProfileScreen = (props) => {
   const dispatch = useDispatch();
 
   const clickHandler = async () => {
-    //dipatch function from useractions that go to the server and fetch post action that send new user profile details in the body of the req to the route
     try {
       await dispatch(saveProfile(details));
       props.navigation.navigate("profile");

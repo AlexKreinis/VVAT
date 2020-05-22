@@ -9,7 +9,7 @@ import {
 } from "../actions/const";
 const youripadress = "https://vvat.herokuapp.com";
 //const youripadress = "http://localhost:5000";
-//try
+
 export const register = (data) => async (dispatch) => {
   try {
     const res = await fetch(`${youripadress}/api/auth/register`, {
@@ -139,42 +139,6 @@ export const findUserProfile = (email) => async (dispatch) => {
     let serverData = await res.json();
 
     return serverData;
-  } catch (err) {
-    throw err;
-  }
-};
-
-export const saveProfile = (data) => async (dispatch, getState) => {
-  try {
-    const token = getState().users.token;
-    const res = await fetch(`${youripadress}/api/profile/saveprofile`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        "x-auth-token": token,
-      },
-      body: JSON.stringify(data),
-    });
-    if (!res.ok) {
-      const errorResData = await res.json();
-      let message = "Something went wrong!";
-      if (errorResData && errorResData.errors.length > 0)
-        message = errorResData.errors[0].msg;
-      throw new Error(message);
-    }
-    let serverData = await res.json();
-
-    dispatch({
-      type: SAVE_PROFILE,
-      payload: {
-        name: serverData.user.name,
-        email: serverData.user.email,
-        description: serverData.user.profile.description,
-        age: serverData.user.profile.age,
-        facebook: serverData.user.profile.facebook,
-      },
-    });
   } catch (err) {
     throw err;
   }

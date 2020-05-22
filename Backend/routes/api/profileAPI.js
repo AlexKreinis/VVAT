@@ -4,12 +4,32 @@ const User = require("../../models/User");
 const Profile = require("../../models/Profile");
 const auth = require("../../middleware/auth");
 
+router.get("/", auth, async (req, res) => {
+  try {
+    const foundUser = await User.findById(req.user.id);
+    const foundProfile = await Profile.findById(foundUser.profile).populate(
+      "events"
+    );
+    if (!foundProfile) {
+      return res.json({ profile: {} });
+    } else res.json({ profile: foundProfile });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ errors: [{ msg: err.message }] });
+  }
+});
 router.get("/eventhistory", auth, async (req, res) => {
   try {
     const foundUser = await User.findById(req.user.id);
     const foundProfile = await Profile.findById(foundUser.profile).populate(
       "events"
     );
+    if (!foundProfile) {
+      return res.json({ eventHistory: [] });
+    }
+    if (!foundProfile.events) {
+      return res.json({ eventHistory: [] });
+    }
     res.json({ eventHistory: foundProfile.events });
   } catch (err) {
     console.error(err);
@@ -43,7 +63,6 @@ router.post("/deletefriendrequest", auth, async (req, res) => {
     );
     foundProfile.friendRequest = filteredFriendReuqest;
     foundProfile.save();
-    console.log(foundProfile);
     res.json({ msg: "you have deleted the request" });
   } catch (error) {
     console.error(error);
@@ -69,7 +88,6 @@ router.get("/getfriendrequests", auth, async (req, res) => {
 });
 router.post("/sendfriendrequest", auth, async (req, res) => {
   try {
-    console.log("entered send friend request");
     const { id } = req.body;
     const FriendRequestUser = await User.findById(id);
     const friendRequestProfile = await Profile.findById(

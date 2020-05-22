@@ -1,21 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, Text, View, Button } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
+import { Button } from "react-native-elements";
 import { AirbnbRating } from "react-native-elements";
 import { useDispatch, useSelector } from "react-redux";
 import { addRating, getRating, addAtendee } from "../store/actions/MapsActions";
 import { getUser } from "../store/actions/Usersactions";
+import Icon from "react-native-vector-icons/FontAwesome";
+
 const EventScreen = (props) => {
   const dispatch = useDispatch();
   const [avgRating, setAvgRating] = useState(0);
   const eventRatings = useSelector((state) => state.maps.eventRatings);
   const userDetails = useSelector((state) => state.users);
-  const ratingCompleted = async (rating) => {
-    try {
-      await dispatch(addRating(rating, props.navigation.state.params.item._id));
-    } catch (err) {
-      console.log(err);
-    }
-  };
+
+  const { item } = props.navigation.state.params;
 
   const RegForEventHandler = () => {
     try {
@@ -42,7 +40,7 @@ const EventScreen = (props) => {
 
   useEffect(() => {
     try {
-      dispatch(getRating(props.navigation.state.params.item._id));
+      dispatch(getRating(item._id));
     } catch (err) {
       console.log(err);
     }
@@ -56,38 +54,64 @@ const EventScreen = (props) => {
     }
   }, [userDetails]);
 
+  const AddedRating = (rating) => {
+    console.log(rating);
+  };
+  const ratingCompleted = async (rating) => {
+    try {
+      await dispatch(addRating(rating, item._id));
+    } catch (err) {
+      console.log(err);
+    }
+  };
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.title}>Welcome to event screen!</Text>
+        <Text style={styles.title}>{item.name} event details</Text>
       </View>
-      <Text>Rate the event: </Text>
-      <AirbnbRating
-        size={30}
-        showRating={false}
-        onFinishRating={ratingCompleted}
-      />
-
-      <View style={styles.eventDetails}>
-        <Text>event name: {props.navigation.state.params.item.name}</Text>
-        <Text>start time: {props.navigation.state.params.item.start}</Text>
-        <Text>end time: {props.navigation.state.params.item.finish}</Text>
+      <View style={{ padding: 20 }}>
+        <Text>Hi {userDetails.name} What would you like to do?</Text>
       </View>
-
-      <Text>event avg rating: {avgRating}</Text>
-
-      <View style={styles.footer}>
-        <Button title="REGISTER FOR EVENT" onPress={RegForEventHandler} />
+      <View>
+        <Text>Rate the event: </Text>
+        <AirbnbRating
+          size={30}
+          showRating={false}
+          onFinishRating={AddedRating}
+        />
       </View>
 
-      <View style={styles.footer}>
+      <View style={styles.center}>
         <Button
-          title="List of Attendees"
+          title="   Register to this event"
+          icon={<Icon name="location-arrow" size={25} color="white" />}
+          onPress={RegForEventHandler}
+          raised={true}
+          buttonStyle={{
+            width: 200,
+          }}
+        />
+        <Button
+          title="  go back"
+          icon={<Icon name="arrow-left" size={20} color="white" />}
+          onPress={() => props.navigation.navigate("Events")}
+          raised={true}
+          buttonStyle={{
+            width: 200,
+          }}
+        />
+        <Button
+          title="  List of Attendees"
+          icon={<Icon name="list" size={25} color="white" />}
           onPress={() =>
             props.navigation.navigate("Attendees", {
-              eventId: props.navigation.state.params.item._id,
+              eventId: item._id,
             })
           }
+          raised={true}
+          buttonStyle={{
+            width: 200,
+          }}
         />
       </View>
     </View>
@@ -96,6 +120,7 @@ const EventScreen = (props) => {
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: "white",
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
@@ -104,11 +129,13 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   eventDetails: {
-    flex: 4,
+    flex: 1,
   },
-  footer: {
-    flex: 0.5,
-    flexDirection: "row",
+  center: {
+    flex: 4,
+    flexDirection: "column",
+    justifyContent: "space-evenly",
+    alignItems: "center",
   },
   title: {
     fontFamily: "dancing-script",
