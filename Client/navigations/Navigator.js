@@ -16,6 +16,7 @@ import SportCentersList from "../Screens/SportCentersList";
 import TermsAndConditions from "../Screens/TermsAndConditions";
 import FindUser from "../Screens/FindUser";
 import EventHistory from "../Screens/EventHistory";
+import AdminControlPanel from "../Screens/AdminControlPanel";
 
 const defaultStackNavOptions = {
   headerStyle: {
@@ -53,6 +54,7 @@ const ProfileNav = createStackNavigator(
     editProfile: EditProfileScreen,
     addFriend: FindUser,
     history: EventHistory,
+    adminPanel: AdminControlPanel,
   },
   {
     defaultNavigationOptions: {
