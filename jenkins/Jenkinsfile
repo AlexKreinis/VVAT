@@ -35,5 +35,15 @@ pipeline {
               body: "Something is wrong with ${env.BUILD_URL}"
               
     } 
+    always {
+          publishHTML target: [
+            allowMissing         : false,
+            alwaysLinkToLastBuild: false,
+            keepAll             : true,
+            reportDir            : 'output/coverage/jest',
+            reportFiles          : 'index.html',
+            reportName           : 'Test Report'
+          ]
+        }
 }
 }
