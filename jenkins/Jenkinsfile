@@ -25,9 +25,9 @@ pipeline {
                     sh 'npm run test'
                  }
             }
-        }
+        
 
-    }
+    
     post {
       failure {
           mail to: 'alexakr3@ac.sce.ac.il',
@@ -35,5 +35,11 @@ pipeline {
               body: "Something is wrong with ${env.BUILD_URL}"
               
     } 
+
 }
+          }
+
+
+  }
+
 }

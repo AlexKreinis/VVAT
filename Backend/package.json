@@ -6,7 +6,7 @@
   "scripts": {
     "start": "nodemon server",
     "server": "nodemon server",
-    "test": "mocha --recursive --exit"
+    "test": "nyc mocha --recursive --exit"
   },
   "author": "vvat",
   "license": "ISC",
@@ -20,6 +20,7 @@
     "jsonwebtoken": "^8.5.1",
     "mocha": "^7.1.1",
     "mongoose": "^5.9.7",
+    "nyc": "^15.0.1",
     "supertest": "^4.0.2"
   },
   "devDependencies": {
