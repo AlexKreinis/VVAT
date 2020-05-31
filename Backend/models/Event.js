@@ -17,10 +17,14 @@ const EventSchema = new mongoose.Schema({
       type: Number,
     },
   ],
+  owner: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "user",
+  },
   atendees: [
     {
-      name: { type: String },
-      email: { type: String },
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "user",
     },
   ],
 });

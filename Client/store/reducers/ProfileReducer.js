@@ -16,6 +16,7 @@ const initialState = {
   friendList: [],
   friendRequest: [],
   isLoading: true,
+  userExists: false,
 };
 const ProfileReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -29,6 +30,7 @@ const ProfileReducer = (state = initialState, action) => {
         facebook: action.payload.facebook,
         age: action.payload.age,
         description: action.payload.description,
+        friendRequest: [...action.payload.friendRequest],
       };
     case SET_EVENT_HISTORY:
       return { ...state, events: [...action.payload.events], isLoading: false };

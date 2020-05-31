@@ -1,5 +1,6 @@
 //const youripadress = "http://localhost:5000";
-const youripadress = "https://vvat.herokuapp.com";
+//const youripadress = "https://vvat.herokuapp.com";
+const youripadress = "http://localhost:5000";
 
 import {
   GET_MAPS,
@@ -9,7 +10,6 @@ import {
   ADD_RATING,
   GET_RATING,
   ADD_ATENDEE,
-  GET_ATENDEE,
   LOADING_EVENTS,
 } from "./const";
 
@@ -35,7 +35,6 @@ export const maps = () => async (dispatch) => {
 
 export const createEvent = (data) => async (dispatch, getState) => {
   try {
-    console.log("data is", data);
     dispatch({ type: LOADING_EVENTS });
     const token = getState().users.token;
     const res = await fetch(`${youripadress}/api/maps/addevent`, {
@@ -153,15 +152,17 @@ export const getEvents = (lat, lon) => async (dispatch) => {
   }
 };
 
-export const addAtendee = (name, email, eventid) => async (dispatch) => {
+export const addAtendee = (eventid) => async (dispatch, getState) => {
   try {
+    const token = getState().users.token;
     const res = await fetch(`${youripadress}/api/maps/addatendee`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
+        "x-auth-token": token,
       },
-      body: JSON.stringify({ name: name, email: email, eventid: eventid }),
+      body: JSON.stringify({ eventid: eventid }),
     });
 
     if (!res.ok) {
@@ -173,11 +174,13 @@ export const addAtendee = (name, email, eventid) => async (dispatch) => {
     }
 
     let serverData = await res.json();
+    console.log(serverData);
     dispatch({
       type: ADD_ATENDEE,
-      payload: serverData,
+      payload: { atendees: serverData.atendeeList },
     });
   } catch (err) {
+    console.log("throwing");
     throw err;
   }
 };
@@ -193,12 +196,10 @@ export const getAtendees = (eventid) => async (dispatch) => {
         message = errorResData.errors[0].msg;
       throw new Error(message);
     }
-
     let serverData = await res.json();
-
     dispatch({
-      type: GET_ATENDEE,
-      payload: serverData.atendees,
+      type: ADD_ATENDEE,
+      payload: { atendees: serverData.atendees },
     });
   } catch (err) {
     throw err;

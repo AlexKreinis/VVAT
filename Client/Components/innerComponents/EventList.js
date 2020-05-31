@@ -16,7 +16,7 @@ const EventList = (props) => {
   const selectedMapsData = useSelector((state) => state.maps.selectedMapData);
   const selectedEvents = useSelector((state) => state.maps.events);
   const [isLoading, setIsLoading] = useState(true);
-  const reduxLoading = useSelector((state) => state.maps.isLoading);
+  const reduxLoading = useSelector((state) => state.maps.events.isLoading);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -24,14 +24,13 @@ const EventList = (props) => {
   }, [selectedMapsData]);
 
   useEffect(() => {
-    if (!reduxLoading) {
-      setEvents(selectedEvents);
-      setIsLoading(false);
-    }
+    setEvents(selectedEvents);
+    setIsLoading(false);
   }, [selectedEvents]);
 
   const handleGetEvents = async () => {
     try {
+      setIsLoading(true);
       await dispatch(getEvents(details.lat, details.lon));
     } catch (error) {
       console.log(error);
@@ -39,6 +38,7 @@ const EventList = (props) => {
   };
 
   useEffect(() => {
+    setIsLoading(true);
     if (details.lat && details.lon) {
       handleGetEvents();
     }
@@ -49,7 +49,7 @@ const EventList = (props) => {
       <TouchableOpacity
         onPress={() =>
           props.navigation.navigate("EventDetails", {
-            item: itemData.item,
+            selectedEvent: itemData.item,
           })
         }
       >
@@ -86,49 +86,65 @@ const EventList = (props) => {
           />
         );
       } else {
-        return (
-          <View style={{ height: "90%" }}>
-            <Text style={{ fontSize: 25, textAlign: "center" }}>
-              There are no upcoming events in this location
-            </Text>
-          </View>
-        );
+        {
+          return (
+            <View style={{ height: "90%" }}>
+              <Text style={{ fontSize: 25, textAlign: "center" }}>
+                There are no upcoming events in this location
+              </Text>
+            </View>
+          );
+        }
       }
     }
   };
-  return (
-    <View style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.title}>{details.name}</Text>
-      </View>
-      <View style={{ marginBottom: 14 }}>
-        <Text style={{ fontSize: 18, color: "darkgrey", fontWeight: "bold" }}>
-          Upcoming Events
-        </Text>
-      </View>
-      {(reduxLoading || isLoading) && events ? (
-        <View style={{ flex: 1, justifyContent: "center" }}>
+  const eventScreen = () => {
+    if (isLoading) {
+      return (
+        <View
+          style={{
+            flex: 1,
+            justifyContent: "center",
+            backgroundColor: "white",
+          }}
+        >
           <ActivityIndicator size="large" color="#0000ff" />
         </View>
-      ) : (
-        <View style={styles.list}>{List()}</View>
-      )}
-      <View>
-        <TouchableOpacity
-          style={{
-            margin: "auto",
-            backgroundColor: "lightblue",
-            padding: 10,
-            borderRadius: 10,
-            marginTop: 30,
-          }}
-          onPress={() => props.navigation.navigate("CreateEvent")}
-        >
-          <Text style={{ fontSize: 18 }}>Add your event</Text>
-        </TouchableOpacity>
-      </View>
-    </View>
-  );
+      );
+    } else {
+      return (
+        <View style={styles.container}>
+          <View style={styles.header}>
+            <Text style={styles.title}>{details.name}</Text>
+          </View>
+          <View style={{ marginBottom: 14 }}>
+            <Text
+              style={{ fontSize: 18, color: "darkgrey", fontWeight: "bold" }}
+            >
+              Upcoming Events
+            </Text>
+          </View>
+          <View style={styles.list}>{List()}</View>
+          <View>
+            <TouchableOpacity
+              style={{
+                margin: "auto",
+                backgroundColor: "lightblue",
+                padding: 10,
+                borderRadius: 10,
+                marginTop: 30,
+              }}
+              onPress={() => props.navigation.navigate("CreateEvent")}
+            >
+              <Text style={{ fontSize: 18 }}>Add your event</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      );
+    }
+  };
+
+  return <>{eventScreen()}</>;
 };
 
 const styles = StyleSheet.create({

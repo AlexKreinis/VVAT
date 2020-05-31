@@ -10,7 +10,6 @@ export const GET_USER_PROFILE = "GET_USER_PROFILE";
 export const ADD_RATING = "ADD_RATING";
 export const GET_RATING = "GET_RATING";
 export const ADD_ATENDEE = " ADD_ATENDEE";
-export const GET_ATENDEE = " GET_ATENDEE";
 export const SET_EVENT_HISTORY = "SET_EVENT_HISTORY";
 export const GET_FRIEND_REQUESTS = "GET_FRIEND_REQUESTS";
 export const PROFILE_LOADING = "PROFILE_LOADING";

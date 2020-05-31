@@ -1,4 +1,4 @@
-import React, { useState, useEffect, createContext } from "react";
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   View,
@@ -6,6 +6,7 @@ import {
   TextInput,
   TouchableOpacity,
   Alert,
+  ActivityIndicator,
 } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { useDispatch, useSelector } from "react-redux";
@@ -22,6 +23,7 @@ const Calender = (props) => {
   const [showEnd, setShowEnd] = useState(false);
   const [eventName, setEventName] = useState("");
   const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || startDate;
@@ -76,8 +78,8 @@ const Calender = (props) => {
       return;
     }
     try {
-      dispatch(
-        await createEvent({
+      await dispatch(
+        createEvent({
           name: eventName,
           start: startDate,
           end: endDate,
@@ -85,10 +87,12 @@ const Calender = (props) => {
           lon: mapData.lon,
         })
       );
-      Alert.alert("Added Event successfully");
+      setIsLoading(true);
       await dispatch(getEvents(selectedMapsData.lat, selectedMapsData.lon));
+      Alert.alert("Added Event successfully");
       props.nav.navigate("Events");
     } catch (err) {
+      console.log(err.message);
       setError(err.message);
     }
   };
@@ -175,7 +179,11 @@ const Calender = (props) => {
           }}
         >
           <TouchableOpacity style={styles.button} onPress={onSubmit}>
-            <Text style={styles.btnText}>Create Event</Text>
+            {isLoading ? (
+              <ActivityIndicator size="small" color="white" />
+            ) : (
+              <Text style={styles.btnText}>Create Event</Text>
+            )}
           </TouchableOpacity>
         </View>
       </View>

@@ -10,9 +10,7 @@ router.get("/", auth, async (req, res) => {
     const foundProfile = await Profile.findById(foundUser.profile).populate(
       "events"
     );
-    if (!foundProfile) {
-      return res.json({ profile: {} });
-    } else res.json({ profile: foundProfile });
+    res.json({ profile: foundProfile });
   } catch (err) {
     console.error(err);
     res.status(500).json({ errors: [{ msg: err.message }] });

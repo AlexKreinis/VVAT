@@ -34,6 +34,7 @@ router.post("/addevent", auth, async (req, res) => {
       start: start,
       finish: end,
       name: name,
+      owner: req.user.id,
     });
     await newEvent.save();
     const foundUser = await User.findById(req.user.id);
@@ -63,9 +64,7 @@ router.post("/addrating", async (req, res) => {
     //  const { rating, eventId } = req.params;
 
     const { rating, eventId } = req.body;
-
     event = await Event.findById(eventId);
-
     event.ratings.push(rating);
     await event.save();
 
@@ -91,27 +90,20 @@ router.get("/getratings/:eventid", async (req, res) => {
   }
 });
 
-router.post("/addatendee", async (req, res) => {
+router.post("/addatendee", auth, async (req, res) => {
   try {
-    //  const { rating, eventId } = req.params;
-
-    const { name, email, eventid } = req.body;
-
-    event = await Event.findById(eventid);
-    var found = false;
-    for (var i = 0; i < event.atendees.length; i++) {
-      if (event.atendees[i].email == email) {
-        found = true;
-        break;
+    const { eventid } = req.body;
+    foundEvent = await Event.findById(eventid).populate("atendees");
+    for (let i = 0; i < foundEvent.atendees.length; i++) {
+      if (foundEvent.atendees[i]._id == req.user.id) {
+        return res
+          .status(500)
+          .json({ errors: [{ msg: "You allready registered to this event" }] });
       }
     }
-    if (!found) event.atendees.push({ name: name, email: email });
-
-    await event.save();
-
-    events = await Event.findById(eventid);
-
-    res.json(events.atendees);
+    foundEvent.atendees.push(req.user.id);
+    await foundEvent.save();
+    res.json({ atendeeList: foundEvent.atendees });
   } catch (err) {
     console.error(err.message);
     res.status(500).json({ errors: [{ msg: err.message }] });
@@ -121,9 +113,7 @@ router.post("/addatendee", async (req, res) => {
 router.get("/getatendees/:eventid", async (req, res) => {
   try {
     const { eventid } = req.params;
-
-    event = await Event.findById(eventid);
-
+    event = await Event.findById(eventid).populate("atendees");
     res.json({ atendees: event.atendees });
   } catch (err) {
     console.error(err.message);

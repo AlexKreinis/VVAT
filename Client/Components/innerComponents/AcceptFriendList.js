@@ -16,9 +16,9 @@ import { Icon, Card, Text } from "react-native-elements";
 
 const AcceptFriendList = () => {
   const friendRequest = useSelector((state) => state.profiles.friendRequest);
-  const reduxLoading = useSelector((state) => state.profiles.isLoading);
   const [error, setError] = useState();
   const [message, setMessage] = useState();
+
   useEffect(() => {
     if (error) {
       Alert.alert("An Error Occurred!", error, [{ text: "Okay" }]);
@@ -31,14 +31,14 @@ const AcceptFriendList = () => {
     }
   }, [message]);
 
-  const dispatch = useDispatch();
-  const [friendReq, setFriendReq] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  useEffect(() => {
+    setFriendReq([...friendRequest]);
+  }, [friendRequest]);
+
   useEffect(() => {
     (async function () {
       try {
         await dispatch(getFriendRequests());
-        setFriendReq([...friendRequest]);
         setIsLoading(false);
       } catch (err) {
         console.log(err.message);
@@ -46,6 +46,10 @@ const AcceptFriendList = () => {
       }
     })();
   }, []);
+
+  const dispatch = useDispatch();
+  const [friendReq, setFriendReq] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   const acceptReuqest = async (id) => {
     try {
@@ -120,7 +124,7 @@ const AcceptFriendList = () => {
           <FlatList
             data={friendReq}
             renderItem={renderingRequests}
-            keyExtractor={(item) => item._id}
+            keyExtractor={(item) => item.id}
           />
         </View>
       );
