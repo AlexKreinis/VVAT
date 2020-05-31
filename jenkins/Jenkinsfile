@@ -27,7 +27,7 @@ pipeline {
             }
         }
 
-    }
+    
     post {
       failure {
           mail to: 'alexakr3@ac.sce.ac.il',
@@ -40,10 +40,41 @@ pipeline {
             allowMissing         : false,
             alwaysLinkToLastBuild: false,
             keepAll             : true,
-            reportDir            : '/',
+            reportDir            : 'output/coverage/jest',
             reportFiles          : 'index.html',
             reportName           : 'Test Report'
           ]
         }
+}
+
+
+   stage('Deploy') {
+      when {
+        expression {
+          currentBuild.result == null || currentBuild.result == 'SUCCESS'
+        }
+      }
+      steps {
+        script {
+          def server = Artifactory.server 'My_Artifactory'
+          uploadArtifact(server)
+        }
+      }
+    }
+  }
+
+def uploadArtifact(server) {
+  def uploadSpec = """{
+            "files": [
+              {
+                "pattern": "continuous-test-code-coverage-guide*.tgz",
+                "target": "npm-stable/"
+              }
+           ]
+          }"""
+  server.upload(uploadSpec)
+def buildInfo = Artifactory.newBuildInfo()
+  server.upload spec: uploadSpec, buildInfo: buildInfo
+  server.publishBuildInfo buildInfo
 }
 }
