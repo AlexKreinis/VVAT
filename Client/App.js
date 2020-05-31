@@ -8,7 +8,7 @@ import ProfileReducer from "./store/reducers/ProfileReducer";
 import { Provider } from "react-redux";
 import ReduxThunk from "redux-thunk";
 import Navigator from "./navigations/Navigator";
-//
+
 const rootReducer = combineReducers({
   users: UsersReducer,
   maps: MapsReducer,
