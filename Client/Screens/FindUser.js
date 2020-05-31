@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, Button, TextInput, Alert } from "react-native";
 import { findUserProfile } from "../store/actions/Usersactions";
 import { sendFriendRequest } from "../store/actions/profileActions";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const AddFriendScreen = (props) => {
   useEffect(() => {
@@ -10,7 +10,7 @@ const AddFriendScreen = (props) => {
       Alert.alert("An Error Occurred!", error, [{ text: "Okay" }]);
     }
   }, [error]);
-
+  const role = useSelector((state) => state.users.role);
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [profile, setProfile] = useState(null);
@@ -38,6 +38,7 @@ const AddFriendScreen = (props) => {
 
   return (
     <View style={styles.container}>
+      {role === "Admin" && <View>ADMING BUTTON</View>}
       <View style={styles.inputBox}>
         <Text>Search for user</Text>
         <TextInput

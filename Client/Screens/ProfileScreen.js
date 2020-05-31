@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import {
   StyleSheet,
   Text,
@@ -24,15 +24,18 @@ const ProfileScreen = (props) => {
     events: [],
     friendList: [],
     friendRequest: [],
+    id: "",
   });
   const [isOpen, setIsOpen] = useState(false);
 
   const userDetails = useSelector((state) => state.users);
   const profileDetails = useSelector((state) => state.profiles);
   const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(getProfile());
-  }, []);
+  }, [profileDetails]);
+
   useEffect(() => {
     const tempDetails = {
       email: userDetails.email ? userDetails.email : "",
@@ -47,7 +50,7 @@ const ProfileScreen = (props) => {
         : [],
     };
     setDetails(tempDetails);
-  }, [userDetails, profileDetails]);
+  }, [profileDetails]);
 
   return (
     <View style={styles.container}>
@@ -161,7 +164,7 @@ const ProfileScreen = (props) => {
           <Text style={styles.description}>{details.description}</Text>
           <View style={styles.buttonContainer}>
             <Button
-              title="edit profile"
+              title="Edit Profile"
               onPress={() => props.navigation.navigate("editProfile")}
             ></Button>
             <Button

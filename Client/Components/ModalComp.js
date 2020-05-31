@@ -5,6 +5,7 @@ import {
   View,
   Modal,
   TouchableHighlight,
+  Alert,
 } from "react-native";
 import ModalNavigator from "./innerComponents/ModalNavigator";
 import AcceptFriendList from "./innerComponents/AcceptFriendList";

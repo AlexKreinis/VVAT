@@ -8,8 +8,8 @@ import {
   SET_FRIEND_REQUESTS,
 } from "../actions/const";
 
-const youripadress = "https://vvat.herokuapp.com";
-//const youripadress = "http://localhost:5000";
+//const youripadress = "https://vvat.herokuapp.com";
+const youripadress = "http://localhost:5000";
 
 export const getEventHistory = () => async (dispatch, getState) => {
   try {
@@ -203,7 +203,7 @@ export const getProfile = () => async (dispatch, getState) => {
           age: serverData.profile.age,
           facebook: serverData.profile.facebook,
           events: serverData.profile.events,
-          friendRequests: serverData.profile.friendRequests,
+          friendRequest: serverData.profile.friendRequest,
           friendList: serverData.profile.friendList,
         },
       });
@@ -232,15 +232,7 @@ export const saveProfile = (data) => async (dispatch, getState) => {
         message = errorResData.errors[0].msg;
       throw new Error(message);
     }
-    let serverData = await res.json();
-    dispatch({
-      type: SAVE_PROFILE,
-      payload: {
-        description: serverData.user.profile.description,
-        age: serverData.user.profile.age,
-        facebook: serverData.user.profile.facebook,
-      },
-    });
+    dispatch(getProfile());
   } catch (err) {
     throw err;
   }

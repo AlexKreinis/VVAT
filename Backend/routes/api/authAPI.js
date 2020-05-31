@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const auth = require("../../middleware/auth");
 const User = require("../../models/User");
-
+const Profile = require("../../models/Profile");
 const { check, validationResult } = require("express-validator");
 const jwt = require("jsonwebtoken");
 const config = require("config");
@@ -16,7 +16,8 @@ router.get("/getuser", auth, async (req, res) => {
 
     res.json({ user });
   } catch (err) {
-    res.status(500).send("Server error");
+    console.error(err);
+    res.status(500).json({ errors: [{ msg: err.message }] });
   }
 });
 
@@ -95,10 +96,13 @@ router.post(
           .status(400)
           .json({ errors: [{ msg: "User allready exists" }] });
       }
+      let profile = new Profile({});
+      await profile.save();
       user = new User({
         name,
         email,
         password,
+        profile: profile._id,
       });
       const salt = await bcrypt.genSalt(10);
 

@@ -18,7 +18,10 @@ const UserSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
-
+  role: {
+    type: String,
+    default: "User",
+  },
   profile: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "profile",
