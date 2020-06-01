@@ -1,4 +1,5 @@
-const youripadress = "http://192.168.0.86:5000";
+const youripadress = "http://192.168.31.161:5000";
+
 //const youripadress = "https://vvat.herokuapp.com";
 
 import {

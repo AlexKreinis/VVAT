@@ -1,26 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, View, Text, Button, Alert } from "react-native";
-import { useSelector, useDispatch } from "react-redux";
+import { StyleSheet, View, Text, Alert } from "react-native";
+import { useDispatch } from "react-redux";
 import { getallusers } from "../../store/actions/Usersactions";
-
-const data = {
-  __v: 0,
-  _id: "5ed1234e90abee44b8569511",
-  date: "2020-05-29T14:59:26.899Z",
-  email: "admin@mail.com",
-  name: "Admin",
-  profile: {
-    __v: 0,
-    _id: "5ed4d5c258d5de00173efd78",
-    age: "29",
-    description: "123",
-    events: [],
-    facebook: "none",
-    friendList: [],
-    friendRequest: [],
-  },
-  role: "Admin",
-};
 
 const allUsers = () => {
   const dispatch = useDispatch();
@@ -29,8 +10,8 @@ const allUsers = () => {
 
   const getAllUsers = async () => {
     try {
-      const temp = await dispatch(getallusers());
-      return temp;
+      const tempUsers = await dispatch(getallusers());
+      setUsers([...tempUsers]);
     } catch (err) {
       setError(err.message);
     }
@@ -40,9 +21,11 @@ const allUsers = () => {
     if (error) {
       Alert.alert("An Error Occurred!", error, [{ text: "Okay" }]);
     }
-    let allUsers = getAllUsers();
-    //setUsers([ ...allUsers ]);
   }, [error]);
+
+  useEffect(() => {
+    getAllUsers();
+  }, []);
 
   return (
     <View style={styles.header}>

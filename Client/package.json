@@ -12,6 +12,7 @@
     "@use-expo/font": "^2.0.0",
     "axios": "^0.19.2",
     "expo": "^37.0.0",
+    "expo-asset": "^8.1.5",
     "expo-linear-gradient": "~8.1.0",
     "expo-location": "~8.1.0",
     "expo-vector-icons": "^10.0.1",
