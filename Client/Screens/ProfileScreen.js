@@ -15,6 +15,7 @@ import Colors from "../constants/Colors";
 import ModalComp from "../Components/ModalComp";
 
 const ProfileScreen = (props) => {
+  const role = useSelector((state) => state.users.role);
   const [details, setDetails] = useState({
     email: "",
     name: "",
@@ -172,11 +173,13 @@ const ProfileScreen = (props) => {
               onPress={() => props.navigation.navigate("addFriend")}
               color="#f1948a"
             />
-            <Button
-              title="Admin panel"
-              onPress={() => props.navigation.navigate("adminPanel")}
-              color="red"
-            />
+            {role === "Admin" && (
+              <Button
+                title="Admin panel"
+                onPress={() => props.navigation.navigate("adminPanel")}
+                color="red"
+              />
+            )}
           </View>
         </View>
       </View>

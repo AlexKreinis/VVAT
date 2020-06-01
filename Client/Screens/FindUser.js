@@ -38,7 +38,6 @@ const AddFriendScreen = (props) => {
 
   return (
     <View style={styles.container}>
-      {role === "Admin" && <View>ADMING BUTTON</View>}
       <View style={styles.inputBox}>
         <Text>Search for user</Text>
         <TextInput
