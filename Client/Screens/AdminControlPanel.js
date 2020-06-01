@@ -1,14 +1,18 @@
 import React from "react";
 import { StyleSheet, View, Text, Button } from "react-native";
 
-const AdminControlPanel = () => {
+const AdminControlPanel = (props) => {
   return (
     <View>
       <View style={styles.header}>
         <Text>ADMIN CONTROL PANEL</Text>
       </View>
 
-      <Button title="See list of users" color="#f1948a" />
+      <Button
+        title="See list of users"
+        color="#f1948a"
+        onPress={() => props.navigation.navigate("adminUsers")}
+      />
       <Button title="See list of events" color="#f1948a" />
     </View>
   );
