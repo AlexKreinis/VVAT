@@ -18,7 +18,7 @@ import EventHistory from "../Screens/EventHistory";
 import AdminControlPanel from "../Screens/AdminControlPanel";
 import allUsers from "../Screens/AdminScreens/allUsers";
 import LoginScreen from "../Screens/LoginScreen";
-
+import About from "../Screens/About";
 const defaultStackNavOptions = {
   headerStyle: {
     backgroundColor: Platform.OS === "android" ? Colors.primaryColor : "",
@@ -87,6 +87,17 @@ const TermsAndConditionsNavigator = createStackNavigator(
   }
 );
 
+const AboutScreenNavigator = createStackNavigator(
+  {
+    Main: {
+      screen: About,
+    },
+  },
+  {
+    defaultNavigationOptions: defaultStackNavOptions,
+  }
+);
+
 const appTabNavigator = {
   Map: {
     screen: MapNav,
@@ -133,6 +144,7 @@ const MainNavigator = createDrawerNavigator({
 
   SportCentersList: SportCentersListNav,
   TermsAndConditions: TermsAndConditionsNavigator,
+  About: AboutScreenNavigator,
 });
 
 const Navigator = createSwitchNavigator({
