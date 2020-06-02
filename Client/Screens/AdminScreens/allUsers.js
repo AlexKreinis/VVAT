@@ -1,36 +1,33 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, View, Text, Button, Alert } from "react-native";
-import { useSelector, useDispatch } from "react-redux";
+import {
+  FlatList,
+  StyleSheet,
+  Alert,
+  TouchableOpacity,
+  View,
+  Text,
+} from "react-native";
+import { useDispatch } from "react-redux";
 import { getallusers } from "../../store/actions/Usersactions";
-
-const data = {
-  __v: 0,
-  _id: "5ed1234e90abee44b8569511",
-  date: "2020-05-29T14:59:26.899Z",
-  email: "admin@mail.com",
-  name: "Admin",
-  profile: {
-    __v: 0,
-    _id: "5ed4d5c258d5de00173efd78",
-    age: "29",
-    description: "123",
-    events: [],
-    facebook: "none",
-    friendList: [],
-    friendRequest: [],
-  },
-  role: "Admin",
-};
+import { ListItem } from "react-native-elements";
 
 const allUsers = () => {
   const dispatch = useDispatch();
   const [users, setUsers] = useState([]);
   const [error, setError] = useState(null);
 
+  const LongClickHandler = () => {
+    Alert.alert("Edit user profile");
+  };
+
+  const ClickHandler = () => {
+    Alert.alert("See user profile");
+  };
+
   const getAllUsers = async () => {
     try {
-      const temp = await dispatch(getallusers());
-      return temp;
+      const tempUsers = await dispatch(getallusers());
+      setUsers([...tempUsers]);
     } catch (err) {
       setError(err.message);
     }
@@ -40,16 +37,39 @@ const allUsers = () => {
     if (error) {
       Alert.alert("An Error Occurred!", error, [{ text: "Okay" }]);
     }
-    let allUsers = getAllUsers();
-    //setUsers([ ...allUsers ]);
   }, [error]);
 
+  useEffect(() => {
+    getAllUsers();
+  }, []);
+  const keyExtractor = (item, index) => index.toString();
+
+  const renderItem = ({ item }) => (
+    <TouchableOpacity>
+      <ListItem
+        title={item["name"]}
+        subtitle={item["email"]}
+        leftAvatar={{ source: require("../../assets/pro2.png") }}
+        bottomDivider
+        chevron
+        onLongPress={LongClickHandler}
+        onPress={ClickHandler}
+      />
+    </TouchableOpacity>
+  );
+
   return (
-    <View style={styles.header}>
-      <Text>ALL USERS SCREEN</Text>
-      <View>
-        <Text>{users}</Text>
+    <View>
+      <View style={{ alignItems: "center", paddingTop: 30 }}>
+        <Text>Note for developers:</Text>
+        <Text>Short click for view, Long for Edit</Text>
       </View>
+      <FlatList
+        contentContainerStyle={{ paddingTop: 50 }}
+        keyExtractor={keyExtractor}
+        data={users}
+        renderItem={renderItem}
+      />
     </View>
   );
 };
@@ -60,7 +80,6 @@ const styles = StyleSheet.create({
   header: {
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 55,
-    marginBottom: 35,
+    flex: 1,
   },
 });
