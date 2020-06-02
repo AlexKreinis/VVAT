@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { ListItem, Icon, Button } from "react-native-elements";
+import TouchableScale from "react-native-touchable-scale";
 import {
   View,
   Text,
@@ -46,32 +48,43 @@ const EventList = (props) => {
 
   const renderEventItem = (itemData) => {
     return (
-      <TouchableOpacity
+      <ListItem
+        containerStyle={{ borderRadius: 10, marginBottom: 5 }}
+        Component={TouchableScale}
+        friction={90} //
+        tension={100} // These props are passed to the parent component (here TouchableScale)
+        activeScale={0.95} //
+        linearGradientProps={{
+          colors: ["#27ae60", "#27ae60"],
+          start: { x: 1, y: 0 },
+          end: { x: 0.2, y: 0 },
+        }}
+        leftElement={
+          <Icon name="ios-american-football" type="ionicon" color="white" />
+        }
+        title={itemData.item.name}
+        titleStyle={{
+          color: "white",
+          fontWeight: "bold",
+          fontSize: 25,
+          marginBottom: 5,
+        }}
+        subtitleStyle={{ color: "white" }}
+        subtitle={
+          " " +
+          new Date(itemData.item.start).toLocaleDateString() +
+          " \n " +
+          new Date(itemData.item.start).toLocaleTimeString() +
+          "  -  " +
+          new Date(itemData.item.finish).toLocaleTimeString()
+        }
+        chevron={{ color: "white", size: 30 }}
         onPress={() =>
           props.navigation.navigate("EventDetails", {
             selectedEvent: itemData.item,
           })
         }
-      >
-        <View style={styles.listItem}>
-          <Text style={{ fontWeight: "bold", fontSize: 22 }}>
-            {" "}
-            {itemData.item.name}
-          </Text>
-          <Text>
-            <Text style={{ fontWeight: "bold" }}>At</Text>{" "}
-            {new Date(itemData.item.start).toDateString()}
-          </Text>
-          <Text>
-            <Text style={{ fontWeight: "bold" }}>From </Text>{" "}
-            {new Date(itemData.item.start).toLocaleTimeString().slice(0, -3)}
-          </Text>
-          <Text style={{ fontWeight: "bold" }}>
-            <Text style={{ fontWeight: "bold" }}>To</Text>{" "}
-            {new Date(itemData.item.finish).toLocaleTimeString().slice(0, -3)}
-          </Text>
-        </View>
-      </TouchableOpacity>
+      />
     );
   };
 
@@ -125,26 +138,26 @@ const EventList = (props) => {
             </Text>
           </View>
           <View style={styles.list}>{List()}</View>
-          <View>
-            <TouchableOpacity
-              style={{
-                margin: "auto",
-                backgroundColor: "lightblue",
-                padding: 10,
-                borderRadius: 10,
-                marginTop: 30,
+          <View style={{ marginTop: 10 }}>
+            <Button
+              icon={
+                <Icon name="plus" size={15} color="white" type="font-awesome" />
+              }
+              title="  Create new event"
+              linearGradientProps={{
+                colors: ["#27ae60", "#27ae60"],
+                start: { x: 1, y: 0 },
+                end: { x: 0.2, y: 0 },
               }}
               onPress={() => props.navigation.navigate("CreateEvent")}
-            >
-              <Text style={{ fontSize: 18 }}>Add your event</Text>
-            </TouchableOpacity>
+            />
           </View>
         </View>
       );
     }
   };
 
-  return <>{eventScreen()}</>;
+  return eventScreen();
 };
 
 const styles = StyleSheet.create({
@@ -166,7 +179,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   list: {
-    flex: 5,
+    flex: 2.1,
     width: "100%",
   },
   listItem: {

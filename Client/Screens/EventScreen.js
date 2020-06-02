@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View, ActivityIndicator, Alert } from "react-native";
-import { Button } from "react-native-elements";
+import { Button, Card } from "react-native-elements";
 import { AirbnbRating } from "react-native-elements";
 import { useDispatch, useSelector } from "react-redux";
 import {
   addRating,
-  getRating,
   addAtendee,
   getAtendees,
+  getRating,
 } from "../store/actions/MapsActions";
 import { getUser } from "../store/actions/Usersactions";
 import Icon from "react-native-vector-icons/FontAwesome";
@@ -16,27 +16,47 @@ const EventScreen = (props) => {
   const dispatch = useDispatch();
   // const [avgRating, setAvgRating] = useState(0);
   const selectedAtendees = useSelector((state) => state.maps.selectedAtendees);
-  const eventRatings = useSelector((state) => state.maps.eventRatings);
   const userDetails = useSelector((state) => state.users);
   const [atendees, setAtendees] = useState([]);
   const { selectedEvent } = props.navigation.state.params;
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
-
+  const [rating, setRating] = useState(3);
+  const [ratingLoading, setRatingLoading] = useState(true);
   useEffect(() => {
     if (error) {
       Alert.alert("An Error Occurred!", error, [{ text: "Okay" }]);
     }
+    setIsLoading(false);
   }, [error]);
 
   useEffect(() => {
-    setAtendees([...selectedAtendees]);
-    setIsLoading(false);
+    try {
+      setIsLoading(true);
+      setAtendees([...selectedAtendees]);
+      setIsLoading(false);
+    } catch (error) {
+      setError(err.message);
+    }
   }, [selectedAtendees]);
+
+  const setInitialRating = async () => {
+    try {
+      const backendRating = await dispatch(
+        getRating(props.navigation.state.params.selectedEvent._id)
+      );
+      setRating(backendRating.rating);
+      setRatingLoading(false);
+    } catch (error) {
+      setIsLoading(false);
+      setError(err.message);
+    }
+  };
 
   useEffect(() => {
     try {
       dispatch(getAtendees(props.navigation.state.params.selectedEvent._id));
+      setInitialRating();
     } catch (err) {
       setIsLoading(false);
       setError(err.message);
@@ -45,36 +65,16 @@ const EventScreen = (props) => {
 
   const RegForEventHandler = async () => {
     try {
-      console.log("Regsitering\n");
       setIsLoading(true);
       await dispatch(
         addAtendee(props.navigation.state.params.selectedEvent._id)
       );
-      console.log(userDetails.id);
       setAtendees([...atendees, userDetails.id]);
     } catch (err) {
       setIsLoading(false);
-      console.log("catching");
       setError(err.message);
     }
   };
-
-  // useEffect(() => {
-  //   setAvgRating(0);
-  //   var total = 0;
-  //   for (var i = 0; i < eventRatings.length; i++) {
-  //     total += parseInt(eventRatings[i]);
-  //   }
-  //   if (eventRatings.length != 0) setAvgRating(total / eventRatings.length);
-  // }, [eventRatings]);
-
-  // useEffect(() => {
-  //   try {
-  //     dispatch(getRating(selectedEvent._id));
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // }, []);
 
   useEffect(() => {
     try {
@@ -85,8 +85,24 @@ const EventScreen = (props) => {
     }
   }, [userDetails]);
 
+  const submitRating = async () => {
+    try {
+      setIsLoading(true);
+      const answer = await dispatch(
+        addRating(
+          props.navigation.state.params.selectedEvent._id,
+          selectedEvent._id
+        )
+      );
+      Alert.alert("Success!", answer.msg, [{ text: "Okay" }]);
+      setIsLoading(false);
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+
   const AddedRating = (rating) => {
-    console.log(rating);
+    setRating(rating);
   };
 
   const isUserRegistered = () => {
@@ -108,13 +124,34 @@ const EventScreen = (props) => {
     }
     if (isUserRegistered()) {
       return (
-        <View>
+        <View style={{ justifyContent: "center", alignItems: "center" }}>
           <Text>Rate the event: </Text>
-          <AirbnbRating
-            size={30}
-            showRating={false}
-            onFinishRating={AddedRating}
-          />
+          <Card>
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-around",
+                alignItems: "center",
+                width: "100%",
+              }}
+            >
+              {ratingLoading ? (
+                <ActivityIndicator />
+              ) : (
+                <AirbnbRating
+                  size={30}
+                  count={5}
+                  reviews={["Terrible", "Bad", "OK", "Good", "Amazing"]}
+                  defaultRating={rating}
+                  size={20}
+                  showRating={true}
+                  onFinishRating={AddedRating}
+                />
+              )}
+
+              <Button title="Submit" type="outline" onPress={submitRating} />
+            </View>
+          </Card>
         </View>
       );
     } else {

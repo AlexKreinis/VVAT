@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, View, Text, FlatList } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Text,
+  FlatList,
+  ActivityIndicator,
+} from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { getAtendees } from "../../store/actions/MapsActions";
 import { Button } from "react-native-elements";
@@ -70,6 +76,7 @@ const Attendees = (props) => {
     },
   ];
   const [atendees, setAtendees] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const dispatch = useDispatch();
   const AttendeesList = useSelector((state) => state.maps.selectedAtendees);
 
@@ -82,8 +89,8 @@ const Attendees = (props) => {
   }, []);
 
   useEffect(() => {
-    console.log("list is", AttendeesList);
     setAtendees([...AttendeesList]);
+    setIsLoading(false);
   }, [AttendeesList]);
 
   const renderItem = ({ item }) => (
@@ -94,36 +101,52 @@ const Attendees = (props) => {
       bottomDivider
     />
   );
-
-  return (
-    <View style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.title}>Attendees</Text>
-      </View>
-      <View style={styles.list}>
-        {atendees.length > 0 ? (
-          <FlatList
-            keyExtractor={(item, index) => item._id}
-            data={atendees}
-            renderItem={renderItem}
-          />
-        ) : (
-          <View>
-            <Text>No one has signed to this event yet</Text>
+  const showAtendeesScreen = () => {
+    if (isLoading) {
+      return (
+        <View
+          style={{
+            height: "100%",
+            backgroundColor: "white",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <ActivityIndicator size="large" color="#0000ff" />
+        </View>
+      );
+    } else
+      return (
+        <View style={styles.container}>
+          <View style={styles.header}>
+            <Text style={styles.title}>Attendees</Text>
           </View>
-        )}
-      </View>
-      <Button
-        title="  go back"
-        icon={<Icon name="arrow-left" size={20} color="white" />}
-        onPress={() => props.navigation.navigate("Events")}
-        raised={true}
-        buttonStyle={{
-          width: 200,
-        }}
-      />
-    </View>
-  );
+          <View style={styles.list}>
+            {atendees.length > 0 ? (
+              <FlatList
+                keyExtractor={(item, index) => item._id}
+                data={atendees}
+                renderItem={renderItem}
+              />
+            ) : (
+              <View>
+                <Text>No one has signed to this event yet</Text>
+              </View>
+            )}
+          </View>
+          <Button
+            title="  go back"
+            icon={<Icon name="arrow-left" size={20} color="white" />}
+            onPress={() => props.navigation.navigate("Events")}
+            raised={true}
+            buttonStyle={{
+              width: 200,
+            }}
+          />
+        </View>
+      );
+  };
+  return showAtendeesScreen();
 };
 
 const styles = StyleSheet.create({

@@ -12,6 +12,8 @@ import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import CustomHeaderButton from "../Components/CustomHeaderButton";
 import ModalComp from "../Components/ModalComp";
 import { selectedMapsDetails } from "../store/actions/MapsActions";
+import TouchableScale from "react-native-touchable-scale";
+import { ListItem } from "react-native-elements";
 
 const SportCentersList = (props) => {
   const Maps = useSelector((state) => state.maps.sportsCenters);
@@ -32,16 +34,28 @@ const SportCentersList = (props) => {
 
   const renderSportcenterItem = (itemData) => {
     return (
-      <TouchableOpacity onPress={() => handleOpenModal(itemData.item)}>
-        <View style={styles.listItem}>
-          <Text style={{ fontWeight: "bold", fontSize: 22 }}>
-            {itemData.item["Name"]}
-          </Text>
-          <Text style={{ fontWeight: "bold", fontSize: 17 }}>
-            {itemData.item["Type"]}
-          </Text>
-        </View>
-      </TouchableOpacity>
+      <ListItem
+        Component={TouchableScale}
+        friction={90} //
+        tension={100} // These props are passed to the parent component (here TouchableScale)
+        activeScale={0.95} //
+        linearGradientProps={{
+          colors: ["#27ae60", "#1e8449"],
+          start: { x: 1, y: 0 },
+          end: { x: 0.2, y: 0 },
+        }}
+        title={itemData.item["Name"]}
+        titleStyle={{ color: "white", fontWeight: "bold" }}
+        subtitleStyle={{ color: "white" }}
+        subtitle={itemData.item["Type"]}
+        chevron={{ color: "white" }}
+        onPress={() => handleOpenModal(itemData.item)}
+        containerStyle={{
+          borderBottomColor: "white",
+          borderBottomWidth: 1,
+          width: "100%",
+        }}
+      />
     );
   };
 

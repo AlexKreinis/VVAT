@@ -13,7 +13,6 @@ const initialState = {
   sportsCenters: [],
   selectedMapData: { lat: "", lon: "", name: "" },
   events: [],
-  eventRatings: [],
   selectedAtendees: [],
   isLoading: true,
 };
@@ -33,17 +32,10 @@ const MapsReducers = (state = initialState, action) => {
           name: action.payload.name,
         },
       };
-    case ADD_RATING:
-      return {
-        ...state,
-        eventRatings: action.payload,
-      };
     case GET_EVENTS:
       return { ...state, events: [...action.payload], isLoading: false };
     case DELETE_EVENTS:
       return { ...state, events: [] };
-    case GET_RATING:
-      return { ...state, eventRatings: action.payload };
     case ADD_ATENDEE:
       return { ...state, selectedAtendees: [...action.payload.atendees] };
     case LOADING_EVENTS:

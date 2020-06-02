@@ -4,6 +4,7 @@ const auth = require("../../middleware/auth");
 var sportdata = require("../../b7data/sport.json");
 const Event = require("../../models/Event");
 const Location = require("../../models/Location");
+const Rating = require("../../models/Rating");
 
 router.get("/getmaps", async (req, res) => {
   try {
@@ -59,31 +60,37 @@ router.post("/addevent", auth, async (req, res) => {
   }
 });
 
-router.post("/addrating", async (req, res) => {
+router.post("/addrating", auth, async (req, res) => {
   try {
-    //  const { rating, eventId } = req.params;
-
     const { rating, eventId } = req.body;
+    oldRating = await Rating.findOne({ rater: req.user.id, eventId: eventId });
+    if (oldRating) {
+      oldRating.rating = parseInt(rating, 10);
+      await oldRating.save();
+      return res.json({ msg: "Rating was added successfully" });
+    }
+    newRating = new Rating({
+      rater: req.user.id,
+      rating: parseInt(rating, 10),
+      eventId: eventId,
+    });
+    await newRating.save();
     event = await Event.findById(eventId);
-    event.ratings.push(rating);
+    event.ratings.push(newRating._id);
     await event.save();
-
-    events = await Event.findById(eventId);
-
-    res.json(events.ratings);
+    res.json({ msg: "Rating was added successfully" });
   } catch (err) {
     console.error(err.message);
     res.status(500).json({ errors: [{ msg: err.message }] });
   }
 });
 
-router.get("/getratings/:eventid", async (req, res) => {
+router.get("/getratings/:eventid", auth, async (req, res) => {
   try {
     const { eventid } = req.params;
-
-    event = await Event.findById(eventid);
-    if (event) res.json({ rating: event.ratings });
-    else res.json({ rating: [] });
+    rating = await Rating.findOne({ rater: req.user.id, eventId: eventid });
+    if (rating) res.json({ rating });
+    else res.json({ rating: 0 });
   } catch (err) {
     console.error(err.message);
     res.status(500).json({ errors: [{ msg: err.message }] });

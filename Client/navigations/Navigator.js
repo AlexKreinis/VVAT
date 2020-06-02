@@ -20,6 +20,7 @@ import allUsersScreen from "../Screens/AdminScreens/allUsersScreen";
 import LoginScreen from "../Screens/LoginScreen";
 import allEventsScreen from "../Screens/AdminScreens/allEventsScreen";
 import userProfileScreen from "../Screens/AdminScreens/userProfileScreen";
+import About from "../Screens/About";
 
 const defaultStackNavOptions = {
   headerStyle: {
@@ -91,6 +92,17 @@ const TermsAndConditionsNavigator = createStackNavigator(
   }
 );
 
+const AboutScreenNavigator = createStackNavigator(
+  {
+    Main: {
+      screen: About,
+    },
+  },
+  {
+    defaultNavigationOptions: defaultStackNavOptions,
+  }
+);
+
 const appTabNavigator = {
   Map: {
     screen: MapNav,
@@ -137,6 +149,7 @@ const MainNavigator = createDrawerNavigator({
 
   SportCentersList: SportCentersListNav,
   TermsAndConditions: TermsAndConditionsNavigator,
+  About: AboutScreenNavigator,
 });
 
 const Navigator = createSwitchNavigator({

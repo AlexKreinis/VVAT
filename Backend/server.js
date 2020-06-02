@@ -15,6 +15,7 @@ const PORT = process.env.PORT || 5000;
 app.use("/api/auth", require("./routes/api/authAPI"));
 app.use("/api/maps", require("./routes/api/mapAPI"));
 app.use("/api/profile", require("./routes/api/profileAPI"));
+app.use("/api/admin", require("./routes/api/adminAPI"));
 
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
 

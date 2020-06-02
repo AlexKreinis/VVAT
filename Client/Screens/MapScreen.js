@@ -21,6 +21,7 @@ const MapScreen = (props) => {
   const Maps = useSelector((state) => state.maps.sportsCenters);
   const [openModal, setOpenModal] = useState(false);
   const [sportsLocations, setSportsLocations] = useState([]);
+  const [error, setError] = useState();
   const dispatch = useDispatch();
 
   useEffect(() => {
