@@ -16,8 +16,10 @@ import TermsAndConditions from "../Screens/TermsAndConditions";
 import FindUser from "../Screens/FindUser";
 import EventHistory from "../Screens/EventHistory";
 import AdminControlPanel from "../Screens/AdminControlPanel";
-import allUsers from "../Screens/AdminScreens/allUsers";
+import allUsersScreen from "../Screens/AdminScreens/allUsersScreen";
 import LoginScreen from "../Screens/LoginScreen";
+import allEventsScreen from "../Screens/AdminScreens/allEventsScreen";
+import userProfileScreen from "../Screens/AdminScreens/userProfileScreen";
 
 const defaultStackNavOptions = {
   headerStyle: {
@@ -56,7 +58,9 @@ const ProfileNav = createStackNavigator(
     addFriend: FindUser,
     history: EventHistory,
     adminPanel: AdminControlPanel,
-    adminUsers: allUsers,
+    adminUsers: allUsersScreen,
+    adminEvents: allEventsScreen,
+    userProfile: userProfileScreen,
   },
   {
     defaultNavigationOptions: {

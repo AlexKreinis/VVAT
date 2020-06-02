@@ -9,8 +9,8 @@ import {
 } from "../actions/const";
 import { getProfile } from "./profileActions";
 
-const youripadress = "https://vvat.herokuapp.com";
-//const youripadress = "http://localhost:5000";
+//const youripadress = "https://vvat.herokuapp.com";
+const youripadress = "http://192.168.0.86:5000";
 
 export const register = (data) => async (dispatch) => {
   try {
@@ -134,7 +134,6 @@ export const findUserProfile = (email) => async (dispatch) => {
 };
 
 export const getallusers = () => async () => {
-  console.log("getallusers ACTIVATED");
   try {
     const res = await fetch(`${youripadress}/api/profile/getallusers/`);
 

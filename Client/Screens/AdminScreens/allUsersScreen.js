@@ -11,7 +11,7 @@ import { useDispatch } from "react-redux";
 import { getallusers } from "../../store/actions/Usersactions";
 import { ListItem } from "react-native-elements";
 
-const allUsers = () => {
+const allUsersScreen = (props) => {
   const dispatch = useDispatch();
   const [users, setUsers] = useState([]);
   const [error, setError] = useState(null);
@@ -42,6 +42,7 @@ const allUsers = () => {
   useEffect(() => {
     getAllUsers();
   }, []);
+
   const keyExtractor = (item, index) => index.toString();
 
   const renderItem = ({ item }) => (
@@ -53,7 +54,12 @@ const allUsers = () => {
         bottomDivider
         chevron
         onLongPress={LongClickHandler}
-        onPress={ClickHandler}
+        onPress={() => {
+          props.navigation.navigate({
+            routeName: "userProfile",
+            params: { userEmail: item["email"] },
+          });
+        }}
       />
     </TouchableOpacity>
   );
@@ -74,7 +80,7 @@ const allUsers = () => {
   );
 };
 
-export default allUsers;
+export default allUsersScreen;
 
 const styles = StyleSheet.create({
   header: {
