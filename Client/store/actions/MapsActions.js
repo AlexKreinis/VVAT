@@ -1,6 +1,6 @@
-const youripadress = "http://192.168.1.36:5000";
+//const youripadress = "http://localhost:5000";
 
-//const youripadress = "https://vvat.herokuapp.com";
+const youripadress = "https://vvat.herokuapp.com";
 
 import {
   GET_MAPS,
