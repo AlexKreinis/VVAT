@@ -2,7 +2,6 @@ import { createStackNavigator } from "react-navigation-stack";
 import { createAppContainer } from "react-navigation";
 import { createSwitchNavigator } from "react-navigation";
 import { createDrawerNavigator } from "react-navigation-drawer";
-import LoginScreen from "../Screens/LoginScreen";
 import RegistrationScreen from "../Screens/RegistrationScreen";
 import MapScreen from "../Screens/MapScreen";
 import ProfileScreen from "../Screens/ProfileScreen";
@@ -18,6 +17,7 @@ import FindUser from "../Screens/FindUser";
 import EventHistory from "../Screens/EventHistory";
 import AdminControlPanel from "../Screens/AdminControlPanel";
 import allUsers from "../Screens/AdminScreens/allUsers";
+import LoginScreen from "../Screens/LoginScreen";
 
 const defaultStackNavOptions = {
   headerStyle: {
