@@ -17,6 +17,7 @@ import TermsAndConditions from "../Screens/TermsAndConditions";
 import FindUser from "../Screens/FindUser";
 import EventHistory from "../Screens/EventHistory";
 import AdminControlPanel from "../Screens/AdminControlPanel";
+import allUsers from "../Screens/AdminScreens/allUsers";
 
 const defaultStackNavOptions = {
   headerStyle: {
@@ -55,6 +56,7 @@ const ProfileNav = createStackNavigator(
     addFriend: FindUser,
     history: EventHistory,
     adminPanel: AdminControlPanel,
+    adminUsers: allUsers,
   },
   {
     defaultNavigationOptions: {

@@ -1,6 +1,5 @@
-//const youripadress = "http://localhost:5000";
 //const youripadress = "https://vvat.herokuapp.com";
-const youripadress = "http://192.168.56.1:5000";
+const youripadress = "http://localhost:5000";
 
 import {
   GET_MAPS,
@@ -63,13 +62,15 @@ export const createEvent = (data) => async (dispatch, getState) => {
   }
 };
 
-export const addRating = (rating, eventId) => async (dispatch) => {
+export const addRating = (rating, eventId) => async (dispatch, getState) => {
   try {
+    const token = getState().users.token;
     const res = await fetch(`${youripadress}/api/maps/addrating`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
+        "x-auth-token": token,
       },
       body: JSON.stringify({ rating: rating, eventId: eventId }),
     });
@@ -83,19 +84,23 @@ export const addRating = (rating, eventId) => async (dispatch) => {
     }
 
     let serverData = await res.json();
-
-    dispatch({
-      type: ADD_RATING,
-      payload: serverData,
-    });
+    return serverData;
   } catch (err) {
     throw err;
   }
 };
 
-export const getRating = (eventid) => async (dispatch) => {
+export const getRating = (eventid) => async (dispatch, getState) => {
   try {
-    const res = await fetch(`${youripadress}/api/maps/getratings/${eventid}`);
+    const token = getState().users.token;
+    const res = await fetch(`${youripadress}/api/maps/getratings/${eventid}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        "x-auth-token": token,
+      },
+    });
 
     if (!res.ok) {
       const errorResData = await res.json();
@@ -106,11 +111,7 @@ export const getRating = (eventid) => async (dispatch) => {
     }
 
     let serverData = await res.json();
-
-    dispatch({
-      type: GET_RATING,
-      payload: serverData.rating,
-    });
+    return serverData.rating;
   } catch (err) {
     throw err;
   }
