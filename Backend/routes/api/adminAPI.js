@@ -39,4 +39,17 @@ router.get("/getallevents/", async (req, res) => {
   }
 });
 
+router.get("/removeevent", async (req, res) => {
+  console.log("req.body in removeevent-------------------", req.body);
+  try {
+    /* const otherUser = await User.findOne({ email: otherEmail })
+      .select("-password")
+      .populate("profile");
+    res.json({ user: otherUser }); */
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ errors: [{ msg: err.message }] });
+  }
+});
+
 module.exports = router;

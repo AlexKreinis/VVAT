@@ -62,3 +62,20 @@ export const getallevents = () => async () => {
     console.log(err.message);
   }
 };
+
+export const removeevent = () => async () => {
+  try {
+    const res = await fetch(`${youripadress}/api/admin/removeevent/`);
+
+    if (!res.ok) {
+      const errorResData = await res.json();
+      let message = "Something went wrong!";
+      if (errorResData && errorResData.errors.length > 0)
+        message = errorResData.errors[0].msg;
+      throw new Error(message);
+    }
+    console.log("res in admin actions-----------", res);
+  } catch (err) {
+    console.log(err.message);
+  }
+};

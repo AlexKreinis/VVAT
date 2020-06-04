@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import { ListItem } from "react-native-elements";
 import { useDispatch } from "react-redux";
-import { getallevents } from "../../store/actions/adminActions";
+import { getallevents, removeevent } from "../../store/actions/adminActions";
 
 const allEventsScreen = () => {
   const keyExtractor = (item, index) => index.toString();
@@ -18,6 +18,7 @@ const allEventsScreen = () => {
   const [events, setEvents] = useState([]);
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [name, setName] = useState("");
 
   const getAllEvents = async () => {
     try {
@@ -25,6 +26,13 @@ const allEventsScreen = () => {
       const tempEvents = await dispatch(getallevents());
       setEvents([...tempEvents]);
       setIsLoading(false);
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+  const removeEventHandler = async () => {
+    try {
+      await dispatch(removeevent());
     } catch (err) {
       setError(err.message);
     }
@@ -41,7 +49,6 @@ const allEventsScreen = () => {
     getAllEvents();
   }, []);
 
-  console.log("events-----------------", events);
   const renderItem = ({ item }) => (
     <TouchableOpacity>
       <ListItem
@@ -50,8 +57,8 @@ const allEventsScreen = () => {
         leftAvatar={{ source: require("../../assets/pro2.png") }}
         bottomDivider
         chevron
+        onPress={removeEventHandler}
         //onLongPress={}
-        //onPress={}
       />
     </TouchableOpacity>
   );
