@@ -1,13 +1,11 @@
 //const youripadress = "https://vvat.herokuapp.com";
-const youripadress = "http://192.168.0.86:5000";
+const youripadress = "http://localhost:5000";
 
 import {
   GET_MAPS,
   SELECTED_MAP_DATA,
   GET_EVENTS,
   DELETE_EVENTS,
-  ADD_RATING,
-  GET_RATING,
   ADD_ATENDEE,
   LOADING_EVENTS,
 } from "./const";

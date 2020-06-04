@@ -89,16 +89,12 @@ const EventScreen = (props) => {
   const submitRating = async () => {
     try {
       setIsLoading(true);
-      const answer = await dispatch(
-        addRating(
-          props.navigation.state.params.selectedEvent._id,
-          selectedEvent._id
-        )
-      );
+      const answer = await dispatch(addRating(rating, selectedEvent._id));
       Alert.alert("Success!", answer.msg, [{ text: "Okay" }]);
       setIsLoading(false);
     } catch (err) {
       setError(err.message);
+      setIsLoading(false);
     }
   };
 

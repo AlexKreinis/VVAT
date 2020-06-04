@@ -1,4 +1,4 @@
-const youripadress = "http://192.168.0.86:5000";
+const youripadress = "http://localhost:5000";
 //const youripadress = "https://vvat.herokuapp.com";
 
 export const adminGetProfile = (email) => async (dispatch, getState) => {

@@ -21,6 +21,7 @@ import LoginScreen from "../Screens/LoginScreen";
 import allEventsScreen from "../Screens/AdminScreens/allEventsScreen";
 import userProfileScreen from "../Screens/AdminScreens/userProfileScreen";
 import About from "../Screens/About";
+import { customDrawerComponent } from "../Components/customDrawerComponent";
 
 const defaultStackNavOptions = {
   headerStyle: {
@@ -139,18 +140,23 @@ const MapProfileTabNavigator =
         },
       });
 
-const MainNavigator = createDrawerNavigator({
-  MapProfile: {
-    screen: MapProfileTabNavigator,
-    navigationOptions: {
-      drawerLabel: "Maps",
+const MainNavigator = createDrawerNavigator(
+  {
+    MapProfile: {
+      screen: MapProfileTabNavigator,
+      navigationOptions: {
+        drawerLabel: "Maps",
+      },
     },
-  },
 
-  SportCentersList: SportCentersListNav,
-  TermsAndConditions: TermsAndConditionsNavigator,
-  About: AboutScreenNavigator,
-});
+    SportCentersList: SportCentersListNav,
+    TermsAndConditions: TermsAndConditionsNavigator,
+    About: AboutScreenNavigator,
+  },
+  {
+    contentComponent: customDrawerComponent,
+  }
+);
 
 const Navigator = createSwitchNavigator({
   loginregister: LoginRegisterNav,

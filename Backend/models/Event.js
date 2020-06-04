@@ -15,7 +15,7 @@ const EventSchema = new mongoose.Schema({
   ratings: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "rater",
+      ref: "rating",
     },
   ],
   owner: {

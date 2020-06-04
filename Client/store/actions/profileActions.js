@@ -9,7 +9,7 @@ import {
 } from "../actions/const";
 
 //const youripadress = "https://vvat.herokuapp.com";
-const youripadress = "http://192.168.0.86:5000";
+const youripadress = "http://localhost:5000";
 
 export const getEventHistory = () => async (dispatch, getState) => {
   try {
@@ -130,6 +130,7 @@ export const getFriendRequests = () => async (dispatch, getState) => {
         "x-auth-token": token,
       },
     });
+
     if (!res.ok) {
       const errorResData = await res.json();
       let message = "Something went wrong!";
@@ -137,7 +138,9 @@ export const getFriendRequests = () => async (dispatch, getState) => {
         message = errorResData.errors[0].msg;
       throw new Error(message);
     }
+
     let serverData = await res.json();
+
     dispatch({
       type: GET_FRIEND_REQUESTS,
       payload: {
