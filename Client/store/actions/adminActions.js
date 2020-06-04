@@ -1,5 +1,5 @@
-const youripadress = "http://localhost:5000";
-//const youripadress = "https://vvat.herokuapp.com";
+//const youripadress = "http://localhost:5000";
+const youripadress = "https://vvat.herokuapp.com";
 
 export const adminGetProfile = (email) => async (dispatch, getState) => {
   try {

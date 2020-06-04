@@ -8,8 +8,8 @@ import {
   GET_USER_PROFILE,
 } from "../actions/const";
 import { getProfile } from "./profileActions";
-//const youripadress = "https://vvat.herokuapp.com";
-const youripadress = "http://localhost:5000";
+const youripadress = "https://vvat.herokuapp.com";
+//const youripadress = "http://localhost:5000";
 
 export const register = (data) => async (dispatch) => {
   try {
