@@ -18,6 +18,9 @@ const AcceptFriendList = () => {
   const friendRequest = useSelector((state) => state.profiles.friendRequest);
   const [error, setError] = useState();
   const [message, setMessage] = useState();
+  const dispatch = useDispatch();
+  const [friendReq, setFriendReq] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     if (error) {
@@ -47,16 +50,13 @@ const AcceptFriendList = () => {
     })();
   }, []);
 
-  const dispatch = useDispatch();
-  const [friendReq, setFriendReq] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-
   const acceptReuqest = async (id) => {
     try {
       setIsLoading(true);
       const answer = await dispatch(acceptFriendRequest(id));
-      setFriendReq(friendReq.filter((friend) => friend._id != id));
       setMessage(answer);
+      setFriendReq(friendReq.filter((friend) => friend._id != id));
+      setIsLoading(false);
     } catch (err) {
       console.log(err);
       setError(err.message);
@@ -124,7 +124,7 @@ const AcceptFriendList = () => {
           <FlatList
             data={friendReq}
             renderItem={renderingRequests}
-            keyExtractor={(item) => item.id}
+            keyExtractor={(item) => item._id}
           />
         </View>
       );

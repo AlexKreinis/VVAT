@@ -7,9 +7,10 @@ const auth = require("../../middleware/auth");
 router.get("/", auth, async (req, res) => {
   try {
     const foundUser = await User.findById(req.user.id);
-    const foundProfile = await Profile.findById(foundUser.profile).populate(
-      "events"
-    );
+    const foundProfile = await Profile.findById(foundUser.profile)
+      .populate("events")
+      .populate("friendList")
+      .populate("friendRequest");
     res.json({ profile: foundProfile });
   } catch (err) {
     console.error(err);
@@ -44,6 +45,12 @@ router.post("/acceptfriendrequest", auth, async (req, res) => {
     );
     foundProfile.friendRequest = filteredFriendReuqest;
     foundProfile.friendList.push(req.body.id);
+    const friendRequestSender = await User.findById(req.body.id);
+    const friendRequestProfile = await Profile.findById(
+      friendRequestSender.profile
+    );
+    friendRequestProfile.friendList.push(req.user.id);
+    await friendRequestProfile.save();
     foundProfile.save();
     res.json({ msg: "accepted the friend request" });
   } catch (error) {
@@ -74,6 +81,7 @@ router.get("/getfriendrequests", auth, async (req, res) => {
     const foundProfile = await Profile.findById(foundUser.profile).populate(
       "friendRequest"
     );
+    console.log();
     if (foundProfile.friendRequest.length > 0) {
       res.json({ friendRequests: foundProfile.friendRequest });
     } else {
@@ -91,6 +99,18 @@ router.post("/sendfriendrequest", auth, async (req, res) => {
     const friendRequestProfile = await Profile.findById(
       FriendRequestUser.profile._id
     );
+    for (let i = 0; i < friendRequestProfile.friendRequest; i++) {
+      if (friendRequestProfile.friendRequest[i] == id) {
+        console.log(
+          friendRequestProfile.friendRequest[i],
+          id,
+          friendRequestProfile.friendRequest[i] == id
+        );
+        return res
+          .status(500)
+          .json({ errors: [{ msg: "You allready sent a friend request" }] });
+      }
+    }
     friendRequestProfile.friendRequest.push(req.user.id);
     await friendRequestProfile.save();
     res.json({ msg: "success" });

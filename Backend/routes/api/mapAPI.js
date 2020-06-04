@@ -74,6 +74,7 @@ router.post("/addrating", auth, async (req, res) => {
       rating: parseInt(rating, 10),
       eventId: eventId,
     });
+    console.log("rating is", newRating);
     await newRating.save();
     event = await Event.findById(eventId);
     event.ratings.push(newRating._id);
