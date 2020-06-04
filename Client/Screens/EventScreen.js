@@ -23,6 +23,7 @@ const EventScreen = (props) => {
   const [error, setError] = useState("");
   const [rating, setRating] = useState(3);
   const [ratingLoading, setRatingLoading] = useState(true);
+
   useEffect(() => {
     if (error) {
       Alert.alert("An Error Occurred!", error, [{ text: "Okay" }]);

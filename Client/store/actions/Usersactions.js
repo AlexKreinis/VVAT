@@ -9,7 +9,11 @@ import {
 } from "../actions/const";
 import { getProfile } from "./profileActions";
 //const youripadress = "https://vvat.herokuapp.com";
+<<<<<<< HEAD
 const youripadress = "http://192.168.56.1:5000";
+=======
+const youripadress = "http://192.168.0.86:5000";
+>>>>>>> f42e016babddf136b42e3bcb6919c5072063bd56
 
 export const register = (data) => async (dispatch) => {
   try {
@@ -127,24 +131,6 @@ export const findUserProfile = (email) => async (dispatch) => {
     let serverData = await res.json();
 
     return serverData;
-  } catch (err) {
-    throw err;
-  }
-};
-
-export const getallusers = () => async () => {
-  try {
-    const res = await fetch(`${youripadress}/api/profile/getallusers/`);
-
-    if (!res.ok) {
-      const errorResData = await res.json();
-      let message = "Something went wrong!";
-      if (errorResData && errorResData.errors.length > 0)
-        message = errorResData.errors[0].msg;
-      throw new Error(message);
-    }
-    let listOfAllUsers = await res.json();
-    return listOfAllUsers.allUsers;
   } catch (err) {
     throw err;
   }

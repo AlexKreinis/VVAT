@@ -8,7 +8,7 @@ import {
   Text,
 } from "react-native";
 import { useDispatch } from "react-redux";
-import { getallusers } from "../../store/actions/Usersactions";
+import { getallusers } from "../../store/actions/adminActions";
 import { ListItem } from "react-native-elements";
 
 const allUsersScreen = (props) => {
@@ -67,8 +67,7 @@ const allUsersScreen = (props) => {
   return (
     <View>
       <View style={{ alignItems: "center", paddingTop: 30 }}>
-        <Text>Note for developers:</Text>
-        <Text>Short click for view, Long for Edit</Text>
+        <Text>USER MANAGMENT SCREEN</Text>
       </View>
       <FlatList
         contentContainerStyle={{ paddingTop: 50 }}

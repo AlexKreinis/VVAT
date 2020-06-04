@@ -134,17 +134,6 @@ router.get("/finduserprofile/:email", async (req, res) => {
   }
 });
 
-router.get("/getallusers/", async (req, res) => {
-  try {
-    const Users = await User.find().select("-password").populate("profile");
-
-    res.json({ allUsers: Users });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ errors: [{ msg: err.message }] });
-  }
-});
-
 router.post("/saveprofile", auth, async (req, res) => {
   try {
     const Finduser = await User.findById(req.user.id);
