@@ -198,6 +198,7 @@ export const getProfile = () => async (dispatch, getState) => {
       throw new Error(message);
     }
     let serverData = await res.json();
+
     if (serverData.profile) {
       dispatch({
         type: GET_PROFILE,

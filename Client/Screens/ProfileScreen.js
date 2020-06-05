@@ -35,7 +35,7 @@ const ProfileScreen = (props) => {
 
   useEffect(() => {
     dispatch(getProfile());
-  }, [profileDetails]);
+  }, [profileDetails, userDetails]);
 
   useEffect(() => {
     const tempDetails = {
@@ -51,7 +51,7 @@ const ProfileScreen = (props) => {
         : [],
     };
     setDetails(tempDetails);
-  }, [profileDetails]);
+  }, [profileDetails, userDetails]);
 
   return (
     <View style={styles.container}>
@@ -71,7 +71,13 @@ const ProfileScreen = (props) => {
       </View>
       <View style={styles.profileDetail}>
         <View style={styles.detailContent}>
-          <Text style={styles.title}>Friends</Text>
+          <TouchableOpacity
+            onPress={() => {
+              props.navigation.navigate("friendList");
+            }}
+          >
+            <Text style={styles.title}>Friends</Text>
+          </TouchableOpacity>
           <Text style={styles.count}>{details.friendList.length}</Text>
         </View>
         <View style={styles.detailContent}>
