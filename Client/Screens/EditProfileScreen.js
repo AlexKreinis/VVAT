@@ -3,12 +3,10 @@ import {
   StyleSheet,
   Text,
   View,
-  Image,
   Button,
   TextInput,
   KeyboardAvoidingView,
   Alert,
-  ScrollView,
 } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import Colors from "../constants/Colors";

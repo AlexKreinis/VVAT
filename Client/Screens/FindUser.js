@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, Button, TextInput, Alert } from "react-native";
+import { View, StyleSheet, Alert } from "react-native";
 import { findUserProfile } from "../store/actions/Usersactions";
 import { sendFriendRequest } from "../store/actions/profileActions";
 import { useDispatch, useSelector } from "react-redux";
+import { SearchBar, Button, ListItem } from "react-native-elements";
+import TouchableScale from "react-native-touchable-scale";
 
 const AddFriendScreen = (props) => {
   useEffect(() => {
@@ -12,14 +14,19 @@ const AddFriendScreen = (props) => {
   }, [error]);
   const role = useSelector((state) => state.users.role);
   const dispatch = useDispatch();
+  const userEmail = useSelector((state) => state.users.email);
   const [email, setEmail] = useState("");
   const [profile, setProfile] = useState(null);
   const [error, setError] = useState(null);
 
   const getProfileHandler = async () => {
     try {
-      const userProfile = await dispatch(findUserProfile(email));
-      setProfile(userProfile.other);
+      if (userEmail === email) {
+        Alert.alert("Sorry", "You cannot add yourself", [{ text: "Okay" }]);
+      } else {
+        const userProfile = await dispatch(findUserProfile(email));
+        setProfile(userProfile.other);
+      }
     } catch (err) {
       setError(err.message);
     }
@@ -38,18 +45,67 @@ const AddFriendScreen = (props) => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.inputBox}>
-        <Text>Search for user</Text>
-        <TextInput
+      <View style={{ marginTop: 40 }}>
+        <SearchBar
+          placeholder="Type Here..."
+          value={email}
           placeholder="Email"
-          selectionColor="blue"
-          style={styles.input}
           onChangeText={(text) => setEmail(text)}
+          platform="default"
+          lightTheme
+          round
         />
-        <Button title="Search" onPress={getProfileHandler} />
+        <Button title="Search" type="clear" onPress={getProfileHandler} />
       </View>
+      <View style={{ marginTop: 25 }}>
+        {profile && (
+          <ListItem
+            style={{ paddingBottom: 50 }}
+            Component={TouchableScale}
+            friction={90}
+            tension={100}
+            activeScale={0.95}
+            linearGradientProps={{
+              colors: ["#FF9800", "#F44336"],
+              start: { x: 1, y: 0 },
+              end: { x: 0.2, y: 0 },
+            }}
+            leftAvatar={{
+              rounded: true,
+              source: {
+                uri:
+                  "https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg",
+              },
+            }}
+            title={profile.name}
+            titleStyle={{ color: "white", fontWeight: "bold" }}
+            subtitleStyle={{ color: "white" }}
+            subtitle={profile.email}
+            chevron={{ color: "white" }}
+            onLongPress={addFriend}
+          />
+        )}
+      </View>
+      <View style={{ marginTop: 200 }}>
+        <Button
+          title="Go back"
+          type="clear"
+          onPress={() => props.navigation.navigate("profile")}
+        ></Button>
+      </View>
+    </View>
+  );
+};
 
-      {profile && (
+{
+  /* <Button
+        title="Go back"
+        onPress={() => props.navigation.navigate("profile")}
+      ></Button> */
+}
+
+{
+  /* {profile && (
         <View>
           <Text>name: {profile.name}</Text>
           <Text>email: {profile.email}</Text>
@@ -62,20 +118,15 @@ const AddFriendScreen = (props) => {
           )}
           <Button title="add friend" onPress={addFriend} />
         </View>
-      )}
-      <Button
-        title="Go back"
-        onPress={() => props.navigation.navigate("profile")}
-      ></Button>
-    </View>
-  );
-};
+      )} */
+}
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "space-around",
+    backgroundColor: "#e1e8ee",
+    //alignItems: "center",
+    //justifyContent: "space-around",
   },
   input: {
     height: 30,
