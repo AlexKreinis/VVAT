@@ -4,10 +4,10 @@ const User = require("../../models/User");
 const Profile = require("../../models/Profile");
 const auth = require("../../middleware/auth");
 
-router.get("/getuser", async (req, res) => {
-  const otherEmail = req.header("user-email");
+router.get("/getuser/:email", auth, async (req, res) => {
+  const userEmail = req.params.email;
   try {
-    const otherUser = await User.findOne({ email: otherEmail })
+    const otherUser = await User.findOne({ email: userEmail })
       .select("-password")
       .populate("profile");
     res.json({ user: otherUser });
@@ -17,10 +17,9 @@ router.get("/getuser", async (req, res) => {
   }
 });
 
-router.get("/getallusers/", async (req, res) => {
+router.get("/getallusers", async (req, res) => {
   try {
     const Users = await User.find().select("-password").populate("profile");
-
     res.json({ allUsers: Users });
   } catch (err) {
     console.error(err);

@@ -8,18 +8,20 @@ import {
   FlatList,
 } from "react-native";
 import { ListItem } from "react-native-elements";
+import { HeaderButtons, Item } from "react-navigation-header-buttons";
+import CustomHeaderButton from "../Components/CustomHeaderButton";
 
 const AdminControlPanel = (props) => {
   const actions = [
     {
       action: "Manage users",
       page: "adminUsers",
-      icon: "../assets/profile.png",
+      icon: "people-outline",
     },
     {
       action: "Manage events",
       page: "adminEvents",
-      icon: "../assets/email.png",
+      icon: "list",
     },
   ];
   const keyExtractor = (item, index) => index.toString();
@@ -28,8 +30,7 @@ const AdminControlPanel = (props) => {
     <TouchableOpacity>
       <ListItem
         title={item["action"]}
-        //subtitle={item["email"]}
-        leftAvatar={{ source: require("../assets/profile.png") }}
+        leftIcon={{ name: item.icon }}
         bottomDivider
         chevron
         onPress={() => props.navigation.navigate(item["page"])}
@@ -38,39 +39,42 @@ const AdminControlPanel = (props) => {
   );
 
   return (
-    /* <View>
-      <View style={styles.header}>
-        <Text>ADMIN CONTROL PANEL</Text>
-      </View>
-
-      <Button
-        title="See list of users"
-        color="#f1948a"
-        onPress={() => props.navigation.navigate("adminUsers")}
-      />
-      <Button title="See list of events" color="#f1948a" />
-    </View> */
-    <View>
-      <View style={{ alignItems: "center", paddingTop: 30 }}>
-        <Text>Note for developers:</Text>
-      </View>
-      <FlatList
-        contentContainerStyle={{ paddingTop: 50 }}
-        keyExtractor={keyExtractor}
-        data={actions}
-        renderItem={renderItem}
-      />
-    </View>
+    <FlatList
+      keyExtractor={keyExtractor}
+      data={actions}
+      renderItem={renderItem}
+    />
   );
 };
 
-export default AdminControlPanel;
+AdminControlPanel.navigationOptions = (navData) => {
+  return {
+    headerTitle: "Admin Control Panel",
+    headerLeft: () => (
+      <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
+        <Item
+          title="Menu"
+          iconName="md-arrow-back"
+          onPress={() => {
+            navData.navigation.navigate("profile");
+          }}
+        />
+      </HeaderButtons>
+    ),
+    headerRight: () => (
+      <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
+        <Item title="Menu" iconName="ios-podium" />
+      </HeaderButtons>
+    ),
+  };
+};
 
 const styles = StyleSheet.create({
   header: {
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 55,
-    marginBottom: 35,
+    flex: 1,
   },
 });
+
+export default AdminControlPanel;

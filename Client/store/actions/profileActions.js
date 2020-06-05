@@ -8,8 +8,8 @@ import {
   SET_FRIEND_REQUESTS,
 } from "../actions/const";
 
-const youripadress = "https://vvat.herokuapp.com";
-//const youripadress = "http://localhost:5000";
+//const youripadress = "https://vvat.herokuapp.com";
+const youripadress = "http://192.168.1.13:5000";
 
 export const getEventHistory = () => async (dispatch, getState) => {
   try {
