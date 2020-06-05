@@ -5,7 +5,7 @@ import {
   Alert,
   TouchableOpacity,
   View,
-  Text,
+  ActivityIndicator,
 } from "react-native";
 import { useDispatch } from "react-redux";
 import { getallusers } from "../../store/actions/adminActions";
@@ -15,6 +15,7 @@ const allUsersScreen = (props) => {
   const dispatch = useDispatch();
   const [users, setUsers] = useState([]);
   const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   const LongClickHandler = () => {
     Alert.alert("Edit user profile");
@@ -26,8 +27,10 @@ const allUsersScreen = (props) => {
 
   const getAllUsers = async () => {
     try {
+      setIsLoading(true);
       const tempUsers = await dispatch(getallusers());
       setUsers([...tempUsers]);
+      setIsLoading(false);
     } catch (err) {
       setError(err.message);
     }
@@ -37,6 +40,7 @@ const allUsersScreen = (props) => {
     if (error) {
       Alert.alert("An Error Occurred!", error, [{ text: "Okay" }]);
     }
+    setIsLoading(false);
   }, [error]);
 
   useEffect(() => {
@@ -57,7 +61,7 @@ const allUsersScreen = (props) => {
         onPress={() => {
           props.navigation.navigate({
             routeName: "userProfile",
-            params: { userEmail: item["email"] },
+            params: { userEmail: item["email"], userName: item["name"] },
           });
         }}
       />
@@ -65,21 +69,27 @@ const allUsersScreen = (props) => {
   );
 
   return (
-    <View>
-      <View style={{ alignItems: "center", paddingTop: 30 }}>
-        <Text>USER MANAGMENT SCREEN</Text>
-      </View>
-      <FlatList
-        contentContainerStyle={{ paddingTop: 50 }}
-        keyExtractor={keyExtractor}
-        data={users}
-        renderItem={renderItem}
-      />
+    <View style={styles.container}>
+      {isLoading ? (
+        <ActivityIndicator size="large" color="#0000ff" />
+      ) : (
+        <>
+          <FlatList
+            keyExtractor={keyExtractor}
+            data={users}
+            renderItem={renderItem}
+          />
+        </>
+      )}
     </View>
   );
 };
 
-export default allUsersScreen;
+allUsersScreen.navigationOptions = (navData) => {
+  return {
+    headerTitle: "Manage Users",
+  };
+};
 
 const styles = StyleSheet.create({
   header: {
@@ -88,3 +98,5 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 });
+
+export default allUsersScreen;

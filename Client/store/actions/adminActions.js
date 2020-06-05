@@ -4,12 +4,12 @@ const youripadress = "http://192.168.0.86:5000";
 export const adminGetProfile = (email) => async (dispatch, getState) => {
   try {
     const token = getState().users.token;
-    const res = await fetch(`${youripadress}/api/admin/getuser`, {
+    const res = await fetch(`${youripadress}/api/admin/getuser/${email}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
-        "user-email": email,
+        "x-auth-token": token,
       },
     });
 
@@ -30,7 +30,6 @@ export const adminGetProfile = (email) => async (dispatch, getState) => {
 export const getallusers = () => async () => {
   try {
     const res = await fetch(`${youripadress}/api/admin/getallusers/`);
-
     if (!res.ok) {
       const errorResData = await res.json();
       let message = "Something went wrong!";
@@ -38,6 +37,7 @@ export const getallusers = () => async () => {
         message = errorResData.errors[0].msg;
       throw new Error(message);
     }
+    console.log("getAllUsers action after the if");
     let listOfAllUsers = await res.json();
     return listOfAllUsers.allUsers;
   } catch (err) {

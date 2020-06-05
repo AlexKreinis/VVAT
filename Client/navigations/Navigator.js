@@ -23,6 +23,8 @@ import userProfileScreen from "../Screens/AdminScreens/userProfileScreen";
 import About from "../Screens/About";
 import { customDrawerComponent } from "../Components/customDrawerComponent";
 import userEditProfileScreen from "../Screens/AdminScreens/userEditProfileScreen";
+import customDrawerComponent from "../Components/customDrawerComponent";
+import FriendList from "../Screens/FriendList";
 
 const defaultStackNavOptions = {
   headerStyle: {
@@ -54,17 +56,34 @@ const MapNav = createStackNavigator(
   }
 );
 
-const ProfileNav = createStackNavigator(
+const AdminNav = createStackNavigator(
   {
-    profile: ProfileScreen,
-    editProfile: EditProfileScreen,
-    addFriend: FindUser,
-    history: EventHistory,
     adminPanel: AdminControlPanel,
     adminUsers: allUsersScreen,
     adminEvents: allEventsScreen,
     userProfile: userProfileScreen,
     userEditProfile: userEditProfileScreen,
+  },
+  {
+    defaultNavigationOptions: {
+      headerStyle: {
+        backgroundColor:
+          Platform.OS === "android" ? Colors.adminPanelColor : "",
+      },
+      headerTintColor:
+        Platform.OS === "android" ? "white" : Colors.adminPanelColor,
+      headerTitleAlign: "center",
+    },
+  }
+);
+
+const ProfileNav = createStackNavigator(
+  {
+    profile: ProfileScreen,
+    admin: AdminNav,
+    editProfile: EditProfileScreen,
+    addFriend: FindUser,
+    history: EventHistory,
   },
   {
     defaultNavigationOptions: {

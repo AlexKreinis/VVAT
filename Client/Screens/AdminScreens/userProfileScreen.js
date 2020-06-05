@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   Text,
@@ -166,7 +166,11 @@ const userProfileScreen = (props) => {
   );
 };
 
-export default userProfileScreen;
+userProfileScreen.navigationOptions = (navData) => {
+  return {
+    headerTitle: `Edit ${navData.navigation.getParam("userName")} profile`,
+  };
+};
 
 const styles = StyleSheet.create({
   header: {
@@ -279,3 +283,5 @@ const styles = StyleSheet.create({
     height: 48,
   },
 });
+
+export default userProfileScreen;

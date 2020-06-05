@@ -17,6 +17,7 @@ const allEventsScreen = () => {
   const dispatch = useDispatch();
   const [events, setEvents] = useState([]);
   const [error, setError] = useState(null);
+  const [name, setName] = useState("");
   const [isLoading, setIsLoading] = useState(true);
 
   const getAllEvents = async () => {
@@ -50,7 +51,6 @@ const allEventsScreen = () => {
       <ListItem
         title={item["name"]}
         subtitle={item["start"]}
-        leftAvatar={{ source: require("../../assets/pro2.png") }}
         bottomDivider
         chevron
         onPress={() => removeEventHandler(item["name"])}
@@ -65,30 +65,30 @@ const allEventsScreen = () => {
         <ActivityIndicator size="large" color="#0000ff" />
       ) : (
         <>
-          <View>
-            <View style={{ alignItems: "center", paddingTop: 30 }}>
-              <Text>EVENT MANAGMENT SCREEN</Text>
-            </View>
-            <FlatList
-              contentContainerStyle={{ paddingTop: 50 }}
-              keyExtractor={keyExtractor}
-              data={events}
-              renderItem={renderItem}
-            />
-          </View>
+          <FlatList
+            //contentContainerStyle={{ paddingTop: 50 }}
+            keyExtractor={keyExtractor}
+            data={events}
+            renderItem={renderItem}
+          />
         </>
       )}
     </View>
   );
 };
 
-export default allEventsScreen;
+allEventsScreen.navigationOptions = (navData) => {
+  return {
+    headerTitle: "Manage Events",
+  };
+};
 
 const styles = StyleSheet.create({
   header: {
-    marginTop: 30,
     justifyContent: "center",
     alignItems: "center",
     flex: 1,
   },
 });
+
+export default allEventsScreen;
