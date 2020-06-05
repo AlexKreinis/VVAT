@@ -1,4 +1,4 @@
-const youripadress = "http://localhost:5000";
+const youripadress = "http://192.168.0.86:5000";
 //const youripadress = "https://vvat.herokuapp.com";
 
 export const adminGetProfile = (email) => async (dispatch, getState) => {
@@ -63,9 +63,10 @@ export const getallevents = () => async () => {
   }
 };
 
-export const removeevent = () => async () => {
+export const removeevent = (name) => async (dispatch) => {
+  console.log("in actions name:-----------", name);
   try {
-    const res = await fetch(`${youripadress}/api/admin/removeevent/`);
+    const res = await fetch(`${youripadress}/api/admin/removeevent/${name}`);
 
     if (!res.ok) {
       const errorResData = await res.json();
@@ -74,8 +75,35 @@ export const removeevent = () => async () => {
         message = errorResData.errors[0].msg;
       throw new Error(message);
     }
-    console.log("res in admin actions-----------", res);
+    dispatch(getallevents());
   } catch (err) {
     console.log(err.message);
+  }
+};
+
+export const saveUserProfile = (editedUser) => async (dispatch, getState) => {
+  try {
+    const token = getState().users.token;
+    const res = await fetch(
+      `${youripadress}/api/admin/saveuserprofile/${editedUser}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          "x-auth-token": token,
+        },
+        body: JSON.stringify(editedUser),
+      }
+    );
+    if (!res.ok) {
+      const errorResData = await res.json();
+      let message = "Something went wrong!";
+      if (errorResData && errorResData.errors.length > 0)
+        message = errorResData.errors[0].msg;
+      throw new Error(message);
+    }
+  } catch (err) {
+    throw err;
   }
 };

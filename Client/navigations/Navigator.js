@@ -22,6 +22,7 @@ import allEventsScreen from "../Screens/AdminScreens/allEventsScreen";
 import userProfileScreen from "../Screens/AdminScreens/userProfileScreen";
 import About from "../Screens/About";
 import { customDrawerComponent } from "../Components/customDrawerComponent";
+import userEditProfileScreen from "../Screens/AdminScreens/userEditProfileScreen";
 
 const defaultStackNavOptions = {
   headerStyle: {
@@ -63,6 +64,7 @@ const ProfileNav = createStackNavigator(
     adminUsers: allUsersScreen,
     adminEvents: allEventsScreen,
     userProfile: userProfileScreen,
+    userEditProfile: userEditProfileScreen,
   },
   {
     defaultNavigationOptions: {

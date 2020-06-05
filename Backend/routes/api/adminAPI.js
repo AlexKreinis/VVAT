@@ -39,13 +39,41 @@ router.get("/getallevents/", async (req, res) => {
   }
 });
 
-router.get("/removeevent", async (req, res) => {
-  console.log("req.body in removeevent-------------------", req.body);
+router.get("/removeevent/:name", async (req, res) => {
+  const { eventName } = req.params;
   try {
-    /* const otherUser = await User.findOne({ email: otherEmail })
-      .select("-password")
-      .populate("profile");
-    res.json({ user: otherUser }); */
+    await Event.deleteOne({ name: eventName });
+    res.json({ msg: "Event Deleted Successfully" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ errors: [{ msg: err.message }] });
+  }
+});
+
+router.post("/saveuserprofile/:editedUser", auth, async (req, res) => {
+  const { email, name, desc, facebook, age } = req.body;
+
+  try {
+    const editedUser = await User.findOne({ email: req.body.email });
+
+    if (!editedUser.profile) {
+      let profile = new Profile({
+        description: desc,
+        age: age,
+        facebook: facebook,
+      });
+      await profile.save();
+    } else {
+      profile = await Profile.findById(editedUser.profile);
+      profile.description = desc;
+      profile.age = age;
+      profile.facebook = facebook;
+      await profile.save();
+    }
+    editedUser.name = name;
+    await editedUser.save();
+    const user = await User.findOne({ email }).populate("profile");
+    res.json({ user: user });
   } catch (err) {
     console.error(err);
     res.status(500).json({ errors: [{ msg: err.message }] });

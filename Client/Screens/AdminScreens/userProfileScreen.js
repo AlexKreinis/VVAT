@@ -15,13 +15,21 @@ import Colors from "../../constants/Colors";
 
 const userProfileScreen = (props) => {
   const [error, setError] = useState(null);
-  const [user, setUser] = useState({ name: "" });
+  const [user, setUser] = useState({
+    name: "",
+    friendList: [],
+    facebook: "",
+    events: [],
+    age: "",
+    email: "",
+  });
 
   const userEmail = props.navigation.getParam("userEmail");
 
   const getUser = async () => {
     try {
       const tempUser = await dispatch(adminGetProfile(userEmail));
+
       setUser({ ...tempUser });
     } catch (err) {
       setError(err.message);
@@ -137,13 +145,19 @@ const userProfileScreen = (props) => {
 
           <Text style={styles.description}>Age: 69</Text>
 
-          <Text style={styles.description}>Facebook: myFacebook</Text>
+          <Text style={styles.description}>Facebook: {user.facebook}</Text>
 
-          <Text style={styles.description}>my Description</Text>
+          <Text style={styles.description}>my desc</Text>
           <View style={styles.buttonContainer}>
             <Button
               title="Edit Profile"
-              onPress={() => props.navigation.navigate("editProfile")}
+              //onPress={() => props.navigation.navigate("userEditProfile")}
+              onPress={() => {
+                props.navigation.navigate({
+                  routeName: "userEditProfile",
+                  params: { user: user },
+                });
+              }}
             ></Button>
           </View>
         </View>

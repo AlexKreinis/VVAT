@@ -18,7 +18,6 @@ const allEventsScreen = () => {
   const [events, setEvents] = useState([]);
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [name, setName] = useState("");
 
   const getAllEvents = async () => {
     try {
@@ -30,12 +29,9 @@ const allEventsScreen = () => {
       setError(err.message);
     }
   };
-  const removeEventHandler = async () => {
-    try {
-      await dispatch(removeevent());
-    } catch (err) {
-      setError(err.message);
-    }
+  const removeEventHandler = (name) => {
+    console.log("ENTERED removeEventHandler, name:", name);
+    dispatch(removeevent(name));
   };
 
   useEffect(() => {
@@ -57,7 +53,7 @@ const allEventsScreen = () => {
         leftAvatar={{ source: require("../../assets/pro2.png") }}
         bottomDivider
         chevron
-        onPress={removeEventHandler}
+        onPress={() => removeEventHandler(item["name"])}
         //onLongPress={}
       />
     </TouchableOpacity>
