@@ -37,7 +37,7 @@ export const getallusers = () => async () => {
         message = errorResData.errors[0].msg;
       throw new Error(message);
     }
-    console.log("getAllUsers action after the if");
+
     let listOfAllUsers = await res.json();
     return listOfAllUsers.allUsers;
   } catch (err) {
@@ -64,7 +64,6 @@ export const getallevents = () => async () => {
 };
 
 export const removeevent = (name) => async (dispatch) => {
-  console.log("in actions name:-----------", name);
   try {
     const res = await fetch(`${youripadress}/api/admin/removeevent/${name}`);
 
@@ -75,7 +74,6 @@ export const removeevent = (name) => async (dispatch) => {
         message = errorResData.errors[0].msg;
       throw new Error(message);
     }
-    dispatch(getallevents());
   } catch (err) {
     console.log(err.message);
   }

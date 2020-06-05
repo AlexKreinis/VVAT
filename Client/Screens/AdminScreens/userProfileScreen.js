@@ -12,17 +12,13 @@ import {
 import { adminGetProfile } from "../../store/actions/adminActions";
 import { useDispatch } from "react-redux";
 import Colors from "../../constants/Colors";
+import { HeaderButtons, Item } from "react-navigation-header-buttons";
+import CustomHeaderButton from "../../Components/CustomHeaderButton";
 
 const userProfileScreen = (props) => {
   const [error, setError] = useState(null);
-  const [user, setUser] = useState({
-    name: "",
-    friendList: [],
-    facebook: "",
-    events: [],
-    age: "",
-    email: "",
-  });
+  const [user, setUser] = useState({});
+  const dispatch = useDispatch();
 
   const userEmail = props.navigation.getParam("userEmail");
 
@@ -35,8 +31,6 @@ const userProfileScreen = (props) => {
       setError(err.message);
     }
   };
-
-  const dispatch = useDispatch();
 
   useEffect(() => {
     if (error) {
@@ -150,14 +144,14 @@ const userProfileScreen = (props) => {
           <Text style={styles.description}>my desc</Text>
           <View style={styles.buttonContainer}>
             <Button
-              title="Edit Profile"
-              //onPress={() => props.navigation.navigate("userEditProfile")}
-              onPress={() => {
+              title="Ban User"
+              color="red"
+              /* onPress={() => {
                 props.navigation.navigate({
                   routeName: "userEditProfile",
                   params: { user: user },
                 });
-              }}
+              }} */
             ></Button>
           </View>
         </View>
@@ -167,8 +161,23 @@ const userProfileScreen = (props) => {
 };
 
 userProfileScreen.navigationOptions = (navData) => {
+  const user = navData.navigation.getParam("user");
   return {
-    headerTitle: `Edit ${navData.navigation.getParam("userName")} profile`,
+    headerTitle: `${navData.navigation.getParam("userName")} Profile`,
+    headerRight: () => (
+      <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
+        <Item
+          title="Menu"
+          iconName="ios-build"
+          onPress={() => {
+            navData.navigation.navigate({
+              routeName: "userEditProfile",
+              params: { user: user },
+            });
+          }}
+        />
+      </HeaderButtons>
+    ),
   };
 };
 
@@ -187,6 +196,9 @@ const styles = StyleSheet.create({
     borderWidth: 4,
     borderColor: "white",
     marginBottom: 10,
+  },
+  banButton: {
+    color: "red",
   },
   name: {
     fontSize: 22,

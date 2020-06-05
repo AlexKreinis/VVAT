@@ -39,7 +39,8 @@ router.get("/getallevents/", async (req, res) => {
 });
 
 router.get("/removeevent/:name", async (req, res) => {
-  const { eventName } = req.params;
+  const eventName = req.params.name;
+
   try {
     await Event.deleteOne({ name: eventName });
     res.json({ msg: "Event Deleted Successfully" });

@@ -36,7 +36,12 @@ const userEditProfileScreen = (props) => {
   const clickHandler = async () => {
     try {
       await dispatch(saveUserProfile(details));
-      props.navigation.navigate("userProfile");
+      props.navigation.navigate({
+        routeName: "userProfile",
+        params: {
+          updatedDetails: details,
+        },
+      });
       Alert.alert("User updated successfully");
     } catch (err) {
       console.log("error catched", err);
@@ -49,11 +54,6 @@ const userEditProfileScreen = (props) => {
       <View style={styles.container}>
         <View style={styles.header}>
           {/* <Image style={styles.avatar} source={require("../assets/pro2.png")} /> */}
-          <Button
-            title="Go back"
-            onPress={() => props.navigation.navigate("userProfile")}
-          ></Button>
-          <Text style={styles.name}>Edit your profile</Text>
         </View>
         <View style={styles.bodyContent}>
           <View>
@@ -108,6 +108,13 @@ const userEditProfileScreen = (props) => {
       </View>
     </KeyboardAvoidingView>
   );
+};
+
+userEditProfileScreen.navigationOptions = (navData) => {
+  const user = navData.navigation.getParam("user");
+  return {
+    headerTitle: `Edit ${user.name}'s Profile`,
+  };
 };
 
 const styles = StyleSheet.create({

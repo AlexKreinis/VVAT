@@ -61,11 +61,6 @@ AdminControlPanel.navigationOptions = (navData) => {
         />
       </HeaderButtons>
     ),
-    headerRight: () => (
-      <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
-        <Item title="Menu" iconName="ios-podium" />
-      </HeaderButtons>
-    ),
   };
 };
 

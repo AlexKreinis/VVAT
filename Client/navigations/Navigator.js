@@ -23,8 +23,6 @@ import userProfileScreen from "../Screens/AdminScreens/userProfileScreen";
 import About from "../Screens/About";
 import { customDrawerComponent } from "../Components/customDrawerComponent";
 import userEditProfileScreen from "../Screens/AdminScreens/userEditProfileScreen";
-import customDrawerComponent from "../Components/customDrawerComponent";
-import FriendList from "../Screens/FriendList";
 
 const defaultStackNavOptions = {
   headerStyle: {

@@ -1,9 +1,5 @@
 //const youripadress = "https://vvat.herokuapp.com";
-<<<<<<< HEAD
 const youripadress = "http://192.168.0.86:5000";
-=======
-const youripadress = "http://192.168.1.13:5000";
->>>>>>> 483ccb54adfedcd2a315f6487ea5755e8aceff41
 
 import {
   GET_MAPS,
