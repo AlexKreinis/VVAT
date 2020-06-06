@@ -50,7 +50,11 @@ router.post(
           .status(400)
           .json({ errors: [{ msg: "Invalid Login details" }] });
       }
-
+      if (user.isBanned) {
+        return res
+          .status(500)
+          .json({ errors: [{ msg: "You'r account was banned " }] });
+      }
       const payload = {
         user: {
           id: user.id,
