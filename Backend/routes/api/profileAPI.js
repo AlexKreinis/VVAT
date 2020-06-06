@@ -94,18 +94,21 @@ router.get("/getfriendrequests", auth, async (req, res) => {
 });
 router.post("/sendfriendrequest", auth, async (req, res) => {
   try {
+    console.log("entered\n");
     const { id } = req.body;
     const FriendRequestUser = await User.findById(id);
     const friendRequestProfile = await Profile.findById(
       FriendRequestUser.profile._id
     );
-    for (let i = 0; i < friendRequestProfile.friendRequest; i++) {
-      if (friendRequestProfile.friendRequest[i] == id) {
-        console.log(
-          friendRequestProfile.friendRequest[i],
-          id,
-          friendRequestProfile.friendRequest[i] == id
-        );
+    console.log(friendRequestProfile);
+    for (let i = 0; i < friendRequestProfile.friendRequest.length; i++) {
+      console.log(
+        "comparions",
+        friendRequestProfile.friendRequest[i].toString(),
+        id,
+        friendRequestProfile.friendRequest[i] === req.user.id
+      );
+      if (friendRequestProfile.friendRequest[i].toString() === req.user.id) {
         return res
           .status(500)
           .json({ errors: [{ msg: "You allready sent a friend request" }] });

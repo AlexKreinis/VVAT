@@ -6,10 +6,10 @@ import {
   GET_USER,
   SAVE_PROFILE,
   GET_USER_PROFILE,
+  GET_PROFILE,
 } from "../actions/const";
-import { getProfile } from "./profileActions";
 //const youripadress = "https://vvat.herokuapp.com";
-const youripadress = "http://192.168.31.161:5000";
+const youripadress = "http://192.168.56.1:5000";
 
 export const register = (data) => async (dispatch) => {
   try {
@@ -72,6 +72,45 @@ export const login = (data) => async (dispatch) => {
   }
 };
 
+export const getProfile = () => async (dispatch, getState) => {
+  try {
+    const token = getState().users.token;
+    const res = await fetch(`${youripadress}/api/profile/`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        "x-auth-token": token,
+      },
+    });
+
+    if (!res.ok) {
+      const errorResData = await res.json();
+      let message = "Something went wrong!";
+      if (errorResData && errorResData.errors.length > 0)
+        message = errorResData.errors[0].msg;
+      throw new Error(message);
+    }
+    let serverData = await res.json();
+
+    if (serverData.profile) {
+      dispatch({
+        type: GET_PROFILE,
+        payload: {
+          description: serverData.profile.description,
+          age: serverData.profile.age,
+          facebook: serverData.profile.facebook,
+          events: serverData.profile.events,
+          friendRequest: serverData.profile.friendRequest,
+          friendList: serverData.profile.friendList,
+        },
+      });
+    }
+  } catch (err) {
+    console.log(err.message);
+  }
+};
+
 export const getUser = () => async (dispatch, getState) => {
   try {
     const token = getState().users.token;
@@ -92,7 +131,6 @@ export const getUser = () => async (dispatch, getState) => {
       throw new Error(message);
     }
     let serverData = await res.json();
-
     if (serverData.user.profile) {
       dispatch(getProfile());
     }

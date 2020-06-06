@@ -1,15 +1,15 @@
 export const SIGNUP = "SIGNUP";
 import {
-  SAVE_PROFILE,
   SET_EVENT_HISTORY,
   GET_FRIEND_REQUESTS,
   PROFILE_LOADING,
   GET_PROFILE,
   SET_FRIEND_REQUESTS,
 } from "../actions/const";
+import { getUser } from "./Usersactions";
 
 //const youripadress = "https://vvat.herokuapp.com";
-const youripadress = "http://192.168.31.161:5000";
+const youripadress = "http://192.168.56.1:5000";
 
 export const getEventHistory = () => async (dispatch, getState) => {
   try {
@@ -178,45 +178,6 @@ export const sendFriendRequest = (id) => async (dispatch, getState) => {
   }
 };
 
-export const getProfile = () => async (dispatch, getState) => {
-  try {
-    const token = getState().users.token;
-    const res = await fetch(`${youripadress}/api/profile/`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        "x-auth-token": token,
-      },
-    });
-
-    if (!res.ok) {
-      const errorResData = await res.json();
-      let message = "Something went wrong!";
-      if (errorResData && errorResData.errors.length > 0)
-        message = errorResData.errors[0].msg;
-      throw new Error(message);
-    }
-    let serverData = await res.json();
-
-    if (serverData.profile) {
-      dispatch({
-        type: GET_PROFILE,
-        payload: {
-          description: serverData.profile.description,
-          age: serverData.profile.age,
-          facebook: serverData.profile.facebook,
-          events: serverData.profile.events,
-          friendRequest: serverData.profile.friendRequest,
-          friendList: serverData.profile.friendList,
-        },
-      });
-    }
-  } catch (err) {
-    console.log(err.message);
-  }
-};
-
 export const saveProfile = (data) => async (dispatch, getState) => {
   try {
     const token = getState().users.token;
@@ -236,7 +197,7 @@ export const saveProfile = (data) => async (dispatch, getState) => {
         message = errorResData.errors[0].msg;
       throw new Error(message);
     }
-    dispatch(getProfile());
+    dispatch(getUser());
   } catch (err) {
     throw err;
   }

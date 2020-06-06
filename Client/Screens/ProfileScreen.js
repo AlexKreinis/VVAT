@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import { Badge } from "react-native-elements";
 import { useSelector, useDispatch } from "react-redux";
-import { getProfile } from "../store/actions/profileActions";
+import { getUser } from "../store/actions/Usersactions";
 import Colors from "../constants/Colors";
 import ModalComp from "../Components/ModalComp";
 
@@ -34,7 +34,7 @@ const ProfileScreen = (props) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getProfile());
+    dispatch(getUser());
   }, [profileDetails, userDetails]);
 
   useEffect(() => {
@@ -71,14 +71,14 @@ const ProfileScreen = (props) => {
       </View>
       <View style={styles.profileDetail}>
         <View style={styles.detailContent}>
+          <Text style={styles.title}>Friends</Text>
           <TouchableOpacity
             onPress={() => {
               props.navigation.navigate("friendList");
             }}
           >
-            <Text style={styles.title}>Friends</Text>
+            <Text style={styles.count}>{details.friendList.length}</Text>
           </TouchableOpacity>
-          <Text style={styles.count}>{details.friendList.length}</Text>
         </View>
         <View style={styles.detailContent}>
           <TouchableOpacity

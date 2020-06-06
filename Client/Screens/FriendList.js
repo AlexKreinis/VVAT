@@ -7,14 +7,13 @@ import {
   FlatList,
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
-import { Icon, Card, Text, Button } from "react-native-elements";
+import { Icon, Text, Button, ListItem } from "react-native-elements";
 import { getProfile } from "../store/actions/profileActions";
 
 const FriendList = (props) => {
   const dispatch = useDispatch();
   const FriendList = useSelector((state) => state.profiles.friendList);
-  const isLoading = useSelector((state) => state.profiles.isLoading);
-  const [isLocalLoading, setIsLocalLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
   const [friends, setFriends] = useState([]);
   const [error, setError] = useState();
 
@@ -23,9 +22,10 @@ const FriendList = (props) => {
       try {
         await dispatch(getProfile());
         setFriends([...FriendList]);
-        setIsLocalLoading(false);
+        setIsLoading(false);
       } catch (err) {
         setError(err.message);
+        isLoading(false);
       }
     })();
   }, []);
@@ -37,7 +37,7 @@ const FriendList = (props) => {
   }, [error]);
 
   const showContent = () => {
-    if (isLocalLoading || isLoading) {
+    if (isLoading) {
       return (
         <View style={{ height: "85%", justifyContent: "center" }}>
           <ActivityIndicator size="large" color="#0000ff" />
@@ -76,18 +76,12 @@ const FriendList = (props) => {
 
   const renderingRequests = (request) => {
     return (
-      <Card containerStyle={{ backgroundColor: "rgba(220, 244, 244, 0.99)" }}>
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-            alignItems: "center",
-            marginVertical: 10,
-          }}
-        >
-          <Text h4>{request.item.name}</Text>
-        </View>
-      </Card>
+      <ListItem
+        title={request.item.name}
+        subtitle={"You are friends in the app"}
+        leftAvatar={{ source: require("../assets/pro2.png") }}
+        bottomDivider
+      />
     );
   };
 

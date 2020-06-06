@@ -21,7 +21,7 @@ import LoginScreen from "../Screens/LoginScreen";
 import allEventsScreen from "../Screens/AdminScreens/allEventsScreen";
 import userProfileScreen from "../Screens/AdminScreens/userProfileScreen";
 import About from "../Screens/About";
-import { customDrawerComponent } from "../Components/customDrawerComponent";
+import customDrawerComponent from "../Components/customDrawerComponent";
 import userEditProfileScreen from "../Screens/AdminScreens/userEditProfileScreen";
 import FriendList from "../Screens/FriendList";
 const defaultStackNavOptions = {
