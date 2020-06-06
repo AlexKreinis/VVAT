@@ -30,9 +30,15 @@ const allEventsScreen = () => {
       setError(err.message);
     }
   };
-  const removeEventHandler = (name) => {
-    console.log("ENTERED removeEventHandler, name:", name);
-    dispatch(removeevent(name));
+  const removeEventHandler = async (name) => {
+    try {
+      console.log("ENTERED removeEventHandler, name:", name);
+      await dispatch(removeevent(name));
+      const filteredEvents = events.filter((event) => event.name != name);
+      setEvents(filteredEvents);
+    } catch (err) {
+      setError(err.message);
+    }
   };
 
   useEffect(() => {
