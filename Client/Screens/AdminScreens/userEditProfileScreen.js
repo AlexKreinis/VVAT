@@ -35,11 +35,11 @@ const userEditProfileScreen = (props) => {
 
   const clickHandler = async () => {
     try {
-      await dispatch(saveUserProfile(details));
+      const updatedUser = await dispatch(saveUserProfile(details));
       props.navigation.navigate({
         routeName: "userProfile",
         params: {
-          updatedDetails: details,
+          updatedUser,
         },
       });
       Alert.alert("User updated successfully");

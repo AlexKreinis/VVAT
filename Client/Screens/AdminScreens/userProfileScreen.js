@@ -39,7 +39,11 @@ const userProfileScreen = (props) => {
   }, [error]);
 
   useEffect(() => {
-    getUser();
+    if (!props.updatedUser) {
+      getUser();
+    } else {
+      setUser(props.updatedUser);
+    }
   }, []);
 
   return (
