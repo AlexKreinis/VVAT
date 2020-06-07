@@ -1,10 +1,10 @@
-const youripadress = "http://192.168.56.1:5000";
+const youripadress = "http://192.168.31.161:5000";
 //const youripadress = "https://vvat.herokuapp.com";
 
 export const adminGetProfile = (email) => async (dispatch, getState) => {
   try {
     const token = getState().users.token;
-    const res = await fetch(`${youripadress}/api/admin/getuser/${email}`, {
+    const res = await fetch(`${youripadress}/aapi/admin/getuser/${email}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
