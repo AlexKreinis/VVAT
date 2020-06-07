@@ -38,11 +38,11 @@ router.get("/getallevents/", async (req, res) => {
   }
 });
 
-router.get("/removeevent/:name", async (req, res) => {
-  const eventName = req.params.name;
+router.get("/removeevent/:eventID", async (req, res) => {
+  const eventID = req.params.eventID;
 
   try {
-    await Event.deleteOne({ name: eventName });
+    await Event.deleteOne({ _id: eventID });
     res.json({ msg: "Event Deleted Successfully" });
   } catch (err) {
     console.error(err);
@@ -73,6 +73,7 @@ router.post("/saveuserprofile/:editedUser", auth, async (req, res) => {
     editedUser.name = name;
     await editedUser.save();
     const user = await User.findOne({ email }).populate("profile");
+    //console.log("user in adminAPI---------------", user);
     res.json({ user: user });
   } catch (err) {
     console.error(err);
