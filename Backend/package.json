@@ -6,7 +6,7 @@
   "scripts": {
     "start": "nodemon server",
     "server": "nodemon server",
-    "test": "nyc mocha --recursive --exit"
+    "test": "npx jscpd routes/api && nyc mocha --recursive --exit "
   },
   "author": "vvat",
   "license": "ISC",
@@ -14,9 +14,11 @@
     "axios": "^0.19.2",
     "bcryptjs": "^2.4.3",
     "chai": "^4.2.0",
+    "cloc": "^2.5.1",
     "config": "^3.3.1",
     "express": "^4.17.1",
     "express-validator": "^6.4.0",
+    "jscpd": "^3.3.0-rc.8",
     "jsonwebtoken": "^8.5.1",
     "mocha": "^7.1.1",
     "mongoose": "^5.9.7",
@@ -25,6 +27,7 @@
   },
   "devDependencies": {
     "eslint": "^7.1.0",
+    "eslint-config-vgno": "^7.0.0",
     "eslint-plugin-react": "^7.20.0",
     "eslint-plugin-react-native": "^3.8.1",
     "nodemon": "^2.0.2"

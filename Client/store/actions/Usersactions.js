@@ -9,7 +9,7 @@ import {
   GET_PROFILE,
 } from "../actions/const";
 //const youripadress = "https://vvat.herokuapp.com";
-const youripadress = "http://192.168.31.161:5000";
+const youripadress = "http://192.168.1.36:5000";
 
 export const register = (data) => async (dispatch) => {
   try {
