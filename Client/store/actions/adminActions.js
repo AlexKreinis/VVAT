@@ -1,4 +1,4 @@
-const youripadress = "http://192.168.1.36:5000";
+const youripadress = "http://192.168.0.86:5000";
 //const youripadress = "https://vvat.herokuapp.com";
 
 export const adminGetProfile = (email) => async (dispatch, getState) => {
@@ -63,9 +63,9 @@ export const getallevents = () => async () => {
   }
 };
 
-export const removeevent = (name) => async (dispatch) => {
+export const removeevent = (eventID) => async (dispatch) => {
   try {
-    const res = await fetch(`${youripadress}/api/admin/removeevent/${name}`);
+    const res = await fetch(`${youripadress}/api/admin/removeevent/${eventID}`);
 
     if (!res.ok) {
       const errorResData = await res.json();
@@ -94,6 +94,7 @@ export const saveUserProfile = (editedUser) => async (dispatch, getState) => {
         body: JSON.stringify(editedUser),
       }
     );
+
     if (!res.ok) {
       const errorResData = await res.json();
       let message = "Something went wrong!";
@@ -101,6 +102,9 @@ export const saveUserProfile = (editedUser) => async (dispatch, getState) => {
         message = errorResData.errors[0].msg;
       throw new Error(message);
     }
+    let serverData = await res.json();
+    //console.log("serverData  ---------------", serverData);
+    return serverData.user;
   } catch (err) {
     throw err;
   }

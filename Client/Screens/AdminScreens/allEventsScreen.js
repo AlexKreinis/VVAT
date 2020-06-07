@@ -30,15 +30,21 @@ const allEventsScreen = () => {
       setError(err.message);
     }
   };
-  const removeEventHandler = async (name) => {
+  const removeEventHandler = async (eventToDelete) => {
     try {
-      console.log("ENTERED removeEventHandler, name:", name);
-      await dispatch(removeevent(name));
-      const filteredEvents = events.filter((event) => event.name != name);
+      await dispatch(removeevent(eventToDelete._id));
+      const filteredEvents = events.filter(
+        (event) => event._id != eventToDelete._id
+      );
       setEvents(filteredEvents);
+      Alert.alert(`Event ${eventToDelete.name} deleted successfully`);
     } catch (err) {
       setError(err.message);
     }
+  };
+
+  const print = (item) => {
+    console.log("item----------------", item);
   };
 
   useEffect(() => {
@@ -59,8 +65,8 @@ const allEventsScreen = () => {
         subtitle={item["start"]}
         bottomDivider
         chevron
-        onPress={() => removeEventHandler(item["name"])}
-        //onLongPress={}
+        onLongPress={() => removeEventHandler(item)}
+        //onLongPress={() => print(item)}
       />
     </TouchableOpacity>
   );

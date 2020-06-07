@@ -21,6 +21,7 @@ const userProfileScreen = (props) => {
   const dispatch = useDispatch();
 
   const userEmail = props.navigation.getParam("userEmail");
+  const updatedUser = props.navigation.getParam("updated");
 
   const getUser = async () => {
     try {
@@ -39,10 +40,10 @@ const userProfileScreen = (props) => {
   }, [error]);
 
   useEffect(() => {
-    if (!props.updatedUser) {
+    if (!updatedUser) {
       getUser();
     } else {
-      setUser(props.updatedUser);
+      setUser(updatedUser);
     }
   }, []);
 

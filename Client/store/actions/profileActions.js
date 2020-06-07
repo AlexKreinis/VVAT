@@ -9,7 +9,7 @@ import {
 import { getUser } from "./Usersactions";
 
 //const youripadress = "https://vvat.herokuapp.com";
-const youripadress = "http://192.168.1.36:5000";
+const youripadress = "http://192.168.0.86:5000";
 
 export const getEventHistory = () => async (dispatch, getState) => {
   try {
