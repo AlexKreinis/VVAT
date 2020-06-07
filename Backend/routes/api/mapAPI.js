@@ -29,7 +29,24 @@ router.get("/getevents/:lat/:lon", async (req, res) => {
 
 router.post("/addevent", auth, async (req, res) => {
   try {
-    const { start, end, lat, lon, name } = req.body;
+    let { start, end, lat, lon, name } = req.body;
+    const Events = await Location.find({ lat, lon }).populate("events");
+    const eventsArr = Events[0]["events"];
+
+    if (eventsArr && eventsArr.length > 0) {
+      const userStart = new Date(start).getTime();
+
+      eventsArr.forEach((event) => {
+        const startTime = new Date(event.start).getTime();
+        const endTime = new Date(event.finish).getTime();
+        if (userStart >= startTime && userStart <= endTime) {
+          return res.status(500).json({
+            errors: [{ msg: "There is allready event at this time" }],
+          });
+        }
+      });
+    }
+
     let location = await Location.findOne({ lat, lon });
     const newEvent = new Event({
       start: start,
