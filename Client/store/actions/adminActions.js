@@ -1,10 +1,12 @@
 const youripadress = "http://192.168.31.161:5000";
 //const youripadress = "https://vvat.herokuapp.com";
 
+import { GET_USER_FOR_ADMIN } from "../actions/const";
+
 export const adminGetProfile = (email) => async (dispatch, getState) => {
   try {
     const token = getState().users.token;
-    const res = await fetch(`${youripadress}/aapi/admin/getuser/${email}`, {
+    const res = await fetch(`${youripadress}/api/admin/getuser/${email}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -20,8 +22,15 @@ export const adminGetProfile = (email) => async (dispatch, getState) => {
         message = errorResData.errors[0].msg;
       throw new Error(message);
     }
-    let serverData = await res.json();
-    return serverData.user;
+    serverData = await res.json();
+    console.log("admin action befor dispatch", serverData.user);
+
+    dispatch({
+      type: GET_USER_FOR_ADMIN,
+      payload: {
+        profile: serverData.user,
+      },
+    });
   } catch (err) {
     console.log(err.message);
   }
@@ -103,7 +112,6 @@ export const saveUserProfile = (editedUser) => async (dispatch, getState) => {
       throw new Error(message);
     }
     let serverData = await res.json();
-    //console.log("serverData  ---------------", serverData);
     return serverData.user;
   } catch (err) {
     throw err;
