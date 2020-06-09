@@ -2,6 +2,7 @@ const expect = require("chai").expect;
 const request = require("supertest");
 const app = require("../../../server.js");
 const connectDB = require("../../../config/db");
+const authToken = require("./user_profile");
 
 describe("Get maps", () => {
   before((done) => {
@@ -50,8 +51,10 @@ it("OK. added event", (done) => {
 });
 
 it("OK. get rating for event", (done) => {
+  console.log(authToken);
   request(app)
     .get("/api/maps/getratings/111111111111111111111111")
+    .set({ "x-auth-token": authToken })
     .then((res) => {
       const body = res.body;
       expect(body).to.contain.property("rating");
