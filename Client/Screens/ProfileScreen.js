@@ -179,13 +179,13 @@ const ProfileScreen = (props) => {
               onPress={() => props.navigation.navigate("addFriend")}
               color="#f1948a"
             />
-            {role === "Admin" && (
+            {/* {role === "Admin" && (
               <Button
                 title="Admin panel"
                 onPress={() => props.navigation.navigate("adminPanel")}
                 color="red"
               />
-            )}
+            )} */}
           </View>
         </View>
       </View>

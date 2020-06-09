@@ -141,8 +141,9 @@ router.post("/saveprofile", auth, async (req, res) => {
   try {
     const Finduser = await User.findById(req.user.id);
     const { name, description, age, facebook } = req.body;
-    if (!Finduser.profile) {
-      let profile = new Profile({
+    let profile = await Profile.findById(Finduser.profile);
+    if (!profile) {
+      profile = new Profile({
         description: description,
         age: age,
         facebook: facebook,
@@ -151,7 +152,6 @@ router.post("/saveprofile", auth, async (req, res) => {
 
       Finduser.profile = profile._id;
     } else {
-      profile = await Profile.findById(Finduser.profile);
       profile.description = description;
       profile.age = age;
       profile.facebook = facebook;

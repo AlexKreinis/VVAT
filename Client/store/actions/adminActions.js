@@ -1,5 +1,7 @@
-const youripadress = "http://192.168.56.1:5000";
+const youripadress = "http://192.168.31.161:5000";
 //const youripadress = "https://vvat.herokuapp.com";
+
+import { GET_USER_FOR_ADMIN } from "../actions/const";
 
 export const adminGetProfile = (email) => async (dispatch, getState) => {
   try {
@@ -20,8 +22,15 @@ export const adminGetProfile = (email) => async (dispatch, getState) => {
         message = errorResData.errors[0].msg;
       throw new Error(message);
     }
-    let serverData = await res.json();
-    return serverData.user;
+    serverData = await res.json();
+    console.log("admin action befor dispatch", serverData.user);
+
+    dispatch({
+      type: GET_USER_FOR_ADMIN,
+      payload: {
+        profile: serverData.user,
+      },
+    });
   } catch (err) {
     console.log(err.message);
   }
@@ -63,9 +72,9 @@ export const getallevents = () => async () => {
   }
 };
 
-export const removeevent = (name) => async (dispatch) => {
+export const removeevent = (eventID) => async (dispatch) => {
   try {
-    const res = await fetch(`${youripadress}/api/admin/removeevent/${name}`);
+    const res = await fetch(`${youripadress}/api/admin/removeevent/${eventID}`);
 
     if (!res.ok) {
       const errorResData = await res.json();
@@ -94,6 +103,7 @@ export const saveUserProfile = (editedUser) => async (dispatch, getState) => {
         body: JSON.stringify(editedUser),
       }
     );
+
     if (!res.ok) {
       const errorResData = await res.json();
       let message = "Something went wrong!";
@@ -101,6 +111,8 @@ export const saveUserProfile = (editedUser) => async (dispatch, getState) => {
         message = errorResData.errors[0].msg;
       throw new Error(message);
     }
+    let serverData = await res.json();
+    return serverData.user;
   } catch (err) {
     throw err;
   }

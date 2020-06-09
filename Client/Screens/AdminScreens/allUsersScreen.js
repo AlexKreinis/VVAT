@@ -62,8 +62,6 @@ const allUsersScreen = (props) => {
           props.navigation.navigate({
             routeName: "userProfile",
             params: {
-              userEmail: item["email"],
-              userName: item["name"],
               user: item,
             },
           });
