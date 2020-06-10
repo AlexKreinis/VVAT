@@ -6,7 +6,7 @@
   "scripts": {
     "start": "nodemon server",
     "server": "nodemon server",
-    "test": "npx jscpd routes/api && nyc mocha --recursive --exit "
+    "test": "npx jscpd --ignore node_modules .  && nyc mocha --recursive --exit "
   },
   "author": "vvat",
   "license": "ISC",
