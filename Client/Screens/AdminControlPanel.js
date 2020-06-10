@@ -1,12 +1,5 @@
 import React from "react";
-import {
-  StyleSheet,
-  View,
-  Text,
-  Button,
-  TouchableOpacity,
-  FlatList,
-} from "react-native";
+import { StyleSheet, TouchableOpacity, FlatList } from "react-native";
 import { ListItem } from "react-native-elements";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import CustomHeaderButton from "../Components/CustomHeaderButton";
@@ -50,17 +43,17 @@ const AdminControlPanel = (props) => {
 AdminControlPanel.navigationOptions = (navData) => {
   return {
     headerTitle: "Admin Control Panel",
-    headerLeft: () => (
-      <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
-        <Item
-          title="Menu"
-          iconName="md-arrow-back"
-          onPress={() => {
-            navData.navigation.navigate("profile");
-          }}
-        />
-      </HeaderButtons>
-    ),
+    // headerLeft: () => (
+    //   <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
+    //     <Item
+    //       title="Menu"
+    //       iconName="md-arrow-back"
+    //       onPress={() => {
+    //         navData.navigation.navigate("MapProfile");
+    //       }}
+    //     />
+    //   </HeaderButtons>
+    // ),
   };
 };
 

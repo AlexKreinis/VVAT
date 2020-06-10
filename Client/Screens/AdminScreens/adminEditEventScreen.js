@@ -16,21 +16,9 @@ import { getEvents } from "../../store/actions/MapsActions";
 import { editEvent } from "../../store/actions/adminActions";
 import DateTimePicker from "@react-native-community/datetimepicker";
 
-//eventToEdit:
-/* Object {
-    "__v": 0,
-    "atendees": Array [],
-    "finish": "2020-06-06T21:58:50.152Z",
-    "name": "123",
-    "owner": "5ed1234e90abee44b8569511",
-    "ratings": Array [],
-    "start": "2020-06-06T20:58:50.152Z",
-  } */
-
 const adminEditEventScreen = (props) => {
   const dispatch = useDispatch();
-  const mapData = useSelector((state) => state.maps.selectedMapData);
-  const selectedMapsData = useSelector((state) => state.maps.selectedMapData);
+
   useEffect(() => {
     if (error) {
       Alert.alert("An Error Occurred!", error, [{ text: "Okay" }]);
@@ -54,17 +42,23 @@ const adminEditEventScreen = (props) => {
     }
   }, [error]);
 
-  const showDatepicker = () => {
-    console.log("eventToEdit-------------", eventToEdit);
+  useEffect(() => {
     setStartDate(new Date(eventToEdit.start));
     setEndDate(new Date(eventToEdit.finish));
+  }, []);
+
+  const showDatepicker = () => {
+    setStartDate(new Date());
+    setEndDate(new Date());
     showMode("date");
   };
 
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || startDate;
+
     setShow(Platform.OS === "ios");
     setStartDate(currentDate);
+    setEndDate(currentDate);
   };
   const onChangeEnd = (event, selectedDate) => {
     const currentDate = selectedDate || endDate;
@@ -89,6 +83,8 @@ const adminEditEventScreen = (props) => {
   };
 
   const onSubmit = async () => {
+    console.log("in on submit start---------", startDate);
+    console.log("in on submit end------------", endDate);
     setError(null);
     let tempStart = new Date(startDate);
     let tempEnd = new Date(endDate);
@@ -96,7 +92,7 @@ const adminEditEventScreen = (props) => {
       setError("Start and end time cannot be the same");
       return;
     } else if (tempStart.getTime() > tempEnd.getTime()) {
-      setError("Start time cannot be earlier then end time");
+      setError("End time cannot be earlier then start time");
       return;
     }
     if (!eventName) {
@@ -113,16 +109,15 @@ const adminEditEventScreen = (props) => {
         })
       );
       setIsLoading(true);
-      await dispatch(getEvents(selectedMapsData.lat, selectedMapsData.lon));
-      Alert.alert("Added Event successfully");
-      props.nav.navigate("Events");
+
+      Alert.alert("Event edited successfully");
+      props.navigation.navigate("adminEvents");
     } catch (err) {
       console.log(err.message);
       setError(err.message);
     }
   };
 
-  //console.log("eventToEdit-------------", eventToEdit);
   return (
     <View style={styles.container}>
       <View>
@@ -132,7 +127,9 @@ const adminEditEventScreen = (props) => {
             <TouchableOpacity style={styles.button} onPress={showDatepicker}>
               <Text style={styles.btnText}>Date</Text>
             </TouchableOpacity>
-            <Text style={styles.outputText}>{startDate.toDateString()}</Text>
+            <Text style={styles.outputText}>
+              {startDate && startDate.toDateString()}
+            </Text>
           </View>
 
           <View style={styles.row}>
@@ -140,7 +137,7 @@ const adminEditEventScreen = (props) => {
               <Text style={styles.btnText}>Start Time</Text>
             </TouchableOpacity>
             <Text style={styles.outputText}>
-              {startDate.toLocaleTimeString().slice(0, -3)}
+              {startDate && startDate.toLocaleTimeString().slice(0, -3)}
             </Text>
           </View>
 
@@ -149,7 +146,7 @@ const adminEditEventScreen = (props) => {
               <Text style={styles.btnText}>End Time</Text>
             </TouchableOpacity>
             <Text style={styles.outputText}>
-              {endDate.toLocaleTimeString().slice(0, -3)}
+              {endDate && endDate.toLocaleTimeString().slice(0, -3)}
             </Text>
           </View>
         </View>

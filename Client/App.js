@@ -5,6 +5,8 @@ import { createStore, combineReducers, applyMiddleware } from "redux";
 import UsersReducer from "./store/reducers/UsersReducer";
 import MapsReducer from "./store/reducers/MapsReducer";
 import ProfileReducer from "./store/reducers/ProfileReducer";
+import AdminReducer from "./store/reducers/AdminReducer";
+
 import { Provider } from "react-redux";
 import ReduxThunk from "redux-thunk";
 import Navigator from "./navigations/Navigator";
@@ -13,6 +15,7 @@ const rootReducer = combineReducers({
   users: UsersReducer,
   maps: MapsReducer,
   profiles: ProfileReducer,
+  admin: AdminReducer,
 });
 
 const store = createStore(rootReducer, applyMiddleware(ReduxThunk));

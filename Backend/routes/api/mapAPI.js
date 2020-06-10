@@ -30,24 +30,21 @@ router.get("/getevents/:lat/:lon", async (req, res) => {
 router.post("/addevent", auth, async (req, res) => {
   try {
     let { start, end, lat, lon, name } = req.body;
-    const Events = await Location.find({ lat, lon }).populate("events");
-    const eventsArr = Events[0]["events"];
-
-    if (eventsArr && eventsArr.length > 0) {
+    let location = await Location.findOne({ lat, lon }).populate("events");
+    if (location && location.events) {
+      const eventsArr = location.events;
       const userStart = new Date(start).getTime();
 
-      eventsArr.forEach((event) => {
-        const startTime = new Date(event.start).getTime();
-        const endTime = new Date(event.finish).getTime();
+      for (let i = 0; i < eventsArr.length; i++) {
+        const startTime = new Date(eventsArr[i].start).getTime();
+        const endTime = new Date(eventsArr[i].finish).getTime();
         if (userStart >= startTime && userStart <= endTime) {
           return res.status(500).json({
             errors: [{ msg: "There is allready event at this time" }],
           });
         }
-      });
+      }
     }
-
-    let location = await Location.findOne({ lat, lon });
     const newEvent = new Event({
       start: start,
       finish: end,
@@ -60,6 +57,8 @@ router.post("/addevent", auth, async (req, res) => {
     foundProfile.events.push(newEvent._id);
     await foundProfile.save();
     if (location) {
+      newEvent.location = location._id;
+      await newEvent.save();
       location.events.push(newEvent._id);
       await location.save();
     } else {
@@ -67,6 +66,8 @@ router.post("/addevent", auth, async (req, res) => {
         lat: lat,
         lon: lon,
       });
+      newEvent.location = newLocation._id;
+      await newEvent.save();
       newLocation.events.push(newEvent._id);
       await newLocation.save();
     }
@@ -91,7 +92,6 @@ router.post("/addrating", auth, async (req, res) => {
       rating: parseInt(rating, 10),
       eventId: eventId,
     });
-    console.log("rating is", newRating);
     await newRating.save();
     event = await Event.findById(eventId);
     event.ratings.push(newRating._id);

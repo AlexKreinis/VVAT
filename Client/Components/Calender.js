@@ -70,7 +70,7 @@ const Calender = (props) => {
       setError("Start and end time cannot be the same");
       return;
     } else if (tempStart.getTime() > tempEnd.getTime()) {
-      setError("Start time cannot be earlier then end time");
+      setError("End time cannot be earlier then start time");
       return;
     }
     if (!eventName) {

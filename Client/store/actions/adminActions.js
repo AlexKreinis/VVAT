@@ -1,7 +1,7 @@
 const youripadress = "http://192.168.0.86:5000";
 //const youripadress = "https://vvat.herokuapp.com";
 
-import { LOADING_EVENTS } from "./const";
+import { LOADING_EVENTS, GET_USER_FOR_ADMIN } from "./const";
 
 export const adminGetProfile = (email) => async (dispatch, getState) => {
   try {
@@ -22,8 +22,15 @@ export const adminGetProfile = (email) => async (dispatch, getState) => {
         message = errorResData.errors[0].msg;
       throw new Error(message);
     }
-    let serverData = await res.json();
-    return serverData.user;
+    serverData = await res.json();
+    console.log("admin action befor dispatch", serverData.user);
+
+    dispatch({
+      type: GET_USER_FOR_ADMIN,
+      payload: {
+        profile: serverData.user,
+      },
+    });
   } catch (err) {
     console.log(err.message);
   }
@@ -105,7 +112,6 @@ export const saveUserProfile = (editedUser) => async (dispatch, getState) => {
       throw new Error(message);
     }
     let serverData = await res.json();
-    //console.log("serverData  ---------------", serverData);
     return serverData.user;
   } catch (err) {
     throw err;
@@ -114,6 +120,7 @@ export const saveUserProfile = (editedUser) => async (dispatch, getState) => {
 
 export const editEvent = (data) => async (dispatch, getState) => {
   try {
+    console.log("ENTERED ACTION");
     dispatch({ type: LOADING_EVENTS });
     const token = getState().users.token;
     const res = await fetch(`${youripadress}/api/admin/editevent`, {
@@ -133,9 +140,9 @@ export const editEvent = (data) => async (dispatch, getState) => {
         message = errorResData.errors[0].msg;
       throw new Error(message);
     }
-
+    console.log("2");
     let json = await res.json();
-    //dispatch(getEvents(data.lat, data.lon)); //second
+    console.log("3");
     return json;
   } catch (err) {
     throw err;

@@ -3,50 +3,77 @@ import {
   StyleSheet,
   Text,
   View,
-  Alert,
   Image,
   TouchableHighlight,
   Button,
   TouchableOpacity,
 } from "react-native";
 import { adminGetProfile } from "../../store/actions/adminActions";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Colors from "../../constants/Colors";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import CustomHeaderButton from "../../Components/CustomHeaderButton";
 
 const userProfileScreen = (props) => {
   const [error, setError] = useState(null);
-  const [user, setUser] = useState({});
+
   const [banTitle, setbanTitle] = useState("ban");
+  const [user, setUser] = useState({
+    email: "",
+    name: "",
+    description: "",
+    facebook: "",
+    age: "",
+    events: [],
+    friendList: [],
+    friendRequest: [],
+    id: "",
+  });
   const dispatch = useDispatch();
-
-  const userEmail = props.navigation.getParam("userEmail");
-  const updatedUser = props.navigation.getParam("updated");
-
+  const userDetails = props.navigation.getParam("user");
+  const updatedUser = useSelector((state) => state.admin.selectedUser);
   const getUser = async () => {
     try {
-      const tempUser = await dispatch(adminGetProfile(userEmail));
-
-      setUser({ ...tempUser });
+      await dispatch(adminGetProfile(userDetails.email));
     } catch (err) {
       setError(err.message);
     }
   };
 
   useEffect(() => {
+    getUser();
+  }, []);
+
+  useEffect(() => {
+    const tempDetails = {
+      ...user,
+      email: updatedUser.email ? updatedUser.email : "",
+      name: updatedUser.name ? updatedUser.name : "",
+      // description: updatedUser.profile.description
+      //   ? updatedUser.profile.description
+      //   : "",
+      // facebook: updatedUser.profile.facebook
+      //   ? updatedUser.profile.facebook
+      //   : "",
+      // age: updatedUser.profile.age ? updatedUser.profile.age : "",
+      // events: updatedUser.profile.events ? updatedUser.profile.events : "",
+      // friendList: updatedUser.profile.friendList
+      //   ? updatedUser.profile.friendList
+      //   : "",
+      // friendRequest: updatedUser.profile.friendRequest
+      //   ? updatedUser.profile.friendRequest
+      //   : "",
+      // id: updatedUser._id ? updatedUser._id : "",
+    };
+
+    setUser(tempDetails);
+  }, [updatedUser]);
+
+  useEffect(() => {
     if (error) {
       Alert.alert("An Error Occurred!", error, [{ text: "Okay" }]);
     }
   }, [error]);
-
-  useEffect(() => {
-    if (!updatedUser) {
-      getUser();
-    } else {
-      setUser(updatedUser);
-    }
-  }, []);
 
   return (
     <View style={styles.container}>
@@ -63,7 +90,7 @@ const userProfileScreen = (props) => {
       <View style={styles.profileDetail}>
         <View style={styles.detailContent}>
           <Text style={styles.title}>Friends</Text>
-          <Text style={styles.count}>0</Text>
+          <Text style={styles.count}>{user.friendList.length}</Text>
         </View>
         <View style={styles.detailContent}>
           <TouchableOpacity
@@ -73,7 +100,7 @@ const userProfileScreen = (props) => {
           >
             <Text style={styles.title}>Events</Text>
           </TouchableOpacity>
-          <Text style={styles.count}>0</Text>
+          <Text style={styles.count}>{user.events.length}</Text>
         </View>
         <View style={styles.detailContent}>
           <Text style={styles.title}>Rating</Text>
@@ -89,26 +116,6 @@ const userProfileScreen = (props) => {
                   style={styles.icon}
                   source={require("../../assets/add-user.png")}
                 />
-                {/* {details.friendRequest.length > 0 && (
-                  <Badge
-                    status="error"
-                    containerStyle={{
-                      position: "absolute",
-                      top: 1,
-                      right: 1,
-                    }}
-                    value={
-                      details.friendRequest.length > 0
-                        ? details.friendRequest.length
-                        : ""
-                    }
-                    badgeStyle={{
-                      height: 25,
-                      width: 25,
-                      borderRadius: 1000,
-                    }}
-                  />
-                )} */}
               </>
             </TouchableHighlight>
 
@@ -143,21 +150,18 @@ const userProfileScreen = (props) => {
             </TouchableHighlight>
           </View>
 
-          <Text style={styles.description}>Age: 69</Text>
+          <Text style={styles.description}>Age: {user.age}</Text>
 
           <Text style={styles.description}>Facebook: {user.facebook}</Text>
 
-          <Text style={styles.description}>my desc</Text>
+          <Text style={styles.description}>{user.description}</Text>
           <View style={styles.buttonContainer}>
             <Button
               title="Ban User"
               color="red"
-              /* onPress={() => {
-                props.navigation.navigate({
-                  routeName: "userEditProfile",
-                  params: { user: user },
-                });
-              }} */
+              onPress={() => {
+                banUserHandler;
+              }}
             ></Button>
           </View>
         </View>
@@ -167,9 +171,9 @@ const userProfileScreen = (props) => {
 };
 
 userProfileScreen.navigationOptions = (navData) => {
-  const user = navData.navigation.getParam("user");
+  const userDetails = navData.navigation.getParam("user");
   return {
-    headerTitle: `${navData.navigation.getParam("userName")} Profile`,
+    headerTitle: `${userDetails["name"]} Profile`,
     headerRight: () => (
       <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
         <Item
@@ -178,7 +182,7 @@ userProfileScreen.navigationOptions = (navData) => {
           onPress={() => {
             navData.navigation.navigate({
               routeName: "userEditProfile",
-              params: { user: user },
+              params: { user: userDetails },
             });
           }}
         />
