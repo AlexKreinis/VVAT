@@ -1,4 +1,4 @@
-const youripadress = "http://192.168.31.161:5000";
+const youripadress = "http://192.168.56.1:5000";
 //const youripadress = "https://vvat.herokuapp.com";
 
 import { GET_USER_FOR_ADMIN } from "../actions/const";

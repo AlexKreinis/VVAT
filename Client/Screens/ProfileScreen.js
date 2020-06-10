@@ -34,10 +34,12 @@ const ProfileScreen = (props) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    console.log("running get user");
     dispatch(getUser());
-  }, [profileDetails, userDetails]);
+  }, []);
 
   useEffect(() => {
+    console.log("running update user");
     const tempDetails = {
       email: userDetails.email ? userDetails.email : "",
       name: userDetails.name ? userDetails.name : "",
@@ -71,14 +73,14 @@ const ProfileScreen = (props) => {
       </View>
       <View style={styles.profileDetail}>
         <View style={styles.detailContent}>
-          <Text style={styles.title}>Friends</Text>
           <TouchableOpacity
             onPress={() => {
               props.navigation.navigate("friendList");
             }}
           >
-            <Text style={styles.count}>{details.friendList.length}</Text>
+            <Text style={styles.title}>Friends</Text>
           </TouchableOpacity>
+          <Text style={styles.count}>{details.friendList.length}</Text>
         </View>
         <View style={styles.detailContent}>
           <TouchableOpacity

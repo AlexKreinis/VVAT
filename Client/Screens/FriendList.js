@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { Icon, Text, Button, ListItem } from "react-native-elements";
-import { getProfile } from "../store/actions/profileActions";
+import { getProfile } from "../store/actions/Usersactions";
 
 const FriendList = (props) => {
   const dispatch = useDispatch();
