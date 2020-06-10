@@ -1,28 +1,39 @@
 import React from "react";
-import { StyleSheet, Text, View, ScrollView, Button } from "react-native";
-import { ListItem } from "react-native-elements";
+import { StyleSheet, ScrollView, View } from "react-native";
+import { ListItem, Button } from "react-native-elements";
 import SafeAreaView from "react-native-safe-area-view";
 import { DrawerItems } from "react-navigation-drawer";
-import { useSelector } from "react-redux";
+import { logout } from "../store/actions/Usersactions";
+import { useSelector, useDispatch } from "react-redux";
 
 const customDrawerComponent = (props) => {
   const role = useSelector((state) => state.users.role);
-
+  const dispatch = useDispatch();
   return (
-    <ScrollView>
-      <SafeAreaView
-        style={styles.container}
-        forceInset={{ top: "always", horizontal: "never" }}
-      >
+    <ScrollView style={styles.container}>
+      <SafeAreaView forceInset={{ top: "always", horizontal: "never" }}>
         <DrawerItems {...props} />
-        {/* {role === " Admin" && ( */}
         <ListItem
           title={"Admin"}
-          bottomDivider
           onPress={() => props.navigation.navigate("adminPanel")}
+          linearGradientProps={{
+            colors: ["#2e86c1", "#2980b9"],
+            start: { x: 1, y: 0 },
+            end: { x: 0.2, y: 0 },
+          }}
+          titleStyle={{ color: "white", fontWeight: "bold" }}
         />
-        {/* )} */}
-        <ListItem title={"Logout"} bottomDivider />
+        <View style={styles.logout}>
+          <Button
+            title="Logout"
+            color="blue"
+            type="clear"
+            onPress={() => {
+              dispatch(logout());
+              props.navigation.navigate("loginregister");
+            }}
+          />
+        </View>
       </SafeAreaView>
     </ScrollView>
   );
@@ -33,5 +44,9 @@ export default customDrawerComponent;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    paddingTop: 20,
+  },
+  logout: {
+    paddingTop: 30,
   },
 });

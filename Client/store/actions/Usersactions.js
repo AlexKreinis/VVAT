@@ -7,6 +7,7 @@ import {
   SAVE_PROFILE,
   GET_USER_PROFILE,
   GET_PROFILE,
+  LOGOUT,
 } from "../actions/const";
 //const youripadress = "https://vvat.herokuapp.com";
 const youripadress = "http://192.168.56.1:5000";
@@ -109,6 +110,10 @@ export const getProfile = () => async (dispatch, getState) => {
   } catch (err) {
     console.log(err.message);
   }
+};
+
+export const logout = () => {
+  return { type: LOGOUT };
 };
 
 export const getUser = () => async (dispatch, getState) => {

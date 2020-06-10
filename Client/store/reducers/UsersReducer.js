@@ -1,4 +1,4 @@
-import { LOGIN, REGISTER, GET_USER } from "../actions/const";
+import { LOGIN, REGISTER, GET_USER, LOGOUT } from "../actions/const";
 const initialState = {
   token: "",
   email: "",
@@ -9,6 +9,9 @@ const initialState = {
 
 const UsersReducers = (state = initialState, action) => {
   switch (action.type) {
+    case LOGOUT: {
+      return initialState;
+    }
     case LOGIN:
       return {
         token: action.payload.token,
