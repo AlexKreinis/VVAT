@@ -24,6 +24,7 @@ import About from "../Screens/About";
 import customDrawerComponent from "../Components/customDrawerComponent";
 import userEditProfileScreen from "../Screens/AdminScreens/userEditProfileScreen";
 import FriendList from "../Screens/FriendList";
+import adminEditEventScreen from "../Screens/AdminScreens/adminEditEventScreen";
 const defaultStackNavOptions = {
   headerStyle: {
     backgroundColor: Platform.OS === "android" ? Colors.primaryColor : "",
@@ -61,6 +62,7 @@ const AdminNav = createStackNavigator(
     adminEvents: allEventsScreen,
     userProfile: userProfileScreen,
     userEditProfile: userEditProfileScreen,
+    adminEditEvent: adminEditEventScreen,
   },
   {
     defaultNavigationOptions: {

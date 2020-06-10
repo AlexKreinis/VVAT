@@ -4,6 +4,56 @@ const User = require("../../models/User");
 const Profile = require("../../models/Profile");
 const auth = require("../../middleware/auth");
 
+router.post("/editevent", auth, async (req, res) => {
+  try {
+    let { id, start, end, name } = req.body;
+    const eventToEdit = await Event.findById({ id });
+    console.log("eventToedit------", eventToEdit);
+
+    if (eventsArr && eventsArr.length > 0) {
+      const userStart = new Date(start).getTime();
+
+      eventsArr.forEach((event) => {
+        const startTime = new Date(event.start).getTime();
+        const endTime = new Date(event.finish).getTime();
+        if (userStart >= startTime && userStart <= endTime) {
+          return res.status(500).json({
+            errors: [{ msg: "There is allready event at this time" }],
+          });
+        }
+      });
+    }
+
+    let location = await Location.findOne({ lat, lon });
+    const newEvent = new Event({
+      start: start,
+      finish: end,
+      name: name,
+      owner: req.user.id,
+    });
+    await newEvent.save();
+    const foundUser = await User.findById(req.user.id);
+    const foundProfile = await Profile.findById(foundUser.profile);
+    foundProfile.events.push(newEvent._id);
+    await foundProfile.save();
+    if (location) {
+      location.events.push(newEvent._id);
+      await location.save();
+    } else {
+      const newLocation = new Location({
+        lat: lat,
+        lon: lon,
+      });
+      newLocation.events.push(newEvent._id);
+      await newLocation.save();
+    }
+    res.json({ msg: "location and event added" });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).json({ errors: [{ msg: err.message }] });
+  }
+});
+
 router.get("/getuser/:email", auth, async (req, res) => {
   const userEmail = req.params.email;
   try {

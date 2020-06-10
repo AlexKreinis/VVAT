@@ -17,10 +17,6 @@ const allUsersScreen = (props) => {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  const LongClickHandler = () => {
-    Alert.alert("Edit user profile");
-  };
-
   const ClickHandler = () => {
     Alert.alert("See user profile");
   };
@@ -57,7 +53,6 @@ const allUsersScreen = (props) => {
         leftAvatar={{ source: require("../../assets/pro2.png") }}
         bottomDivider
         chevron
-        onLongPress={LongClickHandler}
         onPress={() => {
           props.navigation.navigate({
             routeName: "userProfile",

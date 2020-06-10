@@ -18,6 +18,7 @@ import CustomHeaderButton from "../../Components/CustomHeaderButton";
 const userProfileScreen = (props) => {
   const [error, setError] = useState(null);
   const [user, setUser] = useState({});
+  const [banTitle, setbanTitle] = useState("ban");
   const dispatch = useDispatch();
 
   const userEmail = props.navigation.getParam("userEmail");

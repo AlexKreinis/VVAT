@@ -12,7 +12,7 @@ import { ListItem } from "react-native-elements";
 import { useDispatch } from "react-redux";
 import { getallevents, removeevent } from "../../store/actions/adminActions";
 
-const allEventsScreen = () => {
+const allEventsScreen = (props) => {
   const keyExtractor = (item, index) => index.toString();
   const dispatch = useDispatch();
   const [events, setEvents] = useState([]);
@@ -43,10 +43,6 @@ const allEventsScreen = () => {
     }
   };
 
-  const print = (item) => {
-    console.log("item----------------", item);
-  };
-
   useEffect(() => {
     if (error) {
       Alert.alert("An Error Occurred!", error, [{ text: "Okay" }]);
@@ -66,7 +62,14 @@ const allEventsScreen = () => {
         bottomDivider
         chevron
         onLongPress={() => removeEventHandler(item)}
-        //onLongPress={() => print(item)}
+        onPress={() => {
+          props.navigation.navigate({
+            routeName: "adminEditEvent",
+            params: {
+              event: item,
+            },
+          });
+        }}
       />
     </TouchableOpacity>
   );

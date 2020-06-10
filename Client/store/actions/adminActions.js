@@ -1,6 +1,8 @@
 const youripadress = "http://192.168.0.86:5000";
 //const youripadress = "https://vvat.herokuapp.com";
 
+import { LOADING_EVENTS } from "./const";
+
 export const adminGetProfile = (email) => async (dispatch, getState) => {
   try {
     const token = getState().users.token;
@@ -105,6 +107,36 @@ export const saveUserProfile = (editedUser) => async (dispatch, getState) => {
     let serverData = await res.json();
     //console.log("serverData  ---------------", serverData);
     return serverData.user;
+  } catch (err) {
+    throw err;
+  }
+};
+
+export const editEvent = (data) => async (dispatch, getState) => {
+  try {
+    dispatch({ type: LOADING_EVENTS });
+    const token = getState().users.token;
+    const res = await fetch(`${youripadress}/api/admin/editevent`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        "x-auth-token": token,
+      },
+      body: JSON.stringify(data),
+    });
+
+    if (!res.ok) {
+      const errorResData = await res.json();
+      let message = "Something went wrong!";
+      if (errorResData && errorResData.errors.length > 0)
+        message = errorResData.errors[0].msg;
+      throw new Error(message);
+    }
+
+    let json = await res.json();
+    //dispatch(getEvents(data.lat, data.lon)); //second
+    return json;
   } catch (err) {
     throw err;
   }
