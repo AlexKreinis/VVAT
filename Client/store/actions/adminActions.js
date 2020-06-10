@@ -1,4 +1,4 @@
-const youripadress = "http://192.168.0.86:5000";
+const youripadress = "http://192.168.56.1:5000";
 //const youripadress = "https://vvat.herokuapp.com";
 
 import { LOADING_EVENTS, GET_USER_FOR_ADMIN } from "./const";
@@ -23,8 +23,6 @@ export const adminGetProfile = (email) => async (dispatch, getState) => {
       throw new Error(message);
     }
     serverData = await res.json();
-    console.log("admin action befor dispatch", serverData.user);
-
     dispatch({
       type: GET_USER_FOR_ADMIN,
       payload: {
@@ -36,9 +34,17 @@ export const adminGetProfile = (email) => async (dispatch, getState) => {
   }
 };
 
-export const getallusers = () => async () => {
+export const getallusers = () => async (dispatch, getState) => {
   try {
-    const res = await fetch(`${youripadress}/api/admin/getallusers/`);
+    const token = getState().users.token;
+    const res = await fetch(`${youripadress}/api/admin/getallusers/`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        "x-auth-token": token,
+      },
+    });
     if (!res.ok) {
       const errorResData = await res.json();
       let message = "Something went wrong!";
@@ -54,9 +60,17 @@ export const getallusers = () => async () => {
   }
 };
 
-export const getallevents = () => async () => {
+export const getallevents = () => async (dispatch, getState) => {
   try {
-    const res = await fetch(`${youripadress}/api/admin/getallevents`);
+    const token = getState().users.token;
+    const res = await fetch(`${youripadress}/api/admin/getallevents`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        "x-auth-token": token,
+      },
+    });
 
     if (!res.ok) {
       const errorResData = await res.json();
@@ -72,9 +86,20 @@ export const getallevents = () => async () => {
   }
 };
 
-export const removeevent = (eventID) => async (dispatch) => {
+export const removeevent = (eventID) => async (dispatch, getState) => {
   try {
-    const res = await fetch(`${youripadress}/api/admin/removeevent/${eventID}`);
+    const token = getState().users.token;
+    const res = await fetch(
+      `${youripadress}/api/admin/removeevent/${eventID}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          "x-auth-token": token,
+        },
+      }
+    );
 
     if (!res.ok) {
       const errorResData = await res.json();
@@ -120,7 +145,6 @@ export const saveUserProfile = (editedUser) => async (dispatch, getState) => {
 
 export const editEvent = (data) => async (dispatch, getState) => {
   try {
-    console.log("ENTERED ACTION");
     dispatch({ type: LOADING_EVENTS });
     const token = getState().users.token;
     const res = await fetch(`${youripadress}/api/admin/editevent`, {

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { StyleSheet, ScrollView, View } from "react-native";
 import { ListItem, Button } from "react-native-elements";
 import SafeAreaView from "react-native-safe-area-view";
@@ -7,22 +7,30 @@ import { logout } from "../store/actions/Usersactions";
 import { useSelector, useDispatch } from "react-redux";
 
 const customDrawerComponent = (props) => {
+  const [isAdmin, setIsAdmin] = useState(false);
   const role = useSelector((state) => state.users.role);
   const dispatch = useDispatch();
+  useEffect(() => {
+    if (role === "Admin") {
+      setIsAdmin(true);
+    }
+  }, [role]);
   return (
     <ScrollView style={styles.container}>
       <SafeAreaView forceInset={{ top: "always", horizontal: "never" }}>
         <DrawerItems {...props} />
-        <ListItem
-          title={"Admin"}
-          onPress={() => props.navigation.navigate("adminPanel")}
-          linearGradientProps={{
-            colors: ["#2e86c1", "#2980b9"],
-            start: { x: 1, y: 0 },
-            end: { x: 0.2, y: 0 },
-          }}
-          titleStyle={{ color: "white", fontWeight: "bold" }}
-        />
+        {isAdmin && (
+          <ListItem
+            title={"Admin"}
+            onPress={() => props.navigation.navigate("adminPanel")}
+            linearGradientProps={{
+              colors: ["#2e86c1", "#2980b9"],
+              start: { x: 1, y: 0 },
+              end: { x: 0.2, y: 0 },
+            }}
+            titleStyle={{ color: "white", fontWeight: "bold" }}
+          />
+        )}
         <View style={styles.logout}>
           <Button
             title="Logout"

@@ -94,4 +94,3 @@ it("OK. deleteuser", (done) => {
     })
     .catch((err) => done(err));
 });
-module.exports = authToken;

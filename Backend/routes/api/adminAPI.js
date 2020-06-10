@@ -3,12 +3,15 @@ const router = express.Router();
 const User = require("../../models/User");
 const Event = require("../../models/Event");
 const Profile = require("../../models/Profile");
-const auth = require("../../middleware/auth");
+const adminAuth = require("../../middleware/adminAuth");
 
-router.post("/editevent", auth, async (req, res) => {
+router.post("/editevent", adminAuth, async (req, res) => {
   try {
     let { id, start, end, name } = req.body;
     const eventToEdit = await Event.findById(id);
+    if (!eventToEdit) {
+      return res.json({ msg: "Event was not found" });
+    }
     const selectedLocation = await Location.findById(
       eventToEdit.location
     ).populate("events");
@@ -40,7 +43,7 @@ router.post("/editevent", auth, async (req, res) => {
   }
 });
 
-router.get("/getuser/:email", auth, async (req, res) => {
+router.get("/getuser/:email", adminAuth, async (req, res) => {
   const userEmail = req.params.email;
   try {
     const otherUser = await User.findOne({ email: userEmail })
@@ -53,7 +56,7 @@ router.get("/getuser/:email", auth, async (req, res) => {
   }
 });
 
-router.get("/getallusers", async (req, res) => {
+router.get("/getallusers", adminAuth, async (req, res) => {
   try {
     const Users = await User.find().select("-password").populate("profile");
     res.json({ allUsers: Users });
@@ -63,7 +66,7 @@ router.get("/getallusers", async (req, res) => {
   }
 });
 
-router.get("/getallevents/", async (req, res) => {
+router.get("/getallevents/", adminAuth, async (req, res) => {
   try {
     const Events = await Event.find();
 
@@ -74,7 +77,7 @@ router.get("/getallevents/", async (req, res) => {
   }
 });
 
-router.get("/removeevent/:eventID", async (req, res) => {
+router.get("/removeevent/:eventID", adminAuth, async (req, res) => {
   const eventID = req.params.eventID;
 
   try {
@@ -86,7 +89,7 @@ router.get("/removeevent/:eventID", async (req, res) => {
   }
 });
 
-router.post("/saveuserprofile/:editedUser", auth, async (req, res) => {
+router.post("/saveuserprofile/:editedUser", adminAuth, async (req, res) => {
   const { email, name, desc, facebook, age } = req.body;
 
   try {

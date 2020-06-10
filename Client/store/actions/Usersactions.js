@@ -10,7 +10,7 @@ import {
   LOGOUT,
 } from "../actions/const";
 //const youripadress = "https://vvat.herokuapp.com";
-const youripadress = "http://192.168.0.86:5000";
+const youripadress = "http://192.168.56.1:5000";
 
 export const register = (data) => async (dispatch) => {
   try {

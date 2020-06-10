@@ -3,13 +3,12 @@ import {
   SET_EVENT_HISTORY,
   GET_FRIEND_REQUESTS,
   PROFILE_LOADING,
-  GET_PROFILE,
   SET_FRIEND_REQUESTS,
 } from "../actions/const";
 import { getUser } from "./Usersactions";
 
 //const youripadress = "https://vvat.herokuapp.com";
-const youripadress = "http://192.168.0.86:5000";
+const youripadress = "http://192.168.56.1:5000";
 
 export const getEventHistory = () => async (dispatch, getState) => {
   try {
