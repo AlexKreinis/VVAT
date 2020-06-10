@@ -32,7 +32,7 @@ router.post("/editevent", auth, async (req, res) => {
     eventToEdit.end = end;
     eventToEdit.name = name;
     await eventToEdit.save();
-    console.log("1-------------------");
+
     res.json({ msg: "event has been updated" });
   } catch (err) {
     console.error(err.message);

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import {
   TextInput,
-  FlatList,
   Text,
   StyleSheet,
   Alert,
@@ -10,9 +9,8 @@ import {
   Platform,
   ActivityIndicator,
 } from "react-native";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
-import { getEvents } from "../../store/actions/MapsActions";
 import { editEvent } from "../../store/actions/adminActions";
 import DateTimePicker from "@react-native-community/datetimepicker";
 
@@ -83,8 +81,6 @@ const adminEditEventScreen = (props) => {
   };
 
   const onSubmit = async () => {
-    console.log("in on submit start---------", startDate);
-    console.log("in on submit end------------", endDate);
     setError(null);
     let tempStart = new Date(startDate);
     let tempEnd = new Date(endDate);

@@ -140,9 +140,9 @@ export const editEvent = (data) => async (dispatch, getState) => {
         message = errorResData.errors[0].msg;
       throw new Error(message);
     }
-    console.log("2");
+
     let json = await res.json();
-    console.log("3");
+
     return json;
   } catch (err) {
     throw err;
