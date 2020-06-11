@@ -6,7 +6,6 @@ const initialState = {
 const AdminReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_USER_FOR_ADMIN:
-      console.log("admin reducer:", action.payload);
       return {
         ...state,
         selectedUser: { ...action.payload.profile },

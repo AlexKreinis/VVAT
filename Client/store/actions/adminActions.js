@@ -164,6 +164,7 @@ export const banUser = (email) => async (dispatch, getState) => {
       throw new Error(message);
     }
     let serverData = await res.json();
+
     return serverData.msg;
   } catch (err) {
     throw err;

@@ -10,7 +10,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { adminGetProfile, banUser } from "../../store/actions/adminActions";
-import { setBanned } from "../../store/actions/Usersactions";
+import { setBanned, findUserProfile } from "../../store/actions/Usersactions";
 import { useDispatch, useSelector } from "react-redux";
 import Colors from "../../constants/Colors";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
@@ -18,7 +18,7 @@ import CustomHeaderButton from "../../Components/CustomHeaderButton";
 
 const userProfileScreen = (props) => {
   const [error, setError] = useState(null);
-
+  const userDetails = props.navigation.getParam("user");
   const [user, setUser] = useState({
     email: "",
     name: "",
@@ -29,10 +29,10 @@ const userProfileScreen = (props) => {
     friendList: [],
     friendRequest: [],
     id: "",
+    banned: userDetails.isBanned,
   });
   const dispatch = useDispatch();
-  const userDetails = props.navigation.getParam("user");
-  const [IsBanned, setIsBanned] = useState(userDetails.isBanned);
+
   const updatedUser = useSelector((state) => state.admin.selectedUser);
   const getUser = async () => {
     try {
@@ -44,7 +44,7 @@ const userProfileScreen = (props) => {
 
   useEffect(() => {
     getUser();
-  }, []);
+  }, [updatedUser]);
 
   const banHandler = async () => {
     try {
@@ -52,11 +52,9 @@ const userProfileScreen = (props) => {
 
       if (ban == "banned") {
         dispatch(setBanned(true));
-        setIsBanned(true);
         Alert.alert("User banned successfully");
       } else if (ban == "not banned") {
         dispatch(setBanned(false));
-        setIsBanned(false);
         Alert.alert("User unbanned successfully");
       }
     } catch (err) {
@@ -70,21 +68,22 @@ const userProfileScreen = (props) => {
       ...user,
       email: updatedUser.email ? updatedUser.email : "",
       name: updatedUser.name ? updatedUser.name : "",
-      // description: updatedUser.profile.description
-      //   ? updatedUser.profile.description
-      //   : "",
-      // facebook: updatedUser.profile.facebook
-      //   ? updatedUser.profile.facebook
-      //   : "",
-      // age: updatedUser.profile.age ? updatedUser.profile.age : "",
-      // events: updatedUser.profile.events ? updatedUser.profile.events : "",
-      // friendList: updatedUser.profile.friendList
-      //   ? updatedUser.profile.friendList
-      //   : "",
-      // friendRequest: updatedUser.profile.friendRequest
-      //   ? updatedUser.profile.friendRequest
-      //   : "",
-      // id: updatedUser._id ? updatedUser._id : "",
+      description: updatedUser.profile.description
+        ? updatedUser.profile.description
+        : "",
+      facebook: updatedUser.profile.facebook
+        ? updatedUser.profile.facebook
+        : "",
+      age: updatedUser.profile.age ? updatedUser.profile.age : "",
+      events: updatedUser.profile.events ? updatedUser.profile.events : "",
+      friendList: updatedUser.profile.friendList
+        ? updatedUser.profile.friendList
+        : "",
+      friendRequest: updatedUser.profile.friendRequest
+        ? updatedUser.profile.friendRequest
+        : "",
+      id: updatedUser._id ? updatedUser._id : "",
+      banned: updatedUser.isBanned ? updatedUser.isBanned : false,
     };
 
     setUser(tempDetails);
@@ -176,14 +175,14 @@ const userProfileScreen = (props) => {
 
           <Text style={styles.description}>{user.description}</Text>
           <View style={styles.buttonContainer}>
-            {!IsBanned && (
+            {!user.banned && (
               <Button
                 title="Ban User"
                 color="red"
                 onPress={banHandler}
               ></Button>
             )}
-            {IsBanned && (
+            {user.banned && (
               <Button
                 title="Unban User"
                 color="blue"
