@@ -4,11 +4,13 @@ import {
   Text,
   View,
   Image,
+  Alert,
   TouchableHighlight,
   Button,
   TouchableOpacity,
 } from "react-native";
-import { adminGetProfile } from "../../store/actions/adminActions";
+import { adminGetProfile, banUser } from "../../store/actions/adminActions";
+import { setBanned } from "../../store/actions/Usersactions";
 import { useDispatch, useSelector } from "react-redux";
 import Colors from "../../constants/Colors";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
@@ -17,7 +19,6 @@ import CustomHeaderButton from "../../Components/CustomHeaderButton";
 const userProfileScreen = (props) => {
   const [error, setError] = useState(null);
 
-  const [banTitle, setbanTitle] = useState("ban");
   const [user, setUser] = useState({
     email: "",
     name: "",
@@ -31,6 +32,7 @@ const userProfileScreen = (props) => {
   });
   const dispatch = useDispatch();
   const userDetails = props.navigation.getParam("user");
+  const [IsBanned, setIsBanned] = useState(userDetails.isBanned);
   const updatedUser = useSelector((state) => state.admin.selectedUser);
   const getUser = async () => {
     try {
@@ -43,6 +45,25 @@ const userProfileScreen = (props) => {
   useEffect(() => {
     getUser();
   }, []);
+
+  const banHandler = async () => {
+    try {
+      const ban = await dispatch(banUser(userDetails.email));
+
+      if (ban == "banned") {
+        dispatch(setBanned(true));
+        setIsBanned(true);
+        Alert.alert("User banned successfully");
+      } else if (ban == "not banned") {
+        dispatch(setBanned(false));
+        setIsBanned(false);
+        Alert.alert("User unbanned successfully");
+      }
+    } catch (err) {
+      console.log("error catched", err);
+      setError(err.message);
+    }
+  };
 
   useEffect(() => {
     const tempDetails = {
@@ -74,7 +95,6 @@ const userProfileScreen = (props) => {
       Alert.alert("An Error Occurred!", error, [{ text: "Okay" }]);
     }
   }, [error]);
-
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -156,13 +176,20 @@ const userProfileScreen = (props) => {
 
           <Text style={styles.description}>{user.description}</Text>
           <View style={styles.buttonContainer}>
-            <Button
-              title="Ban User"
-              color="red"
-              onPress={() => {
-                banUserHandler;
-              }}
-            ></Button>
+            {!IsBanned && (
+              <Button
+                title="Ban User"
+                color="red"
+                onPress={banHandler}
+              ></Button>
+            )}
+            {IsBanned && (
+              <Button
+                title="Unban User"
+                color="blue"
+                onPress={banHandler}
+              ></Button>
+            )}
           </View>
         </View>
       </View>

@@ -120,4 +120,25 @@ router.post("/saveuserprofile/:editedUser", adminAuth, async (req, res) => {
   }
 });
 
+router.post("/banUser", adminAuth, async (req, res) => {
+  try {
+    let { email } = req.body;
+
+    const us = await User.findOne({ email });
+
+    if (!us.isBanned) {
+      us.isBanned = true;
+      await us.save();
+      return res.json({ msg: "banned" });
+    } else {
+      us.isBanned = false;
+      await us.save();
+      return res.json({ msg: "not banned" });
+    }
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).json({ errors: [{ msg: err.message }] });
+  }
+});
+
 module.exports = router;

@@ -1,4 +1,4 @@
-const youripadress = "http://192.168.56.1:5000";
+const youripadress = "http://localhost:5000";
 //const youripadress = "https://vvat.herokuapp.com";
 
 import { LOADING_EVENTS, GET_USER_FOR_ADMIN } from "./const";
@@ -138,6 +138,33 @@ export const saveUserProfile = (editedUser) => async (dispatch, getState) => {
     }
     let serverData = await res.json();
     return serverData.user;
+  } catch (err) {
+    throw err;
+  }
+};
+
+export const banUser = (email) => async (dispatch, getState) => {
+  try {
+    const token = getState().users.token;
+    const res = await fetch(`${youripadress}/api/admin/banUser`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        "x-auth-token": token,
+      },
+      body: JSON.stringify({ email }),
+    });
+
+    if (!res.ok) {
+      const errorResData = await res.json();
+      let message = "Something went wrong!";
+      if (errorResData && errorResData.errors.length > 0)
+        message = errorResData.errors[0].msg;
+      throw new Error(message);
+    }
+    let serverData = await res.json();
+    return serverData.msg;
   } catch (err) {
     throw err;
   }

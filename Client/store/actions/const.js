@@ -18,3 +18,4 @@ export const GET_PROFILE = "GET_PROFILE";
 export const SET_FRIEND_REQUESTS = "SET_FRIEND_REQUESTS";
 export const GET_USER_FOR_ADMIN = "GET_USER_FOR_ADMIN";
 export const LOGOUT = "LOGOUT";
+export const SET_BAN_STATUS = "SET_BAN_STATUS";

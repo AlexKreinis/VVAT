@@ -4,13 +4,12 @@ import {
   LOGIN,
   REGISTER,
   GET_USER,
-  SAVE_PROFILE,
-  GET_USER_PROFILE,
+  SET_BAN_STATUS,
   GET_PROFILE,
   LOGOUT,
 } from "../actions/const";
 //const youripadress = "https://vvat.herokuapp.com";
-const youripadress = "http://192.168.56.1:5000";
+const youripadress = "http://localhost:5000";
 
 export const register = (data) => async (dispatch) => {
   try {
@@ -173,4 +172,11 @@ export const findUserProfile = (email) => async (dispatch) => {
   } catch (err) {
     throw err;
   }
+};
+
+export const setBanned = (banned) => (dispatch) => {
+  dispatch({
+    type: SET_BAN_STATUS,
+    payload: { banned: banned },
+  });
 };

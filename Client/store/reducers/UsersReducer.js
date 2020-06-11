@@ -1,10 +1,17 @@
-import { LOGIN, REGISTER, GET_USER, LOGOUT } from "../actions/const";
+import {
+  LOGIN,
+  REGISTER,
+  GET_USER,
+  LOGOUT,
+  SET_BAN_STATUS,
+} from "../actions/const";
 const initialState = {
   token: "",
   email: "",
   name: "",
   role: "",
   id: "",
+  banned: false,
 };
 
 const UsersReducers = (state = initialState, action) => {
@@ -28,6 +35,12 @@ const UsersReducers = (state = initialState, action) => {
         name: action.payload.name,
         role: action.payload.role,
         id: action.payload.id,
+      };
+
+    case SET_BAN_STATUS:
+      return {
+        ...state,
+        banned: action.payload.banned,
       };
     default:
       return state;
