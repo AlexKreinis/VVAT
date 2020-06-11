@@ -47,6 +47,18 @@ const EventList = (props) => {
   }, [details]);
 
   const renderEventItem = (itemData) => {
+    const calcAvg = (ratings) => {
+      let allSum = ratings.reduce((sum, singleRate) => {
+        return sum + singleRate.rating;
+      }, 0);
+      let answer = allSum / ratings.length;
+      if (Number.isNaN(answer)) {
+        return "No rating";
+      } else {
+        return answer.toString();
+      }
+    };
+
     return (
       <ListItem
         containerStyle={{ borderRadius: 10, marginBottom: 5 }}
@@ -76,7 +88,10 @@ const EventList = (props) => {
           " \n " +
           new Date(itemData.item.start).toLocaleTimeString() +
           "  -  " +
-          new Date(itemData.item.finish).toLocaleTimeString()
+          new Date(itemData.item.finish).toLocaleTimeString() +
+          "     " +
+          "Rating:" +
+          calcAvg(itemData.item.ratings)
         }
         chevron={{ color: "white", size: 30 }}
         onPress={() =>

@@ -8,7 +8,7 @@ import {
 import { getUser } from "./Usersactions";
 
 //const youripadress = "https://vvat.herokuapp.com";
-const youripadress = "http://localhost:5000";
+const youripadress = "http://192.168.56.1:5000";
 
 export const getEventHistory = () => async (dispatch, getState) => {
   try {
@@ -73,6 +73,7 @@ export const acceptFriendRequest = (id) => async (dispatch, getState) => {
         friendRequest: friendRequest,
       },
     });
+    dispatch(getUser());
     let serverData = await res.json();
     return serverData.msg;
   } catch (err) {

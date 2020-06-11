@@ -7,8 +7,9 @@ import {
   FlatList,
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
-import { Icon, Card, Text, Button } from "react-native-elements";
+import { Icon, ListItem, Text, Button } from "react-native-elements";
 import { getEventHistory } from "../store/actions/profileActions";
+import TouchableScale from "react-native-touchable-scale";
 
 const EventHistory = (props) => {
   const dispatch = useDispatch();
@@ -19,11 +20,14 @@ const EventHistory = (props) => {
   const [error, setError] = useState();
 
   useEffect(() => {
+    setEvents([...eventHistory]);
+    setIsLocalLoading(false);
+  }, [eventHistory]);
+
+  useEffect(() => {
     (async function () {
       try {
         await dispatch(getEventHistory());
-        setEvents([...eventHistory]);
-        setIsLocalLoading(false);
       } catch (err) {
         setError(err.message);
       }
@@ -60,8 +64,16 @@ const EventHistory = (props) => {
         <View
           style={{ height: "75%", marginTop: "15%", justifyContent: "center" }}
         >
-          <View>
-            <Text h2>Event history</Text>
+          <View
+            style={{
+              padding: 20,
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Text h2 style={{ color: "#1c2833" }}>
+              Event history
+            </Text>
           </View>
 
           <FlatList
@@ -76,18 +88,22 @@ const EventHistory = (props) => {
 
   const renderingRequests = (request) => {
     return (
-      <Card containerStyle={{ backgroundColor: "rgba(220, 244, 244, 0.99)" }}>
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-            alignItems: "center",
-            marginVertical: 10,
-          }}
-        >
-          <Text h4>{request.item.name}</Text>
-        </View>
-      </Card>
+      <ListItem
+        Component={TouchableScale}
+        friction={90} //
+        tension={100} // These props are passed to the parent component (here TouchableScale)
+        activeScale={0.95} //
+        linearGradientProps={{
+          colors: ["#58d68d", "#3498db"],
+          start: { x: 1, y: 0 },
+          end: { x: 0.2, y: 0 },
+        }}
+        title={request.item.name}
+        titleStyle={{ color: "white", fontWeight: "bold" }}
+        subtitleStyle={{ color: "white" }}
+        subtitle="My event"
+        bottomDivider
+      />
     );
   };
 

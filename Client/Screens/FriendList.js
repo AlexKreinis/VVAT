@@ -60,7 +60,13 @@ const FriendList = (props) => {
         <View
           style={{ height: "75%", marginTop: "15%", justifyContent: "center" }}
         >
-          <View>
+          <View
+            style={{
+              justifyContent: "center",
+              alignItems: "center",
+              padding: 20,
+            }}
+          >
             <Text h2>friends list</Text>
           </View>
 

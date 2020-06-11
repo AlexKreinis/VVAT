@@ -28,6 +28,7 @@ const Calender = (props) => {
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || startDate;
     setShow(Platform.OS === "ios");
+    setEndDate(currentDate);
     setStartDate(currentDate);
   };
   const onChangeEnd = (event, selectedDate) => {

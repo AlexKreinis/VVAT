@@ -1,4 +1,4 @@
-const youripadress = "http://localhost:5000";
+const youripadress = "http://192.168.56.1:5000";
 //const youripadress = "https://vvat.herokuapp.com";
 
 import { LOADING_EVENTS, GET_USER_FOR_ADMIN } from "./const";
@@ -22,7 +22,7 @@ export const adminGetProfile = (email) => async (dispatch, getState) => {
         message = errorResData.errors[0].msg;
       throw new Error(message);
     }
-    serverData = await res.json();
+    const serverData = await res.json();
     dispatch({
       type: GET_USER_FOR_ADMIN,
       payload: {

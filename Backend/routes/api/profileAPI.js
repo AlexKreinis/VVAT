@@ -102,16 +102,18 @@ router.post("/sendfriendrequest", auth, async (req, res) => {
     );
     console.log(friendRequestProfile);
     for (let i = 0; i < friendRequestProfile.friendRequest.length; i++) {
-      console.log(
-        "comparions",
-        friendRequestProfile.friendRequest[i].toString(),
-        id,
-        friendRequestProfile.friendRequest[i] === req.user.id
-      );
       if (friendRequestProfile.friendRequest[i].toString() === req.user.id) {
         return res
           .status(500)
           .json({ errors: [{ msg: "You allready sent a friend request" }] });
+      }
+    }
+    console.log(friendRequestProfile);
+    for (let i = 0; i < friendRequestProfile.friendList.length; i++) {
+      if (friendRequestProfile.friendList[i].toString() === req.user.id) {
+        return res
+          .status(500)
+          .json({ errors: [{ msg: "You are allready friends" }] });
       }
     }
     friendRequestProfile.friendRequest.push(req.user.id);

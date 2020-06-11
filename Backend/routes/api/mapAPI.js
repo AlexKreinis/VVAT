@@ -18,7 +18,14 @@ router.get("/getmaps", async (req, res) => {
 router.get("/getevents/:lat/:lon", async (req, res) => {
   try {
     const { lat, lon } = req.params;
-    let location = await Location.findOne({ lat, lon }).populate("events");
+    let location = await Location.findOne({ lat, lon }).populate({
+      path: "events",
+      model: "event",
+      populate: {
+        path: "ratings",
+        model: "rating",
+      },
+    });
     if (location) {
       res.json({ events: location.events });
     } else res.json({ events: [] });

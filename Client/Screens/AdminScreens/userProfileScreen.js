@@ -8,6 +8,7 @@ import {
   TouchableHighlight,
   Button,
   TouchableOpacity,
+  ActivityIndicator,
 } from "react-native";
 import { adminGetProfile, banUser } from "../../store/actions/adminActions";
 import { setBanned, findUserProfile } from "../../store/actions/Usersactions";
@@ -29,8 +30,9 @@ const userProfileScreen = (props) => {
     friendList: [],
     friendRequest: [],
     id: "",
-    banned: userDetails.isBanned,
+    banned: false,
   });
+  const [isLoading, setIsLoading] = useState(true);
   const dispatch = useDispatch();
 
   const updatedUser = useSelector((state) => state.admin.selectedUser);
@@ -44,17 +46,15 @@ const userProfileScreen = (props) => {
 
   useEffect(() => {
     getUser();
-  }, [updatedUser]);
+  }, []);
 
   const banHandler = async () => {
     try {
       const ban = await dispatch(banUser(userDetails.email));
 
       if (ban == "banned") {
-        dispatch(setBanned(true));
         Alert.alert("User banned successfully");
       } else if (ban == "not banned") {
-        dispatch(setBanned(false));
         Alert.alert("User unbanned successfully");
       }
     } catch (err) {
@@ -62,7 +62,11 @@ const userProfileScreen = (props) => {
       setError(err.message);
     }
   };
-
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 1000);
+  }, [user]);
   useEffect(() => {
     const tempDetails = {
       ...user,
@@ -94,105 +98,116 @@ const userProfileScreen = (props) => {
       Alert.alert("An Error Occurred!", error, [{ text: "Okay" }]);
     }
   }, [error]);
-  return (
-    <View style={styles.container}>
-      <View style={styles.header}>
-        <View style={styles.headerContent}>
-          <Image
-            style={styles.avatar}
-            source={require("../../assets/pro2.png")}
-          />
-          <Text style={styles.name}>{user.name}</Text>
-          <Text style={styles.name}>{user.email}</Text>
+
+  const profileScreen = () => {
+    return (
+      <View style={styles.container}>
+        <View style={styles.header}>
+          <View style={styles.headerContent}>
+            <Image
+              style={styles.avatar}
+              source={require("../../assets/pro2.png")}
+            />
+            <Text style={styles.name}>{user.name}</Text>
+            <Text style={styles.name}>{user.email}</Text>
+          </View>
         </View>
-      </View>
-      <View style={styles.profileDetail}>
-        <View style={styles.detailContent}>
-          <Text style={styles.title}>Friends</Text>
-          <Text style={styles.count}>{user.friendList.length}</Text>
+        <View style={styles.profileDetail}>
+          <View style={styles.detailContent}>
+            <Text style={styles.title}>Friends</Text>
+            <Text style={styles.count}>{user.friendList.length}</Text>
+          </View>
+          <View style={styles.detailContent}>
+            <TouchableOpacity
+              onPress={() => {
+                props.navigation.navigate("history");
+              }}
+            >
+              <Text style={styles.title}>Events</Text>
+            </TouchableOpacity>
+            <Text style={styles.count}>{user.events.length}</Text>
+          </View>
+          <View style={styles.detailContent}>
+            <Text style={styles.title}>Rating</Text>
+            <Text style={styles.count}>200</Text>
+          </View>
         </View>
-        <View style={styles.detailContent}>
-          <TouchableOpacity
-            onPress={() => {
-              props.navigation.navigate("history");
-            }}
-          >
-            <Text style={styles.title}>Events</Text>
-          </TouchableOpacity>
-          <Text style={styles.count}>{user.events.length}</Text>
-        </View>
-        <View style={styles.detailContent}>
-          <Text style={styles.title}>Rating</Text>
-          <Text style={styles.count}>200</Text>
-        </View>
-      </View>
-      <View style={styles.body}>
-        <View style={styles.bodyContent}>
-          <View style={styles.buttonMenuContainer}>
-            <TouchableHighlight style={[styles.button, styles.buttonAddUser]}>
-              <>
+        <View style={styles.body}>
+          <View style={styles.bodyContent}>
+            <View style={styles.buttonMenuContainer}>
+              <TouchableHighlight style={[styles.button, styles.buttonAddUser]}>
+                <>
+                  <Image
+                    style={styles.icon}
+                    source={require("../../assets/add-user.png")}
+                  />
+                </>
+              </TouchableHighlight>
+
+              <TouchableHighlight
+                style={[styles.button, styles.button1]}
+                //onPress={}
+              >
                 <Image
                   style={styles.icon}
-                  source={require("../../assets/add-user.png")}
+                  source={require("../../assets/facebook2.png")}
                 />
-              </>
-            </TouchableHighlight>
+              </TouchableHighlight>
 
-            <TouchableHighlight
-              style={[styles.button, styles.button1]}
-              //onPress={}
-            >
-              <Image
-                style={styles.icon}
-                source={require("../../assets/facebook2.png")}
-              />
-            </TouchableHighlight>
+              <TouchableHighlight
+                style={[styles.button, styles.buttonMail]}
+                //onPress={}
+              >
+                <Image
+                  style={styles.icon}
+                  source={require("../../assets/gmail.png")}
+                />
+              </TouchableHighlight>
 
-            <TouchableHighlight
-              style={[styles.button, styles.buttonMail]}
-              //onPress={}
-            >
-              <Image
-                style={styles.icon}
-                source={require("../../assets/gmail.png")}
-              />
-            </TouchableHighlight>
+              <TouchableHighlight
+                style={[styles.button, styles.buttonPin]}
+                //onPress={}
+              >
+                <Image
+                  style={styles.icon}
+                  source={require("../../assets/pin.png")}
+                />
+              </TouchableHighlight>
+            </View>
 
-            <TouchableHighlight
-              style={[styles.button, styles.buttonPin]}
-              //onPress={}
-            >
-              <Image
-                style={styles.icon}
-                source={require("../../assets/pin.png")}
-              />
-            </TouchableHighlight>
-          </View>
+            <Text style={styles.description}>Age: {user.age}</Text>
 
-          <Text style={styles.description}>Age: {user.age}</Text>
+            <Text style={styles.description}>Facebook: {user.facebook}</Text>
 
-          <Text style={styles.description}>Facebook: {user.facebook}</Text>
-
-          <Text style={styles.description}>{user.description}</Text>
-          <View style={styles.buttonContainer}>
-            {!user.banned && (
-              <Button
-                title="Ban User"
-                color="red"
-                onPress={banHandler}
-              ></Button>
-            )}
-            {user.banned && (
-              <Button
-                title="Unban User"
-                color="blue"
-                onPress={banHandler}
-              ></Button>
-            )}
+            <Text style={styles.description}>{user.description}</Text>
+            <View style={styles.buttonContainer}>
+              {!user.banned ? (
+                <Button
+                  title="Ban User"
+                  color="red"
+                  onPress={banHandler}
+                ></Button>
+              ) : (
+                <Button
+                  title="Unban User"
+                  color="blue"
+                  onPress={banHandler}
+                ></Button>
+              )}
+            </View>
           </View>
         </View>
       </View>
+    );
+  };
+  return isLoading ? (
+    <View
+      style={{ height: "100%", justifyContent: "center", alignItems: "center" }}
+    >
+      <ActivityIndicator />
     </View>
+  ) : (
+    profileScreen()
   );
 };
 
