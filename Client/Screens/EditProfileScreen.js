@@ -34,7 +34,6 @@ const EditProfileScreen = (props) => {
       await dispatch(saveProfile(details));
       props.navigation.navigate("profile");
     } catch (err) {
-      console.log("error catched", err);
       setError(err.message);
     }
   };

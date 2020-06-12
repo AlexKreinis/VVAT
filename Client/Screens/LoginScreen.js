@@ -18,7 +18,6 @@ import { login } from "../store/actions/Usersactions";
 import { useDispatch } from "react-redux";
 
 const Login = (props) => {
-  //console.log(props);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);

@@ -68,7 +68,15 @@ const allUsersScreen = (props) => {
   return (
     <View style={styles.container}>
       {isLoading ? (
-        <ActivityIndicator size="large" color="#0000ff" />
+        <View
+          style={{
+            height: "100%",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <ActivityIndicator size="large" color="#0000ff" />
+        </View>
       ) : (
         <>
           <FlatList

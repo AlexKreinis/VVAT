@@ -69,23 +69,16 @@ const userProfileScreen = (props) => {
   }, [user]);
   useEffect(() => {
     const tempDetails = {
-      ...user,
       email: updatedUser.email ? updatedUser.email : "",
       name: updatedUser.name ? updatedUser.name : "",
-      description: updatedUser.profile.description
-        ? updatedUser.profile.description
-        : "",
-      facebook: updatedUser.profile.facebook
-        ? updatedUser.profile.facebook
-        : "",
-      age: updatedUser.profile.age ? updatedUser.profile.age : "",
-      events: updatedUser.profile.events ? updatedUser.profile.events : "",
-      friendList: updatedUser.profile.friendList
-        ? updatedUser.profile.friendList
-        : "",
-      friendRequest: updatedUser.profile.friendRequest
+      description: updatedUser.profile ? updatedUser.profile.description : "",
+      facebook: updatedUser.profile ? updatedUser.profile.facebook : "",
+      age: updatedUser.profile ? updatedUser.profile.age : "",
+      events: updatedUser.profile ? updatedUser.profile.events : [],
+      friendList: updatedUser.profile ? updatedUser.profile.friendList : [],
+      friendRequest: updatedUser.profile
         ? updatedUser.profile.friendRequest
-        : "",
+        : [],
       id: updatedUser._id ? updatedUser._id : "",
       banned: updatedUser.isBanned ? updatedUser.isBanned : false,
     };
@@ -126,10 +119,6 @@ const userProfileScreen = (props) => {
               <Text style={styles.title}>Events</Text>
             </TouchableOpacity>
             <Text style={styles.count}>{user.events.length}</Text>
-          </View>
-          <View style={styles.detailContent}>
-            <Text style={styles.title}>Rating</Text>
-            <Text style={styles.count}>200</Text>
           </View>
         </View>
         <View style={styles.body}>

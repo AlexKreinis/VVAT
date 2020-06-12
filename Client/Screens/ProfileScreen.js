@@ -34,12 +34,10 @@ const ProfileScreen = (props) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log("running get user");
     dispatch(getUser());
   }, []);
 
   useEffect(() => {
-    console.log("running update user");
     const tempDetails = {
       email: userDetails.email ? userDetails.email : "",
       name: userDetails.name ? userDetails.name : "",
