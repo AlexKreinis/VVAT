@@ -53,8 +53,10 @@ const userProfileScreen = (props) => {
       const ban = await dispatch(banUser(userDetails.email));
 
       if (ban == "banned") {
+        setUser({ ...user, banned: true });
         Alert.alert("User banned successfully");
       } else if (ban == "not banned") {
+        setUser({ ...user, banned: false });
         Alert.alert("User unbanned successfully");
       }
     } catch (err) {
