@@ -22,6 +22,7 @@ const customDrawerComponent = (props) => {
         {isAdmin && (
           <ListItem
             title={"Admin"}
+            leftIcon={{ name: "people-outline" }}
             onPress={() => props.navigation.navigate("adminPanel")}
             linearGradientProps={{
               colors: ["#2e86c1", "#2980b9"],

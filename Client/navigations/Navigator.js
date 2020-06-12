@@ -8,6 +8,7 @@ import ProfileScreen from "../Screens/ProfileScreen";
 import EditProfileScreen from "../Screens/EditProfileScreen";
 import { createBottomTabNavigator } from "react-navigation-tabs";
 import { Ionicons } from "@expo/vector-icons";
+
 import React from "react";
 import { createMaterialBottomTabNavigator } from "react-navigation-material-bottom-tabs";
 import Colors from "../constants/Colors";
@@ -168,12 +169,56 @@ const MainNavigator = createDrawerNavigator(
       screen: MapProfileTabNavigator,
       navigationOptions: {
         drawerLabel: "Maps",
+        drawerIcon: (drawerConfig) => {
+          return (
+            <Ionicons name="md-pin" size={24} color={drawerConfig.tintColor} />
+          );
+        },
       },
     },
 
-    SportCentersList: SportCentersListNav,
-    TermsAndConditions: TermsAndConditionsNavigator,
-    About: AboutScreenNavigator,
+    SportCentersList: {
+      screen: SportCentersListNav,
+      navigationOptions: {
+        drawerIcon: (drawerConfig) => {
+          return (
+            <Ionicons
+              name="ios-list"
+              size={23}
+              color={drawerConfig.tintColor}
+            />
+          );
+        },
+      },
+    },
+    TermsAndConditions: {
+      screen: TermsAndConditionsNavigator,
+      navigationOptions: {
+        drawerIcon: (drawerConfig) => {
+          return (
+            <Ionicons
+              name="ios-paper"
+              size={23}
+              color={drawerConfig.tintColor}
+            />
+          );
+        },
+      },
+    },
+    About: {
+      screen: AboutScreenNavigator,
+      navigationOptions: {
+        drawerIcon: (drawerConfig) => {
+          return (
+            <Ionicons
+              name="ios-information-circle-outline"
+              size={23}
+              color={drawerConfig.tintColor}
+            />
+          );
+        },
+      },
+    },
   },
   {
     contentComponent: customDrawerComponent,
