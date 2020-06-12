@@ -1,4 +1,4 @@
-const youripadress = "http://192.168.56.1:5000";
+const youripadress = "http://192.168.31.161:5000";
 //const youripadress = "https://vvat.herokuapp.com";
 
 import { LOADING_EVENTS, GET_USER_FOR_ADMIN } from "./const";
@@ -116,18 +116,15 @@ export const removeevent = (eventID) => async (dispatch, getState) => {
 export const saveUserProfile = (editedUser) => async (dispatch, getState) => {
   try {
     const token = getState().users.token;
-    const res = await fetch(
-      `${youripadress}/api/admin/saveuserprofile/${editedUser}`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-          "x-auth-token": token,
-        },
-        body: JSON.stringify(editedUser),
-      }
-    );
+    const res = await fetch(`${youripadress}/api/admin/saveuserprofile/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        "x-auth-token": token,
+      },
+      body: JSON.stringify(editedUser),
+    });
 
     if (!res.ok) {
       const errorResData = await res.json();

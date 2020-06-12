@@ -40,3 +40,52 @@ it("OK. admin editevent", (done) => {
     })
     .catch((err) => done(err));
 });
+
+it("OK. admin getallevents", (done) => {
+  request(app)
+    .get("/api/admin/getallevents/")
+    .set({ "x-auth-token": adminAuthToken })
+    .then((res) => {
+      const body = res.body;
+      expect(body).to.contain.property("allEvents");
+      done();
+    })
+    .catch((err) => done(err));
+});
+
+it("OK. admin getuser", (done) => {
+  request(app)
+    .get("/api/admin/getuser/testuser@mail.com")
+    .set({ "x-auth-token": adminAuthToken })
+    .then((res) => {
+      const body = res.body;
+      expect(body).to.contain.property("user");
+      done();
+    })
+    .catch((err) => done(err));
+});
+
+it("OK. admin getallusers", (done) => {
+  request(app)
+    .get("/api/admin/getallusers/")
+    .set({ "x-auth-token": adminAuthToken })
+    .then((res) => {
+      const body = res.body;
+      expect(body).to.contain.property("allUsers");
+      done();
+    })
+    .catch((err) => done(err));
+});
+
+it("OK. admin banuser", (done) => {
+  request(app)
+    .post("/api/admin/banUser/")
+    .set({ "x-auth-token": adminAuthToken })
+    .send({ email: "testuser@mail.com" })
+    .then((res) => {
+      const body = res.body;
+      expect(body).to.contain.property("msg");
+      done();
+    })
+    .catch((err) => done(err));
+});

@@ -89,7 +89,7 @@ router.get("/removeevent/:eventID", adminAuth, async (req, res) => {
   }
 });
 
-router.post("/saveuserprofile/:editedUser", adminAuth, async (req, res) => {
+router.post("/saveuserprofile/", adminAuth, async (req, res) => {
   const { email, name, desc, facebook, age } = req.body;
 
   try {
