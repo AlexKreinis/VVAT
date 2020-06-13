@@ -43,6 +43,7 @@ const adminEditEventScreen = (props) => {
   useEffect(() => {
     setStartDate(new Date(eventToEdit.start));
     setEndDate(new Date(eventToEdit.finish));
+    setEventName(eventToEdit.name);
   }, []);
 
   const showDatepicker = () => {
@@ -201,7 +202,15 @@ const adminEditEventScreen = (props) => {
         >
           <TouchableOpacity style={styles.button} onPress={onSubmit}>
             {isLoading ? (
-              <ActivityIndicator size="small" color="white" />
+              <View
+                style={{
+                  height: "100%",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <ActivityIndicator size="small" color="white" />
+              </View>
             ) : (
               <Text style={styles.btnText}>Edit Event</Text>
             )}

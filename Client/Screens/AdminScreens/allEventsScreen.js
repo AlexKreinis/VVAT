@@ -30,7 +30,7 @@ const allEventsScreen = (props) => {
       setError(err.message);
     }
   };
-  const removeEventHandler = async (eventToDelete) => {
+  const deleteEvent = async (eventToDelete) => {
     try {
       await dispatch(removeevent(eventToDelete._id));
       const filteredEvents = events.filter(
@@ -39,8 +39,31 @@ const allEventsScreen = (props) => {
       setEvents(filteredEvents);
       Alert.alert(`Event ${eventToDelete.name} deleted successfully`);
     } catch (err) {
-      setError(err.message);
+      throw err;
     }
+  };
+  const removeEventHandler = async (eventToDelete) => {
+    Alert.alert(
+      "Alert Title",
+      "Are you sure you want to delete this event?",
+      [
+        {
+          text: "Yes",
+          onPress: async () => {
+            try {
+              deleteEvent(eventToDelete);
+            } catch (err) {
+              setError(err.message);
+            }
+          },
+        },
+        {
+          text: "No",
+          style: "cancel",
+        },
+      ],
+      { cancelable: false }
+    );
   };
 
   useEffect(() => {
@@ -74,20 +97,24 @@ const allEventsScreen = (props) => {
     </TouchableOpacity>
   );
 
-  return (
+  return isLoading ? (
+    <View
+      style={{
+        height: "100%",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <ActivityIndicator size="large" color="black" />
+    </View>
+  ) : (
     <View style={styles.container}>
-      {isLoading ? (
-        <ActivityIndicator size="large" color="#0000ff" />
-      ) : (
-        <>
-          <FlatList
-            //contentContainerStyle={{ paddingTop: 50 }}
-            keyExtractor={keyExtractor}
-            data={events}
-            renderItem={renderItem}
-          />
-        </>
-      )}
+      <FlatList
+        //contentContainerStyle={{ paddingTop: 50 }}
+        keyExtractor={keyExtractor}
+        data={events}
+        renderItem={renderItem}
+      />
     </View>
   );
 };
