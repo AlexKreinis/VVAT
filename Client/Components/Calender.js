@@ -179,7 +179,11 @@ const Calender = (props) => {
             justifyContent: "center",
           }}
         >
-          <TouchableOpacity style={styles.button} onPress={onSubmit}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={onSubmit}
+            disabled={isLoading}
+          >
             {isLoading ? (
               <ActivityIndicator size="small" color="white" />
             ) : (

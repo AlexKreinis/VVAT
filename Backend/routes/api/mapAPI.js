@@ -37,6 +37,13 @@ router.get("/getevents/:lat/:lon", async (req, res) => {
 router.post("/addevent", auth, async (req, res) => {
   try {
     let { start, end, lat, lon, name } = req.body;
+    let testDate = new Date();
+    let testStartDate = new Date(start);
+    if (testDate > testStartDate) {
+      return res.status(500).json({
+        errors: [{ msg: "You cannot create an event on a past date" }],
+      });
+    }
     let location = await Location.findOne({ lat, lon }).populate("events");
     if (location && location.events) {
       const eventsArr = location.events;

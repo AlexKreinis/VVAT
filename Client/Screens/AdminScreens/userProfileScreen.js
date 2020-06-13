@@ -113,14 +113,10 @@ const userProfileScreen = (props) => {
             <Text style={styles.count}>{user.friendList.length}</Text>
           </View>
           <View style={styles.detailContent}>
-            <TouchableOpacity
-              onPress={() => {
-                props.navigation.navigate("history");
-              }}
-            >
+            <View>
               <Text style={styles.title}>Events</Text>
-            </TouchableOpacity>
-            <Text style={styles.count}>{user.events.length}</Text>
+              <Text style={styles.count}>{user.events.length}</Text>
+            </View>
           </View>
         </View>
         <View style={styles.body}>
