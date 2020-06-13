@@ -223,7 +223,7 @@ const adminEditEventScreen = (props) => {
 
 const styles = StyleSheet.create({
   container: {
-    height: "90%",
+    height: 350,
     width: "100%",
     alignItems: "center",
     justifyContent: "center",
@@ -250,7 +250,7 @@ const styles = StyleSheet.create({
   row: {
     display: "flex",
     flexDirection: "row",
-    justifyContent: "space-evenly",
+    justifyContent: "flex-start",
     alignItems: "center",
   },
   inputSection: {
