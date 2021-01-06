@@ -11,7 +11,7 @@
   "author": "vvat",
   "license": "ISC",
   "dependencies": {
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "bcryptjs": "^2.4.3",
     "chai": "^4.2.0",
     "cloc": "^2.5.1",
