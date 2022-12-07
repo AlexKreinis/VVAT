@@ -16,7 +16,7 @@
     "chai": "^4.2.0",
     "cloc": "^2.5.1",
     "config": "^3.3.1",
-    "express": "^4.17.1",
+    "express": "^4.18.2",
     "express-validator": "^6.4.0",
     "jscpd": "^3.3.0-rc.8",
     "jsonwebtoken": "^8.5.1",
