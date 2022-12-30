@@ -20,7 +20,7 @@
     "express-validator": "^6.4.0",
     "jscpd": "^3.3.0-rc.8",
     "jsonwebtoken": "^8.5.1",
-    "mocha": "^7.1.1",
+    "mocha": "^10.2.0",
     "mongoose": "^5.9.7",
     "nyc": "^15.0.1",
     "supertest": "^4.0.2"
